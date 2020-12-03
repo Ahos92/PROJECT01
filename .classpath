@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/HikariCP-3.4.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/slf4j-api-1.7.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

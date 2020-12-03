@@ -2,6 +2,7 @@ package project.five.pos.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,23 +11,27 @@ public class DBManager {
 
 	// DBpool
 	public static Connection getConnection() {
-		HikariConfig config =  new  HikariConfig("hikari.properties");
+		HikariConfig config =  new  HikariConfig("some/hikari.properties");
 		HikariDataSource ds =  new  HikariDataSource(config);
-		
+
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
-			
-			// 标情标情标情 
+
 			System.out.println("DB俊 楷搬登菌嚼聪促.!!");
-		} catch (SQLException e) {
+
+		} catch (SQLException sqle) {
+			System.out.println("DB 立加角菩 : " + sqle.toString());
+		} catch (Exception e) {
+			System.out.println("Unkonwn error");
 			e.printStackTrace();
 		}
-	
 		return conn;
 	}
 
 
-
+	public static void main(String[] args) {
+		getConnection();
+	}
 
 }
