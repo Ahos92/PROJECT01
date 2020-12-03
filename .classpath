@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/HikariCP-3.4.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/ojdbc8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ahos/Desktop/local_workSpace/slf4j-api-1.7.30.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/자바 취업반 과정/lib/HikariCP-3.4.5.jar"/>
+	<classpathentry kind="lib" path="C:/자바 취업반 과정/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/자바 취업반 과정/lib/slf4j-api-1.7.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
