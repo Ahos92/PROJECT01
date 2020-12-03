@@ -12,6 +12,7 @@ import project.five.pos.db.DBManager;
 
 public class Customer {
 
+	// developer merge
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
