@@ -45,6 +45,6 @@ public class DBManager {
 		if (conn != null)
 			conn.close();
 		System.out.println("DB Á¾·á!");
-	}
+	} 
 
 }
