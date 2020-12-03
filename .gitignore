@@ -26,4 +26,8 @@
 hs_err_pid*
 /bin/
 .classpath
+<<<<<<< HEAD
 .project
+=======
+.project
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
