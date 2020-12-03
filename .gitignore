@@ -1,4 +1,4 @@
-# 여기에 적는 확장자를 가진 파일들은 git이 무시한다
+# �뿬湲곗뿉 �쟻�뒗 �솗�옣�옄瑜� 媛�吏� �뙆�씪�뱾�� git�씠 臾댁떆�븳�떎
 # Java.gitignore template
 
 # Compiled class file
@@ -25,3 +25,5 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
+.classpath
+.project
