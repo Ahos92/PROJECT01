@@ -1,8 +1,6 @@
 package project.five.pos.db;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.*;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -28,10 +26,25 @@ public class DBManager {
 		}
 		return conn;
 	}
-
-
-	public static void main(String[] args) {
-		getConnection();
+	
+	// db 연결해제
+	public static void p_c_Close(PreparedStatement ps, Connection conn) throws SQLException {
+		if(ps != null)
+			ps.close();
+		if(conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
 	}
+	
+	// db 연결해제
+	public static void p_r_c_Close(PreparedStatement ps, ResultSet rs, Connection conn) throws SQLException {
+		if (rs != null)
+			rs.close();
+		if (ps != null)
+			ps.close();
+		if (conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
+	} 
 
 }

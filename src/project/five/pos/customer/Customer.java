@@ -12,15 +12,17 @@ import project.five.pos.db.DBManager;
 
 public class Customer {
 
+	// developer merge
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
+	
 	// customer_no, last_name, first_name, contact_no, membership, discount_pct
 	public Customer() {
 
 	}
 
-	// ¸â¹öÁ¶È¸ ddd
+	// ¸â¹öÁ¶È¸
 	public void selectAllCustomer() {
 	
 		try {
@@ -48,7 +50,6 @@ public class Customer {
 	}
 
 	public static void main(String[] args) {
-	
 		Customer customer = new Customer();
 		customer.selectAllCustomer();
 		
