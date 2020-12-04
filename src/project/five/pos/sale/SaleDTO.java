@@ -4,9 +4,10 @@ public class SaleDTO {
 
 	// cart Table
 	private int cart_no;
-	private int order_no;
+	private int order_no; // 12/04 추가
 	private int product_no;
 	private int selected_item;
+	private int total_price; // 12/04 추가
 	
 	// pos Table
 	private int device_id;
@@ -22,9 +23,18 @@ public class SaleDTO {
 	private String product_category;
 	private String termsofcondition;
 	// 테스트용 추가 컬럼
-	private int order_count;
+	private int order_count; // 12/04 추가
 	
+
 	
+	public int getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(int total_price) {
+		this.total_price = total_price;
+	}
+
 	public int getOrder_no() {
 		return order_no;
 	}
