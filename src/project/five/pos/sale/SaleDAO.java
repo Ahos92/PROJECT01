@@ -75,23 +75,23 @@ public class SaleDAO {
 
 	
 	// 장바구니 내역 cart TABLE에 저장
-	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int cartNumber) {
+	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber) {
 	
 		try {
 			conn = DBManager.getConnection();
 			
-			conn.setAutoCommit(false);
+			//conn.setAutoCommit(false);
 			
-			String sql = "insert into cart values(?, ?, ?, ?)";
+			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			
 			for (int i = 0; i < cartlist.size(); i++) {
-
-				ps.setInt(1, i + 1); // cart_no
-				ps.setInt(2, cartNumber); // order_no
-				ps.setInt(3, cartlist.get(i).getProduct_no()); // product_no
-				ps.setInt(4, cartlist.get(i).getOrder_count()); // selected_count				
 				
+				ps.setInt(1, orderNumber); // order_no
+				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
+				ps.setInt(3, cartlist.get(i).getOrder_count()); // selected_count				
+				// 어차피 한번 계산한 값 들고오기 (주문 가격)
+				ps.setInt(4, cartlist.get(i).getProduct_price() * cartlist.get(i).getOrder_count());
 				ps.addBatch();
 				
 			}
@@ -108,6 +108,28 @@ public class SaleDAO {
 		return cartlist;
 	}	
 
-	
+	public int MaxOrderNumber() {
+		
+		int max = 0;
+		
+		conn = DBManager.getConnection();
+		
+		try {
+			ps = conn.prepareStatement("select order_no from cart order by order_no asc");
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				max = rs.getInt("order_no");
+			}
+			
+			DBManager.p_r_c_Close(ps, rs, conn);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return max;
+	}
 	
 }
