@@ -20,8 +20,10 @@ public class SaleDAO {
 		
 	}
 	
-	// 테스트 메서드
-	// 상품 클릭 > 주문 내역으로 데이터 전달 메서드 
+	/*
+	   테스트 메서드
+	   	상품이 넘어오는거 가정
+	 */
 	public SaleDTO testOrder(String name, String opt, int count) {
 		// 상품 데이터 담을 객체
 		SaleDTO saleDTO = new SaleDTO();
@@ -74,7 +76,14 @@ public class SaleDAO {
 	}
 
 	
-	// 장바구니 내역 cart TABLE에 저장
+	/* 
+	   장바구니 내역 cart TABLE에 저장
+		정산 관리 위한 데이터 저장
+		모드 2개로나눠서 
+			- 오토커밋 해제 모드(처음 주문결제 넘어갈 때) 
+			- 적용 모드(최종 결제 완료) 
+		할 예정(미정)
+	 */
 	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber) {
 	
 		try {
@@ -97,8 +106,11 @@ public class SaleDAO {
 			}
 			
 			int[] rows = ps.executeBatch();
-			System.out.println(rows.length + "행이 변경 되었습니다.");
-			
+			if (rows.length == 0) {
+				System.err.println("결제 품목이 없습니다.");
+			} else {
+				System.out.println(rows.length + "행이 변경 되었습니다.");
+			}
 			DBManager.p_c_Close(ps, conn);
 			
 		} catch (SQLException e) {
@@ -108,6 +120,7 @@ public class SaleDAO {
 		return cartlist;
 	}	
 
+	// 신규 주문번호 판별을 위함
 	public int MaxOrderNumber() {
 		
 		int max = 0;
@@ -122,6 +135,8 @@ public class SaleDAO {
 			while (rs.next()) {
 				max = rs.getInt("order_no");
 			}
+			
+			System.out.println("현재 주문 번호 : " + max);
 			
 			DBManager.p_r_c_Close(ps, rs, conn);
 			
