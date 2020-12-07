@@ -5,52 +5,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
 import project.five.pos.db.DBManager;
 
-public class Payment {
-	
+public class Bank {
+
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
 	
-	public Payment() {
+	public Bank() {
+		
 		
 	}
-	
-	public void selectAllPayment() {
+		
+	public void selectAllBank() {
 		try {
 			conn = DBManager.getConnection();
 
-			ps = conn.prepareStatement("select * from payment");
+			ps = conn.prepareStatement("select * from bank");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				System.out.printf("%-15d\t%-10d\t%-10s\t%-10s\t%-10s\n",
-						rs.getInt("payment_no"),
-						rs.getInt("coupon_no"),
+				System.out.printf("%-15s\t%-10s\t%-30s\t%-10s\n",
 						rs.getString("bank_id"),
-						rs.getString("payment_type"),
-						rs.getString("payment_date")
-						
+						rs.getString("bank_name"),
+						rs.getString("bank_location"),
+						rs.getString("phone_number")
 						);
 			}
 			rs.close();
 			ps.close();
 			conn.close();
-			
+				
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
 	public static void main(String[] args) {
-		Payment pm = new Payment();
-		pm.selectAllPayment();
-		
-	}	
+		Bank bk = new Bank();
+		bk.selectAllBank();
+	}
 }
