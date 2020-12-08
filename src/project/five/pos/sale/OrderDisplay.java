@@ -27,17 +27,15 @@ public class OrderDisplay extends JFrame {
 	// 주문내역 테이블
 	JTable table;
 	JScrollPane scroll;
-	static String header[]	= {"메뉴", "옵션", "수량", "▲", "▼", "총가격", "취소"};
+	static String header[]	= {"메뉴", "옵션", "수량", "▲", "▼", "가격", "취소"};
 	Object selectlist[][];
 	int cellBtnSize;
 	static ArrayList<SaleDTO> cartlist = new ArrayList<>();
 	int orderCount;
 
-	public OrderDisplay() {	
-		setLayout(new BorderLayout());
-		southPanel = new JPanel();
-		centerPanel = new JPanel();
+	Font font;
 	
+	public OrderDisplay() {	
 		// 더미 데이터
 		// 	 버튼으로 상품의 정보 전달 받음 (한번의 주문량)
 		// 새로운 주문번호 들어올때 1증가
@@ -49,13 +47,28 @@ public class OrderDisplay extends JFrame {
 		cartlist.add(dao.testOrder("홍차", "HOT", 1));
 		cartlist.add(dao.testOrder("케이크", null, 1));
 //		cartlist.add(dao.testOrder("빙수", null, 1));
-		orderCount = cartlist.size();
+		orderCount = cartlist.size();	
+		
+		// 테스트 용 결제화면
+		JFrame f = new JFrame();
+		JLabel l = new JLabel("TEST 결제화면 입니다.");
+		l.setHorizontalAlignment(l.CENTER);
+		f.add(l);
+		TestSwingTools.initTestFrame(f, "결제 화면", false);
+		//////////////////////////////////////////////////
+	
+		
+		
+		setLayout(new BorderLayout());
+		southPanel = new JPanel();
+		centerPanel = new JPanel();
 		
 		// 주문번호, 주문내역 라벨 표시
 		info_label = new JLabel("주문 내역");
 		add(info_label, BorderLayout.NORTH);
 		
 		// 주문 내역 화면
+		//	- 상품객체 정보 배열에 받아서 출력
 		selectlist = new Object[orderCount][6];
 		for (int i = 0; i < orderCount; i++) {
 			selectlist[i][0] = cartlist.get(i).getProduct_name();
@@ -86,19 +99,6 @@ public class OrderDisplay extends JFrame {
 
 		payBtn = new SaleBtn("결제", 50);
 		cancleBtn = new SaleBtn("취소", 50);
-		
-		// 결제화면 테스트 Frame으로 설정
-		JFrame f = new JFrame("결제 화면 test");
-		JLabel l = new JLabel("TEST 결제화면 입니다.");
-		Font font;
-		font = new Font("바탕", Font.BOLD, 30);
-		l.setFont(font);
-		l.setHorizontalAlignment(l.CENTER);
-		f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
-		f.setSize(500, 300);
-		f.add(l);
-		f.setLocation(1300, 100);
-		f.setVisible(false);
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		payBtn.addActionListener(new PaymentPageAction(this, f, dtm, orderNumber));
@@ -111,11 +111,7 @@ public class OrderDisplay extends JFrame {
 		add(southPanel, BorderLayout.SOUTH);
 		add(centerPanel, BorderLayout.CENTER);
 		
-		setTitle("장바구니 화면");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 300);
-		setLocation(1300, 100);
-		setVisible(true);
+		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
 	}
 
 	public static void main(String[] args) {	

@@ -47,15 +47,17 @@ public class PaymentPageAction implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	
 		dao.saveCartlist(getUpdateDTO(), orderNumber);
+		
+		// 생성자 변수에 따른 코드
 		try {
-			// 화면전환 생성자 받았을 때 적용
+			// 화면전환 생성자까지 받았을 때 적용
 			presentFrame.setVisible(false);
 			nextFrame.setVisible(true);
 
 		} catch (NullPointerException npe) {
-
-			// 테이블변수 생성자 받았을 때 적용
+			// 테이블모델만 받았을 때 적용
 			System.err.println("결제창 넘어감!!");
 		}
 
@@ -63,7 +65,8 @@ public class PaymentPageAction implements ActionListener{
 
 	/*
 	    주문내역 추가, 수정, 삭제 전달받아서 
-	     업데이트 하기 
+	     - 업데이트 하기 
+	     - cart TABLE에 최종적으로 저장시킬 데이터 만드는 메서드
 	 */
 	private ArrayList<SaleDTO> getUpdateDTO() {
 		ArrayList<SaleDTO> updateCart = new ArrayList<>();
