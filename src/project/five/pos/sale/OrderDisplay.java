@@ -27,10 +27,10 @@ public class OrderDisplay extends JFrame {
 	// 주문내역 테이블
 	JTable table;
 	JScrollPane scroll;
-	static String header[]	= {"메뉴", "옵션", "수량", "▲", "▼", "가격", "취소"};
-	Object selectlist[][];
+	String[] header= {"메뉴", "옵션", "수량", "▲", "▼", "가격", "취소"};
+	Object[][] selectlist;
 	int cellBtnSize;
-	static ArrayList<SaleDTO> cartlist = new ArrayList<>();
+	ArrayList<SaleDTO> cartlist;
 	int orderCount;
 
 	Font font;
@@ -40,6 +40,7 @@ public class OrderDisplay extends JFrame {
 		// 	 버튼으로 상품의 정보 전달 받음 (한번의 주문량)
 		// 새로운 주문번호 들어올때 1증가
 		SaleDAO dao = new SaleDAO();
+		cartlist = new ArrayList<>();
 		int orderNumber = dao.MaxOrderNumber();
 		orderNumber++;
 //		cartlist.add(dao.testOrder("아메리카노", "HOT", 2));
