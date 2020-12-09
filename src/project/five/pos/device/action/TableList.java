@@ -15,7 +15,8 @@ public class TableList {
 	
 	public String[] header() {
 		head_data = new ArrayList<>();
-		head_length = 0;
+		// 에러방지
+		head_length = 5;
 		
 		if (this.btn_text.equals("판매 내역 조회")) {
 			head_data.add("카트 번호");
@@ -30,8 +31,14 @@ public class TableList {
 				header[i] = head_data.get(i);
 			}
 			
-		} else {
-			System.out.println("미구현");
+		} else if (this.btn_text.equals("결제 내역 조회")) {
+			header = new String[head_length];
+			System.err.println("미구현 : PAYMENT 파트 결합");
+			
+		} else if (this.btn_text.equals("회원 정보 조회")) {
+			header = new String[head_length];
+			System.err.println("미구현 : CUSTOMER 파트 결합");
+			
 		}
 		return header;
 	}

@@ -2,6 +2,8 @@ package project.five.pos.device;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -11,8 +13,8 @@ import project.five.pos.sale.TestSwingTools;
 public class DeviceDisplay extends JFrame {
 
 	// 테스트
-	// 관리자 ID : project
-	// 관리자 PW : five
+	// 관리자 ID : 123
+	// 관리자 PW : 45
 	
 	// device_id : 1234
 	//  어느 프레임이든 출력되게 설정
@@ -24,16 +26,13 @@ public class DeviceDisplay extends JFrame {
 	JLabel device_info;
 	// 관리자모드 버튼
 	JButton manager_btn;
-				
+	JDialog login_confirm;
 	
 	static JFrame f2;
 	static {
 		f2 = new ManagerDisplay();
 	}
-	/* 
-	 	매개변수 JFrame frame
-	 		-관리자모드 들어가면 현재프레임 닫고 관리자모드 프레임 실행 하기 위함
-	 */
+
 	public DeviceDisplay() {
 		setLayout(new BorderLayout());
 		
@@ -49,6 +48,7 @@ public class DeviceDisplay extends JFrame {
 		
 		add(info, BorderLayout.SOUTH);
 		
+		JFrame f = this;
 		manager_btn.addActionListener(new ChangeFrameBtn(this));
 		
 		TestSwingTools.initTestFrame(this, "POS TEST", true);
