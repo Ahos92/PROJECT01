@@ -1,75 +1,80 @@
 package project.five.pos.device;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.sql.SQLSyntaxErrorException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.*;
+
+import java.util.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 import project.five.pos.device.action.ChangeFrameBtn;
-import project.five.pos.device.action.TableList;
-import project.five.pos.sale.SaleDAO;
-import project.five.pos.sale.SaleDTO;
-import project.five.pos.sale.TestSwingTools;
+import project.five.pos.device.comp.IntegerComp;
+import project.five.pos.sale.*;
 
 public class InquiryDisplay extends JFrame {
 
-	JPanel center_p;
-	JPanel south_p;
-	
+	JPanel north_p, center_p, south_p;
+
+	JButton back_to_manager, change_sort;
+
+	TableList config_data;
+
 	ArrayList<String> head_data;
 	String[] header;
-	int head_length;
-	
-	SaleDAO dao;
-	ArrayList<SaleDTO> cartlist;
+
+	ArrayList<SaleDTO> search_data;
 	Object[][] inquiry_list;
-	int inq_length;
-	
+
 	JTable table;
 	JScrollPane scroll;
 	DefaultTableModel dtm;
+	Comparator<Integer> comparator;
 
-	JButton back_to_manager;
-	
 	public InquiryDisplay(String btn_text) {
 		setLayout(new BorderLayout());
-		
+
+		north_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		center_p = new JPanel();
 		south_p = new JPanel();
-		
-		header = new TableList(btn_text).header();
-		head_length = header.length;
-		
-		dao = new SaleDAO();
-		cartlist = dao.searchAllCart("order_no", "asc");
-		inq_length = cartlist.size();
-		
-		inquiry_list = new Object[inq_length][head_length];
-		for (int i = 0; i < inq_length; i++) {
-			inquiry_list[i][0] = cartlist.get(i).getCart_no();
-			inquiry_list[i][1] = cartlist.get(i).getOrder_no();
-			inquiry_list[i][2] = cartlist.get(i).getProduct_name();
-			inquiry_list[i][3] = cartlist.get(i).getSelected_item();
-			inquiry_list[i][4] = cartlist.get(i).getTotal_price();
-		};
-		
+
+
+		config_data =  new TableList(btn_text);
+		// 조회할 컬럼 값들
+		header = config_data.header();
+
+		// 조회할 DB 검색
+		search_data = new SearchDB().outToTable(btn_text);
+
+		// 출력할 컬럼에 맞는 데이터 값
+
+		inquiry_list = config_data.data(search_data, header);
+
 		dtm = new DefaultTableModel(inquiry_list, header);
 		table = new JTable(dtm);
-		scroll = new JScrollPane(table);
+		// 오름차순, 내림차순 메서드
+		// 클래스 쪼개기
+		TableRowSorter sorter = new TableRowSorter<>();
+		comparator = new IntegerComp();
+		sorter.setModel(table.getModel());
+		for (int i = 0; i < table.getColumnCount(); i++) {		
+			char ch = table.getValueAt(1, i).toString().charAt(0);
+			if (ch >= '0' && ch <= '9') {
+			  sorter.setComparator(i, comparator);
+			}
+		};
+		table.setRowSorter(sorter);
 		
+		scroll = new JScrollPane(table);
+
 		scroll.setPreferredSize(new Dimension(480, 500));
 		center_p.add(scroll);
 		add(center_p, BorderLayout.CENTER);
-	
+
 		back_to_manager = new JButton("관리자 메뉴로 돌아가기");
 		back_to_manager.addActionListener(new ChangeFrameBtn(this));
 		south_p.add(back_to_manager);
 		add(south_p, BorderLayout.SOUTH);
-		
+
 		TestSwingTools.initTestFrame(this, "INQ TEST", false);
 	}
 

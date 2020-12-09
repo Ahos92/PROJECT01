@@ -151,11 +151,7 @@ public class SaleDAO {
 		return max;
 	}
 
-	/*
-	  	column - order_no / total_price 
-	  	sort - asc / desc
-	 */
-	public ArrayList<SaleDTO> searchAllCart(String column, String sort) {
+	public ArrayList<SaleDTO> searchAllCart() {
 
 		cartlist = new ArrayList<>();
 
@@ -164,11 +160,8 @@ public class SaleDAO {
 		try {
 			ps = conn.prepareStatement("select *"
 									+ " from cart inner join product using(product_no)"
-									+ " order by " + column + " " + sort);
-//			
-//			ps.setString(1, column);
-//			ps.setString(2, sort);
-			
+									+ " order by cart_no asc");
+
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
