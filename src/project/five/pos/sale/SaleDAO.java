@@ -186,4 +186,44 @@ public class SaleDAO {
 
 	}
 
+	
+	/*
+	 	조건에 맞는 데이터
+	 */
+	public ArrayList<SaleDTO> searchCart(String column_name, String column_data) {
+
+		cartlist = new ArrayList<>();
+
+		conn = DBManager.getConnection();
+
+		try {
+			ps = conn.prepareStatement("select cart_no, order_no, product_name, selected_item, total_price"
+					+ " from cart inner join product using(product_no)"
+					+ " where " + column_name + " = " + column_data
+					+ " order by cart_no asc");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				saleDTO = new SaleDTO();
+				
+				saleDTO.setCart_no(rs.getInt("cart_no"));
+				saleDTO.setOrder_no(rs.getInt("order_no"));
+				saleDTO.setProduct_name(rs.getString("product_name"));
+				saleDTO.setSelected_item(rs.getInt("selected_item"));
+				saleDTO.setTotal_price(rs.getInt("total_price"));
+				
+				cartlist.add(saleDTO);
+			}
+		
+			DBManager.p_r_c_Close(ps, rs, conn);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return cartlist;
+
+	}
+	
 }
