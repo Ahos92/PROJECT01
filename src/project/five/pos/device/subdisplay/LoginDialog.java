@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.subdisplay;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.device.action.ChangeFrameBtn;
+import project.five.pos.device.actionbtn.ChangeFrameBtn;
 
 public class LoginDialog extends JDialog {
 

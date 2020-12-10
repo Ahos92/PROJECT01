@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.subdisplay;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

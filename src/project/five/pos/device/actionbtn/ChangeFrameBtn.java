@@ -1,4 +1,4 @@
-package project.five.pos.device.action;
+package project.five.pos.device.actionbtn;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,10 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import project.five.pos.device.ConfirmDialog;
 import project.five.pos.device.DeviceDisplay;
-import project.five.pos.device.LoginDialog;
-import project.five.pos.device.ManagerDisplay;
+import project.five.pos.device.subdisplay.ConfirmDialog;
+import project.five.pos.device.subdisplay.LoginDialog;
+import project.five.pos.device.subdisplay.ManagerDisplay;
 
 public class ChangeFrameBtn implements ActionListener{
 

@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.subdisplay;
 
 import java.awt.*;
 
@@ -7,12 +7,17 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import project.five.pos.device.action.ChangeFrameBtn;
+import project.five.pos.device.SearchDB;
+import project.five.pos.device.TableList;
+import project.five.pos.device.actionbtn.ChangeFrameBtn;
 import project.five.pos.device.comp.IntegerComp;
+import project.five.pos.device.comp.SortTable;
 import project.five.pos.sale.*;
 
 public class InquiryDisplay extends JFrame {
 
+	JLabel head;
+	
 	JPanel north_p, center_p, south_p;
 
 	JButton back_to_manager, change_sort;
@@ -28,12 +33,15 @@ public class InquiryDisplay extends JFrame {
 	JTable table;
 	JScrollPane scroll;
 	DefaultTableModel dtm;
-	Comparator<Integer> comparator;
-
+	SortTable sort;
+	
 	public InquiryDisplay(String btn_text) {
 		setLayout(new BorderLayout());
 
+		head = new JLabel(btn_text);
 		north_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		north_p.add(head);
+
 		center_p = new JPanel();
 		south_p = new JPanel();
 
@@ -51,28 +59,21 @@ public class InquiryDisplay extends JFrame {
 
 		dtm = new DefaultTableModel(inquiry_list, header);
 		table = new JTable(dtm);
+		
 		// 오름차순, 내림차순 메서드
-		// 클래스 쪼개기
-		TableRowSorter sorter = new TableRowSorter<>();
-		comparator = new IntegerComp();
-		sorter.setModel(table.getModel());
-		for (int i = 0; i < table.getColumnCount(); i++) {		
-			char ch = table.getValueAt(1, i).toString().charAt(0);
-			if (ch >= '0' && ch <= '9') {
-			  sorter.setComparator(i, comparator);
-			}
-		};
-		table.setRowSorter(sorter);
+		sort = new SortTable(table);
 		
 		scroll = new JScrollPane(table);
 
 		scroll.setPreferredSize(new Dimension(480, 500));
 		center_p.add(scroll);
-		add(center_p, BorderLayout.CENTER);
 
 		back_to_manager = new JButton("관리자 메뉴로 돌아가기");
 		back_to_manager.addActionListener(new ChangeFrameBtn(this));
 		south_p.add(back_to_manager);
+
+		add(north_p, BorderLayout.NORTH);
+		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 
 		TestSwingTools.initTestFrame(this, "INQ TEST", false);
