@@ -7,9 +7,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import project.five.pos.TestSwingTools;
 import project.five.pos.device.actionbtn.ChangeFrameBtn;
 import project.five.pos.device.subdisplay.ManagerDisplay;
-import project.five.pos.sale.TestSwingTools;
+
 
 public class DeviceDisplay extends JFrame {
 

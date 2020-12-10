@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import project.five.pos.device.actionbtn.ChangeFrameBtn;
 import project.five.pos.device.actionbtn.InquiryActionBtn;
-import project.five.pos.sale.TestSwingTools;
+import project.five.pos.TestSwingTools;
 
 public class ManagerDisplay extends JFrame {
 	
