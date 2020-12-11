@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import project.five.pos.db.DBManager;
 
@@ -88,23 +91,28 @@ public class SaleDAO {
 			- 적용 모드(최종 결제 완료) 
 		할 예정(미정)
 	 */
-	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber) {
+	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber, String device_id) {
 
 		try {
 			conn = DBManager.getConnection();
 
 			//conn.setAutoCommit(false);
 
-			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?)";
+			String sql = "insert into cart "
+						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 
 			for (int i = 0; i < cartlist.size(); i++) {
-
+				String day = "2020-12-12";
+				java.sql.Timestamp now = java.sql.Timestamp.valueOf(LocalDateTime.now());
+				
 				ps.setInt(1, orderNumber); // order_no
 				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
 				ps.setInt(3, cartlist.get(i).getOrder_count()); // selected_count				
 				// 어차피 한번 계산한 값 들고오기 (주문 가격)
 				ps.setInt(4, cartlist.get(i).getProduct_price() * cartlist.get(i).getOrder_count());
+				ps.setInt(5, Integer.parseInt(device_id));
+				ps.setTimestamp(6, now);
 				ps.addBatch();
 
 			}
@@ -224,6 +232,34 @@ public class SaleDAO {
 
 		return cartlist;
 
+	}
+
+	public boolean searchPOS(int device_id, String device_pw) {
+		
+		conn = DBManager.getConnection();
+
+		try {
+			ps = conn.prepareStatement("select * from pos where device_id = ? and device_id = ?");
+
+			ps.setInt(1, device_id);
+			ps.setString(2, device_pw);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				System.out.println("로그인 성공");
+				return true;
+			} 
+			
+			DBManager.p_r_c_Close(ps, rs, conn);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.err.println("로그인 실패");
+		return false;
+		
 	}
 	
 }

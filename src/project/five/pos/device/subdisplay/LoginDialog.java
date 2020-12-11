@@ -22,7 +22,8 @@ public class LoginDialog extends JDialog {
 	public LoginDialog(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
-		setBounds(1445, 400, 200, 130);
+		setSize(200, 130);
+		setLocationRelativeTo(null);
 		
 		id_l = new JLabel("¾ÆÀÌµð   ");
 		id_fd = new JTextField(10);

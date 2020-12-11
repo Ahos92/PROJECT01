@@ -11,10 +11,15 @@ public class SaleDTO {
 	
 	// pos Table
 	private int device_id;
-	private int payment_id;
-	private int customer_id;
-	// int cart_no
-
+	private String device_pw;
+	
+	// branch table
+	private int branch_no;
+	private int business_id;
+	private String branch_name;
+	private String branch_location;
+	private String phone_number;
+	
 	// test product table
 	// int product_no;
 	private String product_name;
@@ -26,7 +31,54 @@ public class SaleDTO {
 	private int order_count; // 12/04 Ãß°¡
 	
 
-	
+	public String getDevice_pw() {
+		return device_pw;
+	}
+
+	public void setDevice_pw(String device_pw) {
+		this.device_pw = device_pw;
+	}
+
+	public int getBranch_no() {
+		return branch_no;
+	}
+
+	public void setBranch_no(int branch_no) {
+		this.branch_no = branch_no;
+	}
+
+	public int getBusiness_id() {
+		return business_id;
+	}
+
+	public void setBusiness_id(int business_id) {
+		this.business_id = business_id;
+	}
+
+	public String getBranch_name() {
+		return branch_name;
+	}
+
+	public void setBranch_name(String branch_name) {
+		this.branch_name = branch_name;
+	}
+
+	public String getBranch_location() {
+		return branch_location;
+	}
+
+	public void setBranch_location(String branch_location) {
+		this.branch_location = branch_location;
+	}
+
+	public String getPhone_number() {
+		return phone_number;
+	}
+
+	public void setPhone_number(String phone_number) {
+		this.phone_number = phone_number;
+	}
+
 	public int getTotal_price() {
 		return total_price;
 	}
@@ -81,22 +133,6 @@ public class SaleDTO {
 	
 	public void setDevice_id(int device_id) {
 		this.device_id = device_id;
-	}
-	
-	public int getPayment_id() {
-		return payment_id;
-	}
-	
-	public void setPayment_id(int payment_id) {
-		this.payment_id = payment_id;
-	}
-	
-	public int getCustomer_id() {
-		return customer_id;
-	}
-	
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
 	}
 	
 	public String getProduct_name() {

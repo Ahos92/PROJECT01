@@ -12,7 +12,7 @@ public class TestSwingTools extends JFrame {
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 800);
-		frame.setLocation(1300, 100);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(visible);
 	}
 	

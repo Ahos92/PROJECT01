@@ -15,7 +15,8 @@ public class ConfirmDialog extends JDialog {
 	public ConfirmDialog(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
-		setBounds(1420, 400, 250, 130);
+		setSize(200, 130);
+		setLocationRelativeTo(null);
 		
 		msg = new JLabel("아이디나 비밀번호가 맞지 않습니다!");
 		msg.setHorizontalAlignment(msg.CENTER);

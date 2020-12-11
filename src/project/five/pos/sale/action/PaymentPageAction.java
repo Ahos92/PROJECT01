@@ -18,24 +18,26 @@ public class PaymentPageAction implements ActionListener{
 	ArrayList<SaleDTO> cartlist; 
 	int orderNumber;
 	DefaultTableModel dtm;
+	String device_id;
 
 	SaleDAO dao = new SaleDAO(); 
 
 	public PaymentPageAction(JFrame presentFrame, JFrame nextFrame, 
-			DefaultTableModel dtm, int orderNumber) {
+			DefaultTableModel dtm, int orderNumber, String device_id) {
 
 		this.nextFrame = nextFrame;
 		this.presentFrame = presentFrame;
 		this.dtm = dtm;
 		this.orderNumber = orderNumber;	
+		this.device_id = device_id;
 	}
 
 
 
-	public PaymentPageAction(DefaultTableModel dtm, int orderNumber) {
+	public PaymentPageAction(DefaultTableModel dtm, int orderNumber, String device_id) {
 		this.dtm = dtm;
 		this.orderNumber = orderNumber;
-
+		this.device_id = device_id;
 	}
 
 
@@ -48,7 +50,7 @@ public class PaymentPageAction implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
-		dao.saveCartlist(getUpdateDTO(), orderNumber);
+		dao.saveCartlist(getUpdateDTO(), orderNumber, device_id);
 		
 		// 생성자 변수에 따른 코드
 		try {

@@ -34,7 +34,7 @@ public class ChangeFrameBtn implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("메뉴로 돌아가기")) {
-			changeable_frame = new DeviceDisplay();
+			changeable_frame = new DeviceDisplay("1234");
 
 		} else if(e.getActionCommand().equals("로그인")){			
 			// 테스트 할동안 주석처리

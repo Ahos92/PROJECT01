@@ -17,10 +17,6 @@ public class DeviceDisplay extends JFrame {
 	// 테스트
 	// 관리자 ID : 123
 	// 관리자 PW : 45
-	
-	// device_id : 1234
-	//  어느 프레임이든 출력되게 설정
-	String device_id = "1234";
 
 	//
 	JPanel info;
@@ -30,12 +26,8 @@ public class DeviceDisplay extends JFrame {
 	JButton manager_btn;
 	JDialog login_confirm;
 	
-	static JFrame f2;
-	static {
-		f2 = new ManagerDisplay();
-	}
-
-	public DeviceDisplay() {
+	public DeviceDisplay(String device_id) {
+		
 		setLayout(new BorderLayout());
 		
 		info = new JPanel(new BorderLayout());
@@ -54,11 +46,6 @@ public class DeviceDisplay extends JFrame {
 		manager_btn.addActionListener(new ChangeFrameBtn(this));
 		
 		TestSwingTools.initTestFrame(this, "POS TEST", true);
-	}
-	
-	public static void main(String[] args) {
-		new DeviceDisplay();
-
 	}
 	
 }

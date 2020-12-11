@@ -35,8 +35,9 @@ public class OrderDisplay extends JFrame {
 	int orderCount;
 
 	Font font;
-	
-	public OrderDisplay() {	
+						// 패널로 보낸다 생각하면 
+						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
+	public OrderDisplay(String device_id) {	
 		// 더미 데이터
 		// 	 버튼으로 상품의 정보 전달 받음 (한번의 주문량)
 		// 새로운 주문번호 들어올때 1증가
@@ -103,7 +104,8 @@ public class OrderDisplay extends JFrame {
 		cancleBtn = new SaleBtn("취소", 50);
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
-		payBtn.addActionListener(new PaymentPageAction(this, f, dtm, orderNumber));
+		//					패널용 생성자도 있음
+		payBtn.addActionListener(new PaymentPageAction(this, f, dtm, orderNumber, device_id));
 		
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
 		cancleBtn.addActionListener(new CancleAction(dtm));
@@ -116,10 +118,8 @@ public class OrderDisplay extends JFrame {
 		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
 	}
 
-	public static void main(String[] args) {	
-		new OrderDisplay();
-
+	public static void main(String[] args) {
+		new OrderDisplay("1234");
 	}
-
 }
 
