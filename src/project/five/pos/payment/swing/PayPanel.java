@@ -4,14 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +31,7 @@ import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
 
 public class PayPanel extends JFrame {
 	
+	// 뒷 배경 이미지
 	ImageIcon bg = new ImageIcon(ImageIO.read(new File("assets/images/background.jpg")).getScaledInstance(1000, 1000, Image.SCALE_SMOOTH));
 	
 	//코로나 고정 이미지
@@ -41,22 +40,23 @@ public class PayPanel extends JFrame {
 	static int price = 5000;
 	static String lists = "아이스 아메리카노";
 	
+	static JPanel center_panel;
+	static JPanel junior_panel2;
+	static JPanel junior_panel3;
 	
+	static JButton ckmem_btn;
+	static JButton register_btn;
+	
+	public static JPanel card_panel;
+	public static CardLayout card;
 	
 	public PayPanel() throws IOException {
 		
-		
-		
 		JTextField register = new JTextField("멤버쉽 입력");
-		JTextField input_cp = new JTextField("쿠폰 입력");
-		
-		// 프레임 설정 함수		
-		
-		
-		
+			
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		JPanel center_panel = new JPanel(new GridLayout(5, 5, 5, 5));
+		center_panel = new JPanel(new GridLayout(4, 4, 5, 5));
 		JPanel north_panel = new JPanel(new FlowLayout(FlowLayout.CENTER,5, 5));
 		JPanel west_panel = new JPanel(new CardLayout(15, 15));
 		JPanel east_panel = new JPanel(new CardLayout(15, 15));
@@ -70,16 +70,27 @@ public class PayPanel extends JFrame {
 		//주니어 패널 지정
 		JPanel junior_panel = new JPanel(new GridLayout(1, 2, 5, 5));	// 카드, 현금
 		
-		JPanel junior_panel2 = new JPanel(new GridLayout(1, 2, 5, 5));	// 멤버쉽 입력 / 등록
+		// 멤버십 패널 지정
+		card_panel = new JPanel();
+		card_panel.setOpaque(false);
+		card = new CardLayout();
+		 
+		card_panel.setLayout(card);
+		
+		junior_panel2 = new JPanel(new GridLayout(1, 2, 5, 5));	// 멤버쉽 입력 / 등록
+		junior_panel3 = new JPanel(new GridLayout(1, 2, 5, 5));	// 멤버쉽 라벨
+		
+		card_panel.add("버튼", junior_panel2);
+	
+		
+		junior_panel.setOpaque(false);
+		junior_panel2.setOpaque(false);
 		
 		
 		//라벨 모음
 		JLabel branch_name = new JLabel("Fancy a cuppa?");
 		branch_name.setForeground(Color.WHITE);
-		
-		
-		JLabel speicality = new JLabel("추천 메뉴");
-		
+		branch_name.setFont(new Font("Serif",Font.BOLD, 36));
 		
 		JLabel item_list = new JLabel("주문하신 상품 :" + lists + "(이미지로 교체)");
 		JLabel total_price = new JLabel("총 결제할 금액 : " + price, SwingConstants.CENTER);
@@ -88,17 +99,13 @@ public class PayPanel extends JFrame {
 		item_list.setForeground(Color.WHITE);
 		total_price.setForeground(Color.WHITE);
 		
-		
 		//버튼 모음
-		JButton ckmem_btn = new JButton("멤버쉽 입력");
-		
-		
-		JButton register_btn = new JButton("멤버쉽 등록");
-		
+		ckmem_btn = new JButton("멤버쉽 입력");
+		register_btn = new JButton("멤버쉽 등록");
+	
 		register_btn.addActionListener(new BtnAction(register_btn));
-		
-		
-		
+		ckmem_btn.addActionListener(new BtnAction(ckmem_btn));
+
 		JButton card_btn = new JButton("카드");
 		JButton cash_btn = new JButton("현금");
 		
@@ -109,20 +116,20 @@ public class PayPanel extends JFrame {
 		JButton cancel_btn = new JButton("취소하기");
 		JButton payment_btn = new JButton("결제하기");
 		
+		payment_btn.addActionListener(new BtnAction(payment_btn, price));
+		
+		
 		//버튼 기능(함수 ClickedBtnAction)
-		card_btn.addActionListener(new ClickedBtnAction(junior_panel, "카드"));
-		cash_btn.addActionListener(new ClickedBtnAction(junior_panel,"현금"));
+		card_btn.addActionListener(new ClickedBtnAction(junior_panel, "카드", card_btn, cash_btn, price));
+		cash_btn.addActionListener(new ClickedBtnAction(junior_panel,"현금", card_btn, cash_btn, price));
 		
-		//패널 추가
-		
-		
-		// 이름 변경 고안
 		north_panel.add(branch_name);
 		
 		// 추천메뉴 추가
 		for(ImageEnum imgname : ImageEnum.values()) {
 			west_panel.add(imgname.getLname(), new ImageLabel(imgname));
 		}
+		
 		// 메뉴 로테이트(클릭) -> 시간 지남에 따라 자동으로 바꿔보기
 		west_panel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,7 +143,10 @@ public class PayPanel extends JFrame {
 		
 		// 코로나 마스크 포스터 추가
 		try {
-			east_panel.add(new JLabel(new ImageIcon(ImageIO.read(new File(IMG_COVID)).getScaledInstance(150, 400, Image.SCALE_SMOOTH))));
+			BufferedImage coImage = ImageIO.read(new File(IMG_COVID));
+			int cox = coImage.getWidth();
+			int coy = coImage.getHeight();
+			east_panel.add(new JLabel(new ImageIcon(ImageIO.read(new File(IMG_COVID)).getScaledInstance(cox/5, coy/3, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -145,19 +155,14 @@ public class PayPanel extends JFrame {
 		center_panel.add(item_list);
 		
 		//멤버쉽 패널
-		center_panel.add(junior_panel2);
+		center_panel.add(card_panel);
 		junior_panel2.add(ckmem_btn);
 		junior_panel2.add(register_btn);
-		
-		
-		//쿠폰 패널
-		center_panel.add(input_cp);
-		
+	
 		//결제 타입 패널
 		center_panel.add(junior_panel);
 		junior_panel.add(card_btn);
 		junior_panel.add(cash_btn);
-		
 		
 		center_panel.add(total_price);
 		
@@ -170,9 +175,9 @@ public class PayPanel extends JFrame {
 		
 		ProSwingTools.initTestFrame(this);
 		JLabel label = new JLabel(bg);
-		label.setBounds(0, 0, 1000, 900);
+		label.setBounds(0, 0, 750, 750);
 		JPanel back = new JPanel(new BorderLayout());
-		back.setBounds(0, 0, 1000, 900);
+		back.setBounds(0, 0, 750, 750);
 		back.add(center_panel, BorderLayout.CENTER);
 		back.add(north_panel, BorderLayout.NORTH);
 		back.add(west_panel, BorderLayout.WEST);
@@ -187,9 +192,8 @@ public class PayPanel extends JFrame {
 	
 	public static void main(String[] args) {
 		try {
-			new PayPanel();
+			PayPanel main = new PayPanel();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

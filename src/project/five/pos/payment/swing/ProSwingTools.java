@@ -7,8 +7,8 @@ public class ProSwingTools {
 	public static void initTestFrame(JFrame frame) {
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000, 900);
-		frame.setLocation(100, 0);
+		frame.setSize(766, 789);
+		frame.setLocation(1000, 100);
 		frame.setVisible(true);
 	}
 }

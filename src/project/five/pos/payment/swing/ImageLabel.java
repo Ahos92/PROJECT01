@@ -10,6 +10,6 @@ public class ImageLabel extends JLabel{
 
 	public ImageLabel(ImageEnum img) {
 		super(new ImageIcon(img.image
-				.getScaledInstance(150, 400, Image.SCALE_AREA_AVERAGING)));
+				.getScaledInstance(img.x/3, img.y/2, Image.SCALE_AREA_AVERAGING)));
 	}
 }

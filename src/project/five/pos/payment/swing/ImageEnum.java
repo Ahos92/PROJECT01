@@ -1,6 +1,7 @@
 package project.five.pos.payment.swing;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,6 +20,8 @@ public enum ImageEnum {
 	String lname;
 	String img_path;
 	Image image;
+	int x;
+	int y;
 	
 	
 	private ImageEnum(String lname, String img_path) {
@@ -27,6 +30,9 @@ public enum ImageEnum {
 		
 		try {
 			this.image = ImageIO.read(new File(img_path));
+			BufferedImage bimage = ImageIO.read(new File(img_path));
+			x = bimage.getWidth();
+			y = bimage.getHeight();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
