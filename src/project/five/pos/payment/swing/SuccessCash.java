@@ -26,16 +26,13 @@ public class SuccessCash extends JFrame{
 		this.cash_btn = cash_btn;
 		
 		setTitle("결제 정보 확인 중..");
-		
-        
+		        
         JPanel NewWindowContainer = new JPanel();
         setContentPane(NewWindowContainer);
         JLabel NewLabel = new JLabel("잔액이 부족합니다");
         JLabel NewLabel2 = new JLabel("결제 정보 확인 완료");
         try {
-			
-			
-
+			// 잔액 부족			
 	        if(money < price) {
 	        	Thread.sleep(1000);
 	        	NewWindowContainer.add(NewLabel);
@@ -44,11 +41,11 @@ public class SuccessCash extends JFrame{
 				cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 				card_btn.setEnabled(true);
 	        }
+	        // 잔액 충분
 	        else {
 	        	Thread.sleep(1000);
 	        	NewWindowContainer.add(NewLabel2);
-	        	
-	        	
+	        	        	
 	        }
 	        NewWindowContainer.addMouseListener(new MouseAdapter() {
 	        	
@@ -64,15 +61,7 @@ public class SuccessCash extends JFrame{
 			
 			ex.printStackTrace();
 		}
-        
-        
-       
-        
-        
-        
-        
-        
-        
+                                                                       
         setSize(400,100);
         setResizable(false);
         setLocation(800, 400);

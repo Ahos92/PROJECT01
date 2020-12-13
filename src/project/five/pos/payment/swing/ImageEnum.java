@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 public enum ImageEnum {
 	
 	// 추천메뉴 이미지 추가
-	
-	
 	COFFEE("커피", "assets/images/rccoffee.jpg"),
 	LATTE("라떼", "assets/images/rclatte.jpg"),
 	NEW("신메뉴", "assets/images/rcnew.jpg"),
@@ -22,7 +20,6 @@ public enum ImageEnum {
 	Image image;
 	int x;
 	int y;
-	
 	
 	private ImageEnum(String lname, String img_path) {
 		this.lname = lname;

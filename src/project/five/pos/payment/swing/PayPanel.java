@@ -38,11 +38,16 @@ public class PayPanel extends JFrame {
 	final static String IMG_COVID = "C:\\자바 취업반 과정\\covid19.png";
 
 	static int price = 5000;
+	static int orderNumber = 1;
 	static String lists = "아이스 아메리카노";
 	
-	static JPanel center_panel;
+	static JPanel main_center_panel;
+	
+	public static JPanel center_panel;
+	public static CardLayout main_card;
+	
+	static JPanel junior_panel;
 	static JPanel junior_panel2;
-	static JPanel junior_panel3;
 	
 	static JButton ckmem_btn;
 	static JButton register_btn;
@@ -50,16 +55,29 @@ public class PayPanel extends JFrame {
 	public static JPanel card_panel;
 	public static CardLayout card;
 	
+	static JButton card_btn;
+	static JButton cash_btn;
+	
+	
 	public PayPanel() throws IOException {
-		
-		JTextField register = new JTextField("멤버쉽 입력");
-			
+					
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		main_center_panel = new JPanel();
+		main_center_panel.setOpaque(false);
+		main_card = new CardLayout();
+		main_center_panel.setLayout(main_card);
+		
 		center_panel = new JPanel(new GridLayout(4, 4, 5, 5));
+		
+		
 		JPanel north_panel = new JPanel(new FlowLayout(FlowLayout.CENTER,5, 5));
 		JPanel west_panel = new JPanel(new CardLayout(15, 15));
 		JPanel east_panel = new JPanel(new CardLayout(15, 15));
+		
+		
+		
 		
 		south_panel.setOpaque(false);
 		center_panel.setOpaque(false);
@@ -67,8 +85,11 @@ public class PayPanel extends JFrame {
 		west_panel.setOpaque(false);
 		east_panel.setOpaque(false);
 		
+		main_center_panel.add("결제전", center_panel);
+		
+		
 		//주니어 패널 지정
-		JPanel junior_panel = new JPanel(new GridLayout(1, 2, 5, 5));	// 카드, 현금
+		junior_panel = new JPanel(new GridLayout(1, 2, 5, 5));	// 카드, 현금
 		
 		// 멤버십 패널 지정
 		card_panel = new JPanel();
@@ -78,8 +99,7 @@ public class PayPanel extends JFrame {
 		card_panel.setLayout(card);
 		
 		junior_panel2 = new JPanel(new GridLayout(1, 2, 5, 5));	// 멤버쉽 입력 / 등록
-		junior_panel3 = new JPanel(new GridLayout(1, 2, 5, 5));	// 멤버쉽 라벨
-		
+				
 		card_panel.add("버튼", junior_panel2);
 	
 		
@@ -87,18 +107,17 @@ public class PayPanel extends JFrame {
 		junior_panel2.setOpaque(false);
 		
 		
-		//라벨 모음
+		//카페 이름
 		JLabel branch_name = new JLabel("Fancy a cuppa?");
 		branch_name.setForeground(Color.WHITE);
 		branch_name.setFont(new Font("Serif",Font.BOLD, 36));
 		
+		// 주문 리스트
 		JLabel item_list = new JLabel("주문하신 상품 :" + lists + "(이미지로 교체)");
 		JLabel total_price = new JLabel("총 결제할 금액 : " + price, SwingConstants.CENTER);
-		
-		
 		item_list.setForeground(Color.WHITE);
 		total_price.setForeground(Color.WHITE);
-		
+				
 		//버튼 모음
 		ckmem_btn = new JButton("멤버쉽 입력");
 		register_btn = new JButton("멤버쉽 등록");
@@ -106,8 +125,8 @@ public class PayPanel extends JFrame {
 		register_btn.addActionListener(new BtnAction(register_btn));
 		ckmem_btn.addActionListener(new BtnAction(ckmem_btn));
 
-		JButton card_btn = new JButton("카드");
-		JButton cash_btn = new JButton("현금");
+		card_btn = new JButton("카드");
+		cash_btn = new JButton("현금");
 		
 		//버튼 테두리 지정
 		card_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -115,13 +134,14 @@ public class PayPanel extends JFrame {
 		
 		JButton cancel_btn = new JButton("취소하기");
 		JButton payment_btn = new JButton("결제하기");
+		payment_btn.setEnabled(false);
 		
 		payment_btn.addActionListener(new BtnAction(payment_btn, price));
 		
 		
 		//버튼 기능(함수 ClickedBtnAction)
-		card_btn.addActionListener(new ClickedBtnAction(junior_panel, "카드", card_btn, cash_btn, price));
-		cash_btn.addActionListener(new ClickedBtnAction(junior_panel,"현금", card_btn, cash_btn, price));
+		card_btn.addActionListener(new ClickedBtnAction(junior_panel, "카드", card_btn, cash_btn, payment_btn, price));
+		cash_btn.addActionListener(new ClickedBtnAction(junior_panel,"현금", card_btn, cash_btn, payment_btn, price));
 		
 		north_panel.add(branch_name);
 		
@@ -178,7 +198,7 @@ public class PayPanel extends JFrame {
 		label.setBounds(0, 0, 750, 750);
 		JPanel back = new JPanel(new BorderLayout());
 		back.setBounds(0, 0, 750, 750);
-		back.add(center_panel, BorderLayout.CENTER);
+		back.add(main_center_panel, BorderLayout.CENTER);
 		back.add(north_panel, BorderLayout.NORTH);
 		back.add(west_panel, BorderLayout.WEST);
 		back.add(east_panel, BorderLayout.EAST);
@@ -186,8 +206,7 @@ public class PayPanel extends JFrame {
 		back.setOpaque(false);
 		add(back);
 		add(label);
-		
-		
+				
 	}
 	
 	public static void main(String[] args) {

@@ -16,19 +16,20 @@ import javax.swing.border.BevelBorder;
 
 public class PaidByCash extends JFrame{
 
-	int price;
-	
+	int price;	
 	JButton card_btn;
 	JButton cash_btn;
+	JButton payment_btn;
+	
+	static int i_money;
 	
 	String[] choices = {"50000", "10000", "5000", "1000"};
-	
-	
-	
-	public PaidByCash(int price, JButton card_btn, JButton cash_btn) {
+			
+	public PaidByCash(int price, JButton card_btn, JButton cash_btn, JButton payment_btn) {
 		this.price = price;
 		this.card_btn = card_btn;
 		this.cash_btn = cash_btn;
+		this.payment_btn = payment_btn;
 		
 		setTitle("결제금액 : " + this.price + "원");
 		
@@ -52,7 +53,7 @@ public class PaidByCash extends JFrame{
 				if(e.getButton() == MouseEvent.BUTTON1) {
 					
 					String s_money = howMuch2.getSelectedItem().toString();
-					int i_money = Integer.parseInt(s_money);
+					i_money = Integer.parseInt(s_money);
 					
 					new SuccessCash(i_money, price, card_btn, cash_btn);
 					dispose();
@@ -72,6 +73,7 @@ public class PaidByCash extends JFrame{
 					cash_btn.setText("현금");
 					cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 					card_btn.setEnabled(true);
+					payment_btn.setEnabled(false);
 					dispose();
 				}
 			}

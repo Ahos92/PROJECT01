@@ -68,11 +68,11 @@ public class CheckMem extends JFrame {
 					
 					mobileNo = "";
 					if(e.getButton() == MouseEvent.BUTTON1) {
-							mobileNo += first_no.getText().trim();
+							mobileNo += first_no.getText();
 							mobileNo += "-";
-							mobileNo += middle_no.getText().trim();
+							mobileNo += middle_no.getText();
 							mobileNo += "-";
-							mobileNo += last_no.getText().trim();
+							mobileNo += last_no.getText();
 							
 							//System.out.println(mobileNo);
 							

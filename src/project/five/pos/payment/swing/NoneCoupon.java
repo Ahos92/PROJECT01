@@ -7,24 +7,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SuccessCard extends JFrame{
+public class NoneCoupon extends JFrame {
 
-	public SuccessCard() {
-		
-		setTitle("결제 정보 확인 중..");
-		
+	public NoneCoupon() {
+		setTitle("쿠폰 오류");
+		        
         JPanel NewWindowContainer = new JPanel();
         setContentPane(NewWindowContainer);
         
+        JLabel NewLabel = new JLabel("존재하지 않는 쿠폰 입니다. 쿠폰 번호를 확인해주세요.");
         
-        JLabel NewLabel = new JLabel("카드 인식 완료.");
+        NewWindowContainer.add(NewLabel);
         
-        try {
-			Thread.sleep(2000);
-			NewWindowContainer.add(NewLabel);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
         
         NewWindowContainer.addMouseListener(new MouseAdapter() {
         	
@@ -35,7 +29,7 @@ public class SuccessCard extends JFrame{
         	
         	}
         });
-                        
+        
         setSize(400,100);
         setResizable(false);
         setLocation(800, 400);

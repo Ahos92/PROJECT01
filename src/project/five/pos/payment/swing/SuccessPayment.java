@@ -7,17 +7,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SuccessCard extends JFrame{
+public class SuccessPayment extends JFrame {
 
-	public SuccessCard() {
+	public SuccessPayment() {
 		
-		setTitle("결제 정보 확인 중..");
-		
+		setTitle("결제 중..");
+
         JPanel NewWindowContainer = new JPanel();
         setContentPane(NewWindowContainer);
         
         
-        JLabel NewLabel = new JLabel("카드 인식 완료.");
+        JLabel NewLabel = new JLabel("결제가 성공적으로 이루어졌습니다. 감사합니다.");
         
         try {
 			Thread.sleep(2000);
@@ -35,7 +35,7 @@ public class SuccessCard extends JFrame{
         	
         	}
         });
-                        
+        
         setSize(400,100);
         setResizable(false);
         setLocation(800, 400);

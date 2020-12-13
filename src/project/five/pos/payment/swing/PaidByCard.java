@@ -25,17 +25,19 @@ public class PaidByCard extends JFrame{
 		{"은행을 선택해주세요", "(NH)농협은행", "(KB)국민은행",
 							"(SH)신한은행", "(IBK)기업은행"};
 	
+	static String cardId;
+	static String cardNumber;
+	
 	JButton card_btn;
 	JButton cash_btn;
-	
-	
-	
-	public PaidByCard(int price, JButton card_btn, JButton cash_btn) {
+	JButton payment_btn;
+		
+	public PaidByCard(int price, JButton card_btn, JButton cash_btn, JButton payment_btn) {
 		this.price = price;
 		this.card_btn = card_btn;
 		this.cash_btn = cash_btn;
-		
-		
+		this.payment_btn = payment_btn;
+				
 		setTitle("결제금액 : " + this.price + "원(일시불)");
 		
 		JPanel insertCard = new JPanel(new GridLayout(3,1,0,0));
@@ -62,16 +64,32 @@ public class PaidByCard extends JFrame{
 		
 		JButton cardOkay = new JButton("확인");
 		
+		cardNumber = "";
 		cardOkay.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				
 				if(e.getButton() == MouseEvent.BUTTON1) {
 					
-					// 쿠폰 마지막 결제할때 불러올 예정
-//					String s_money = howMuch2.getSelectedItem().toString();
-//					int i_money = Integer.parseInt(s_money);
+					String selectedCard = selectCode.getSelectedItem().toString();
+					
+					if(selectedCard.contains("IBK")) {
+						cardId = selectedCard.substring(1, 4);
+						// 테스트 코드
+						//System.out.println(cardId);
+					}
+					else {
+						cardId = selectedCard.substring(1, 3);
+						//System.out.println(cardId);
+					}
+					
+					cardNumber += first_cardNum.getText();
+					cardNumber += "-****-****-";
+					cardNumber += last_cardNum.getText();
+					// 테스트 코드
+					//System.out.println(cardNumber);
 					
 					new SuccessCard();
 					dispose();
@@ -91,6 +109,7 @@ public class PaidByCard extends JFrame{
 					card_btn.setText("카드");
 					card_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 					cash_btn.setEnabled(true);
+					payment_btn.setEnabled(false);					
 					dispose();
 				}
 			}
