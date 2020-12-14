@@ -19,15 +19,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import project.five.pos.db.DBManager;
+
 public class UpdateMenu extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521/XEPDB1";
+
+	static Connection con;
+	static PreparedStatement pstmt;
+	static ResultSet rs;
 	
-	private Connection con = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
 	
 	private int TextX = 100;
 	private JTextField[] rows = new JTextField[3];
@@ -94,11 +95,10 @@ public class UpdateMenu extends JDialog implements ActionListener {
 	
 	public void update() {
 		String sql = "UPDATE product SET product_price=?, product_count=?"
-				+ " WHERE product_no=?";
+				+ " WHERE product_name=?";
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,"hr","1234");
+			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, Integer.valueOf(rows[1].getText()));

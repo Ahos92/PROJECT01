@@ -19,15 +19,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import project.five.pos.db.DBManager;
 
 public class AddMenu extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521/XEPDB1";
 	
-	private Connection con = null;
-	private PreparedStatement pstmt = null;
+	private Connection con;
+	private PreparedStatement pstmt;
 	
 	private int TextX = 20;
 	private JTextField[] rows = new JTextField[3];
@@ -108,8 +107,7 @@ public class AddMenu extends JDialog implements ActionListener{
 				+ "product_seq.nextval,?,?,?,?,?)";
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,"hr","1234");
+			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, rows[0].getText());

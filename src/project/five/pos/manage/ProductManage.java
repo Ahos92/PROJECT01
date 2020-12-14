@@ -1,5 +1,6 @@
 package project.five.pos.manage;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,41 +13,49 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.manage.AddMenu;
-//import swing.ExTableAddBtn.TableCell;
+import project.five.pos.manage.UpdateMenu;
+import project.five.pos.manage.DeleteMenu;
 
 public class ProductManage extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JButton jBtnAddRow = null;
-	private JButton jBtnSaveRow = null;
-	private JButton jBtnEditRow = null;
+	private JButton jBtnAddRow;
+	private JButton jBtnEditRow;
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JPanel panel;
 	private AddMenu addD;
 	private UpdateMenu upD;
+	private DeleteMenu delD;
 	
-
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521/XEPDB1";
 	private String colNames[] = {"No","메뉴명","가격","수량","카테고리","구분","삭제"};
 	private DefaultTableModel model = new DefaultTableModel(colNames,0)
-	{public boolean isCellEditable(int i, int c){ return false; }};
+	{public boolean isCellEditable(int row, int col) {
+		switch(col) { // 삭제 버튼 row만 작동하고 나머지 col은 작동 불가(=수정불가) 
+		case 6:
+			return true;
+		default:
+			return false;
+		}
+	}};
 
 
-	private Connection con = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
+	private Connection con;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
 	
 	
 	public ProductManage() {
@@ -56,11 +65,13 @@ public class ProductManage extends JFrame implements ActionListener{
 		//table.setFont(new Font("Courier", Font.PLAIN, 20));
 		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
 		table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
-		//table.getColumnModel().getColumn(6).setCellRenderer(new TableCell());
-		//table.getColumnModel().getColumn(6).setCellEditor(new TableCell());
 		
 		//table.addMouseListener(new JTableMouseListener());
 		scrollPane = new JScrollPane(table);
+		
+		table.getColumnModel().getColumn(6).setCellRenderer(new TableCell());
+		table.getColumnModel().getColumn(6).setCellEditor(new TableCell());
+		
 		scrollPane.setSize(500,450);
 		scrollPane.setLocation(100, 210);
 		panel.add(scrollPane);
@@ -70,43 +81,14 @@ public class ProductManage extends JFrame implements ActionListener{
 		select();
 		initialize(); // 값 변화
 		
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-	}
-	
-
-	// 마우스로 클릭한 행의 좌표를 구해서 그 값을 보여줌
-	public class JTableMouseListener implements MouseListener{
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-			JTable jtable = (JTable)e.getSource();
-			int row = jtable.getSelectedRow();
-			int col = jtable.getSelectedColumn();
-
-			System.out.println(model.getValueAt(row, col));
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-		}
-		@Override
-		public void mouseExited(MouseEvent e) {
-		}
-		@Override
-		public void mousePressed(MouseEvent e) {
-		}
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		}
 	}
 
 	private void select() {
 		String sql = "SELECT * FROM product order by product_no";
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,"hr","1234");
+			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -118,7 +100,6 @@ public class ProductManage extends JFrame implements ActionListener{
 						rs.getInt("product_count"),
 						rs.getString("product_category"),
 						rs.getString("termsofcondition")
-						//,삭제 버튼
 				});
 			}
 		} catch (Exception e) {
@@ -164,10 +145,40 @@ public class ProductManage extends JFrame implements ActionListener{
 		}
 	}
 	
+	class TableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer{
+		JButton del;
+		
+		public TableCell() {
+			del = new JButton("삭제");
+			del.addActionListener(e -> {
+				int result = JOptionPane.showConfirmDialog(null, "정말 삭제하시겠습니까?",
+						"Delete Menu",JOptionPane.YES_NO_OPTION);
+				if(result == JOptionPane.YES_OPTION) {
+					int row = table.getSelectedRow();
+					delD = new DeleteMenu(model.getValueAt(row, 0).toString());
+					model.setRowCount(0);
+					select();
+				}
+			});
+		}
+		@Override
+		public Object getCellEditorValue() {
+			return null;
+		}
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			return del;
+		}
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			return del;
+		}
+		
+	}
 	
-
-
-
+	
 	public static void main(String[] args) {
 		new ProductManage();
 	}
