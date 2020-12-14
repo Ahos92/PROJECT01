@@ -32,7 +32,7 @@ public class LoginFrame extends JFrame {
 			public void run() {
 				try {
 					LoginFrame frame = new LoginFrame();
-					
+	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

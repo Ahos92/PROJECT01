@@ -38,7 +38,7 @@ public class JoinFrame extends JFrame {
 			public void run() {
 				try {
 					JoinFrame frame = new JoinFrame();
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

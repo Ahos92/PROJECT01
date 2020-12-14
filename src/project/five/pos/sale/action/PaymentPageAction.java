@@ -77,9 +77,8 @@ public class PaymentPageAction implements ActionListener{
 	private ArrayList<SaleDTO> getUpdateDTO() {
 		ArrayList<SaleDTO> updateCart = new ArrayList<>();
 		SaleDTO updateDTO = new SaleDTO();
-		if (dtm.getRowCount() == 0) {
-			// 알림창으로 구현 예정
-			System.err.println("결제할 품목이 없습니다. (알림창 구현)");		
+		if (dtm.getRowCount() == 0) {		
+			System.err.println("결제할 품목이 없습니다.");		
 
 		} else {
 			for (int i = 0; i < dtm.getRowCount(); i++) {

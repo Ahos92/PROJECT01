@@ -42,8 +42,7 @@ public class CancleAction implements ActionListener {
 			pastFrame.setVisible(true);
 			
 		} catch (NullPointerException npe) {
-			
-			// 테이블변수 생성자 받았을 때 적용
+
 			System.err.println("장바구니 초기화!");
 		}
 	}

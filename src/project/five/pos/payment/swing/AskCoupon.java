@@ -57,7 +57,7 @@ public class AskCoupon extends JFrame {
 	static String startDate;
 	static String expiredDate;
 	
-	static int device_id = 1004;
+	static int device_id = 1234;
 	
 	public AskCoupon(int price) {
 		this.price = price;
