@@ -10,15 +10,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import project.five.pos.membership.gui.LoginFrame;
 import project.five.pos.membership.dao.MemberDao;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField tfUsername, tfPassword;
+	private JTextField tfUsername; 
+	private JPasswordField tfPassword;
 	private JButton loginBtn, joinBtn;
 
 	/**
@@ -45,15 +48,15 @@ public class LoginFrame extends JFrame {
 		setSize(400, 300);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("아이디");		// username
+		JLabel lblLogin = new JLabel("username");		
 		lblLogin.setBounds(41, 52, 69, 35);
 		contentPane.add(lblLogin);
 		
-		JLabel lblPassword = new JLabel("비밀번호");	// Password
+		JLabel lblPassword = new JLabel("password");	
 		lblPassword.setBounds(41, 103, 69, 35);
 		contentPane.add(lblPassword);
 		
@@ -62,17 +65,23 @@ public class LoginFrame extends JFrame {
 		contentPane.add(tfUsername);
 		tfUsername.setColumns(10);
 		
-		joinBtn = new JButton("회원가입");
+		joinBtn = new JButton("Sign UP");
 		joinBtn.setBounds(229, 154, 104, 29);
 		contentPane.add(joinBtn);
 		
-		loginBtn = new JButton("로그인");
+		loginBtn = new JButton("Sign IN");
 		loginBtn.setBounds(108, 154, 106, 29);
 		contentPane.add(loginBtn);
 		
-		tfPassword = new JTextField();
+		
+		tfPassword = new JPasswordField();
+		tfPassword.setEchoChar('*');
+		//tfPassword = new JTextField();
 		tfPassword.setColumns(10);
 		tfPassword.setBounds(157, 103, 176, 35);
+		
+		
+		
 		contentPane.add(tfPassword);
 		
 		setVisible(true);
