@@ -20,7 +20,6 @@ public class Sample {
 		memberName.add("NAME");
 		memberName.add("EMAIL");
 		memberName.add("PHONE");
-		memberName.add("CREATEDATE");
 		
 		return memberName;
 	}
@@ -28,11 +27,11 @@ public class Sample {
 	public static Vector<Member> getMembers(){
 		//Member 데이터
 		Vector<Member> members = new Vector<>();
-		members.add(new Member(1,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888"));
-		members.add(new Member(2,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888"));
-		members.add(new Member(3,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888"));
-		members.add(new Member(4,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888"));
-		members.add(new Member(5,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888"));
+		members.add(new Member(1,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888", 50000, "S등급", 0.05, 0.05));
+		members.add(new Member(2,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888", 30000, "A등급", 0.05, 0.05));
+		members.add(new Member(3,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888", 20000, "B등급", 0.05, 0.05));
+		members.add(new Member(4,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888", 10000, "C등급", 0.05, 0.05));
+		members.add(new Member(5,"ssarmango","bitc5600","jooho","ssar@nate.com", "01022228888", 5000,  null, 0.05, 0.05));
 		
 		return members;
 	}

@@ -2,16 +2,21 @@ package project.five.pos.membership.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 
 public class MemberDao {
+	
 	private MemberDao() {}
-	private static MemberDao instance=new MemberDao();
+	
+	private static MemberDao instance = new MemberDao();
+	
 	public static MemberDao getInstance() {
 		return instance;
 	}
@@ -56,14 +61,41 @@ public class MemberDao {
 	public int save(Member member) {
 		conn = DBConnection.getConnection();
 		
+		
+		
 		try {
-			pstmt = conn.prepareStatement("insert into member values(member_seq.nextval, ?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into member values(member_seq.nextval, ?,?,?,?,?,?,?,?,?)");
+//			pstmt.setString(1, member.getUsername());
 			pstmt.setString(1, member.getUsername());
-			pstmt.setString(2, member.getPassword());
+			pstmt.setString(2, member.getPassword());			
 			pstmt.setString(3, member.getName());
 			pstmt.setString(4, member.getBirth());
 			pstmt.setString(5, member.getPhone());
+			
+			// 12.09 추가 ---------------------------------------
+			pstmt.setInt(6, member.getAmount());
+			pstmt.setString(7, member.getGrade());
+			pstmt.setDouble(8, member.getDiscount_pct());
+			pstmt.setDouble(9, member.getSave_pct());
+			// --------------------------------------------------
+			
 			pstmt.executeUpdate(); //return값은 처리된 레코드의 개수
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	// 회원 삭제
+	public int delete(String username) {
+		conn = DBConnection.getConnection();
+
+		try {
+			pstmt = conn.prepareStatement("delete from member where username = ?");
+			pstmt.setString(1, username);
+			
+			pstmt.executeUpdate(); 
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();

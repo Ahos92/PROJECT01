@@ -60,14 +60,14 @@ public class MemberListFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JLabel label = new JLabel("\uD68C\uC6D0\uC815\uBCF4");
+		JLabel label = new JLabel("회원 정보");
 		label.setFont(new Font("굴림", Font.BOLD, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(label, BorderLayout.NORTH);
 
 		southPanel = new JPanel(new GridLayout(1, 2));
 		JButton btnDelete = new JButton("삭제");
-		JButton btnLogout = new JButton("\uB85C\uADF8\uC544\uC6C3");
+		JButton btnLogout = new JButton("로그 아웃");
 		southPanel.add(btnDelete);
 		southPanel.add(btnLogout);
 		contentPane.add(southPanel, BorderLayout.SOUTH);
@@ -101,6 +101,14 @@ public class MemberListFrame extends JFrame {
 			row.addElement(members.get(i).getBirth());
 			row.addElement(members.get(i).getPhone());
 			tableModel.addRow(row); // table모델에 행 넣기
+			
+			// 12.09 추가 --------------------------------------------------
+			row.addElement(members.get(i).getAmount());
+			row.addElement(members.get(i).getGrade());
+			row.addElement(members.get(i).getDiscount_pct());
+			row.addElement(members.get(i).getSave_pct());
+			tableModel.addRow(row); // table모델에 행 넣기
+		
 		}
 
 		JTable table = new JTable(tableModel);
