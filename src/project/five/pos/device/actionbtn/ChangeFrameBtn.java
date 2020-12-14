@@ -9,10 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import project.five.pos.MainDisplay;
-import project.five.pos.device.DeviceDisplay;
 import project.five.pos.device.subdisplay.ConfirmDialog;
 import project.five.pos.device.subdisplay.LoginDialog;
 import project.five.pos.device.subdisplay.ManagerDisplay;
+import project.five.pos.manage.ProductManage;
 import project.five.pos.membership.gui.JoinFrame;
 import project.five.pos.membership.gui.LoginFrame;
 
@@ -38,7 +38,7 @@ public class ChangeFrameBtn implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("메뉴로 돌아가기")) {
 			changeable_frame = new MainDisplay("1234");
-
+			
 		} else if(e.getActionCommand().equals("로그인")){			
 			// 테스트 할동안 주석처리
 //			String id = id_fd.getText();
@@ -46,7 +46,7 @@ public class ChangeFrameBtn implements ActionListener{
 //			if (id.equals("123") && pw.equals("45")) {
 				changeable_frame = new ManagerDisplay();
 				System.out.println("로그인 성공!");
-//				
+				
 //			} else if (!(id.equals("123")) || !(pw.equals("45"))) {
 //				login_confirm = new ConfirmDialog(present_frame, "test2");
 //			}
@@ -56,8 +56,13 @@ public class ChangeFrameBtn implements ActionListener{
 
 		} else if(e.getActionCommand().equals("관리자 메뉴로 돌아가기")) {
 			changeable_frame = new ManagerDisplay();
+			
 		} else if(e.getActionCommand().equals("회원 가입")) {
 			changeable_frame = new JoinFrame();
+			
+		} else if(e.getActionCommand().equals("상품 관리")) {
+			changeable_frame = new ProductManage();
+			
 		}
 		
 		// dialog 띄울 때 변할 화면 Null

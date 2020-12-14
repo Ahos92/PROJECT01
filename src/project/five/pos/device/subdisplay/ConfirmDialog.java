@@ -25,7 +25,7 @@ public class ConfirmDialog extends JDialog {
 		check.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				dispose();
 			}
 		});
 		

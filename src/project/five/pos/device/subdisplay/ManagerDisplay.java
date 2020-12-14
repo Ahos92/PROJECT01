@@ -11,7 +11,7 @@ import project.five.pos.TestSwingTools;
 public class ManagerDisplay extends JFrame {
 	
 	// 결제내역, 판매상품, 회원정보조회, 메뉴로 돌아가기 버튼
-	JButton pay_history, sold_history, mem_info, back_to_menu, signup;
+	JButton pay_history, sold_history, mem_info, back_to_menu, signup, product_manage;
 	
 	public ManagerDisplay() {
 		setLayout(null);
@@ -28,18 +28,22 @@ public class ManagerDisplay extends JFrame {
 		back_to_menu.setBounds(160, 500, 150, 30);
 		signup = new JButton("회원 가입");
 		signup.setBounds(30, 200, 130, 130);
+		product_manage = new JButton("상품 관리");
+		product_manage.setBounds(180, 200, 130, 130);
 		
 		pay_history.addActionListener(new InquiryActionBtn(this));
 		sold_history.addActionListener(new InquiryActionBtn(this));
 		mem_info.addActionListener(new InquiryActionBtn(this));
 		back_to_menu.addActionListener(new ChangeFrameBtn(this));
 		signup.addActionListener(new ChangeFrameBtn(this));
+		product_manage.addActionListener(new ChangeFrameBtn(this));
 		
 		add(pay_history);
 		add(sold_history);
 		add(mem_info);
 		add(back_to_menu);	
 		add(signup);
+		add(product_manage);
 		
 		TestSwingTools.initTestFrame(this, "관리자 모드", false);
 	}

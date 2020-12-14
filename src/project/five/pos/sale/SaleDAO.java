@@ -205,7 +205,7 @@ public class SaleDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			ps = conn.prepareStatement("select cart_no, order_no, product_name, selected_item, total_price"
+			ps = conn.prepareStatement("select *"
 					+ " from cart inner join product using(product_no)"
 					+ " where " + column_name + " = " + column_data
 					+ " order by cart_no asc");
@@ -218,6 +218,7 @@ public class SaleDAO {
 				saleDTO.setCart_no(rs.getInt("cart_no"));
 				saleDTO.setOrder_no(rs.getInt("order_no"));
 				saleDTO.setProduct_name(rs.getString("product_name"));
+				saleDTO.setTermsofcondition(rs.getString("termsofcondition"));
 				saleDTO.setSelected_item(rs.getInt("selected_item"));
 				saleDTO.setTotal_price(rs.getInt("total_price"));
 				
@@ -262,4 +263,54 @@ public class SaleDAO {
 		
 	}
 	
+	public int SumByOrderNum(int orderNumber) {
+		int sum = 0;
+		conn = DBManager.getConnection();
+		
+		try {
+			
+			String sql = "select sum(total_price) from cart where order_no = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, orderNumber);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				sum = rs.getInt("sum(total_price)");
+			}
+		} catch (SQLException e) {
+
+		}
+		
+		return sum;
+	}
+	
+	public int CountOrderNum(int orderNumber) {
+		int cnt = 0;
+		conn = DBManager.getConnection();
+		
+		try {
+			
+			String sql = "select count(cart_no) from cart where order_no = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, orderNumber);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				cnt = rs.getInt("count(cart_no)");
+			}
+		} catch (SQLException e) {
+
+		}
+		
+		return cnt;
+	}
+	
+	public static void main(String[] args) {
+		SaleDAO dao = new SaleDAO();
+		System.out.println(dao.CountOrderNum(2));
+	}
 }

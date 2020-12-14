@@ -97,7 +97,7 @@ public class AskCoupon extends JFrame {
 		order_cart.setForeground(Color.WHITE);
 		order_cart.setFont(new Font("Serif",Font.BOLD, 14));
 		
-		JLabel order_no = new JLabel("주문 번호 : " + PayPanel.orderNumber);
+		JLabel order_no = new JLabel("주문 번호 : ");
 		order_no.setForeground(Color.WHITE);
 		order_no.setFont(new Font("Serif",Font.BOLD, 36));
 		

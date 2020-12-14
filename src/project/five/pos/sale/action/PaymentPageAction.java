@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 import project.five.pos.payment.swing.PayPanel;
@@ -16,30 +17,25 @@ public class PaymentPageAction implements ActionListener{
 
 	JFrame presentFrame;
 
-	ArrayList<SaleDTO> cartlist; 
-	int orderNumber;
+	ArrayList<SaleDTO> cartlist, orderList, updateCart; 
+	SaleDTO updateDTO;
+	int orderNumber, orderCount, price;
+
 	DefaultTableModel dtm;
 	String device_id;
-
+	
+	ArrayList<String> lists;
+	
 	SaleDAO dao = new SaleDAO(); 
 
 	public PaymentPageAction(JFrame presentFrame, 
-			DefaultTableModel dtm, int orderNumber, String device_id) {
+			DefaultTableModel dtm, int orderNumber, int orderCount, String device_id) {
 		this.presentFrame = presentFrame;
 		this.dtm = dtm;
 		this.orderNumber = orderNumber;	
+		this.orderCount = orderCount;
 		this.device_id = device_id;
 	}
-
-
-
-	public PaymentPageAction(DefaultTableModel dtm, int orderNumber, String device_id) {
-		this.dtm = dtm;
-		this.orderNumber = orderNumber;
-		this.device_id = device_id;
-	}
-
-
 
 	/*
 	 	업데이트된 정보 전달 받아서
@@ -57,13 +53,30 @@ public class PaymentPageAction implements ActionListener{
 			presentFrame.setVisible(false);
 			
 			try {
+				// 결제화면에 넘겨줄 데이터 주문번호, 총가격, 상품 이름
+				orderList = dao.searchCart("order_no", String.valueOf(orderNumber));
+				price = dao.SumByOrderNum(orderNumber);
+				lists = new ArrayList<>();
+				for (int i = 0; i < orderCount; i++) {
+					String format = String.format("%s (%s)",  
+														  orderList.get(i).getProduct_name(),
+														  orderList.get(i).getTermsofcondition());
+					if (format.contains("null")) {
+						lists.add(orderList.get(i).getProduct_name());
+					} else {
+						lists.add(format);
+					}
+				}	
+				
 				new PayPanel();
+				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 
 		} catch (NullPointerException npe) {
 			// 테이블모델만 받았을 때 적용
+			presentFrame.setVisible(false);
 			System.err.println("결제창 넘어감!!");
 		}
 
@@ -75,8 +88,8 @@ public class PaymentPageAction implements ActionListener{
 	     - cart TABLE에 최종적으로 저장시킬 데이터 만드는 메서드
 	 */
 	private ArrayList<SaleDTO> getUpdateDTO() {
-		ArrayList<SaleDTO> updateCart = new ArrayList<>();
-		SaleDTO updateDTO = new SaleDTO();
+		updateCart = new ArrayList<>();
+		updateDTO = new SaleDTO();
 		if (dtm.getRowCount() == 0) {		
 			System.err.println("결제할 품목이 없습니다.");		
 

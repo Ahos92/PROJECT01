@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -26,6 +27,8 @@ import javax.swing.border.BevelBorder;
 
 import project.five.pos.payment.swing.btn.action.BtnAction;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
+import project.five.pos.sale.SaleDAO;
+import project.five.pos.sale.SaleDTO;
 
 
 
@@ -36,6 +39,7 @@ public class PayPanel extends JFrame {
 	
 	//코로나 고정 이미지
 	final static String IMG_COVID = "assets/images/covid19.png";
+
 
 	static int price = 5000;
 	static int orderNumber = 1;
@@ -60,7 +64,7 @@ public class PayPanel extends JFrame {
 	
 	
 	public PayPanel() throws IOException {
-					
+	
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		

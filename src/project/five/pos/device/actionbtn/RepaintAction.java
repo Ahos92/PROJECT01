@@ -36,8 +36,7 @@ public class RepaintAction implements ActionListener {
 		} else {
 			new_dtm = new InqTableModel(btn_text);			
 		}
-		
-		// 정렬 구현안됨
+	
 		((InqTableModel)new_dtm).changeData(old_dtm, new_dtm);	
 	}
 }

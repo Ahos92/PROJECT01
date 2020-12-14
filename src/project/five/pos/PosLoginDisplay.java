@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.device.DeviceDisplay;
 import project.five.pos.device.subdisplay.ConfirmDialog;
 import project.five.pos.sale.SaleDAO;
 
@@ -23,22 +22,18 @@ public class PosLoginDisplay extends JFrame {
 		id_l = new JLabel("Device_id");
 		id_l.setBounds(500, 150, 100, 30);
 		id_l.setFont(font);
-		add(id_l);
 		
 		id_tf = new JTextField(20);
 		id_tf.setBounds(600, 150, 120, 30);
 		id_tf.setFont(font);
-		add(id_tf);
 		
 		pw_l = new JLabel("Password");
 		pw_l.setBounds(500, 200, 100, 30);
 		pw_l.setFont(font);		
-		add(pw_l);
 		
 		pw_tf = new JTextField(20);
 		pw_tf.setBounds(600, 200, 120, 30);
 		pw_tf.setFont(font);
-		add(pw_tf);
 		
 		JFrame f = this;
 		login_btn = new JButton("login");
@@ -50,13 +45,18 @@ public class PosLoginDisplay extends JFrame {
 				if (dao.searchPOS(Integer.parseInt(id_tf.getText()), pw_tf.getText())) {
 					// 메인 디스플레이 호출  
 					// 디바이스 아이디도 메인으로 넘겨주고 나머지 패널로 바꿔서 화면전환하기
-					new DeviceDisplay(id_tf.getText());
+					new MainDisplay(id_tf.getText());
 					setVisible(false);
 				} else {
 					new ConfirmDialog(f, "로그인 실패!");
 				}
 			}
 		});
+
+		add(id_l);
+		add(id_tf);
+		add(pw_l);
+		add(pw_tf);
 		add(login_btn);
 		
 		setTitle("FivePoS");

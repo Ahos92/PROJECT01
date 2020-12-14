@@ -32,7 +32,7 @@ public class OrderDisplay extends JFrame {
 	Object[][] selectlist;
 	int cellBtnSize;
 	ArrayList<SaleDTO> cartlist;
-	int orderCount;
+	int orderCount, orderNumber;
 
 	Font font;
 						// 패널로 보낸다 생각하면 
@@ -43,7 +43,7 @@ public class OrderDisplay extends JFrame {
 		// 새로운 주문번호 들어올때 1증가
 		SaleDAO dao = new SaleDAO();
 		cartlist = new ArrayList<>();
-		int orderNumber = dao.MaxOrderNumber();
+		orderNumber = dao.MaxOrderNumber();
 		orderNumber++;
 //		cartlist.add(dao.testOrder("아메리카노", "HOT", 2));
 		cartlist.add(dao.testOrder("아메리카노", "ICE", 1));
@@ -95,7 +95,7 @@ public class OrderDisplay extends JFrame {
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		//					패널용 생성자도 있음
-		payBtn.addActionListener(new PaymentPageAction(this, dtm, orderNumber, device_id));
+		payBtn.addActionListener(new PaymentPageAction(this, dtm, orderNumber, orderCount, device_id));
 		
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
 		cancleBtn.addActionListener(new CancleAction(dtm));
