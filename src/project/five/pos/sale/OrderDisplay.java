@@ -51,17 +51,7 @@ public class OrderDisplay extends JFrame {
 		cartlist.add(dao.testOrder("케이크", null, 1));
 //		cartlist.add(dao.testOrder("빙수", null, 1));
 		orderCount = cartlist.size();	
-		
-		// 테스트 용 결제화면
-		JFrame f = new JFrame();
-		JLabel l = new JLabel("TEST 결제화면 입니다.");
-		l.setHorizontalAlignment(l.CENTER);
-		f.add(l);
-		TestSwingTools.initTestFrame(f, "결제 화면", false);
-		//////////////////////////////////////////////////
 	
-		
-		
 		setLayout(new BorderLayout());
 		southPanel = new JPanel();
 		centerPanel = new JPanel();
@@ -105,7 +95,7 @@ public class OrderDisplay extends JFrame {
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		//					패널용 생성자도 있음
-		payBtn.addActionListener(new PaymentPageAction(this, f, dtm, orderNumber, device_id));
+		payBtn.addActionListener(new PaymentPageAction(this, dtm, orderNumber, device_id));
 		
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
 		cancleBtn.addActionListener(new CancleAction(dtm));

@@ -2,17 +2,18 @@ package project.five.pos.sale.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
+import project.five.pos.payment.swing.PayPanel;
 import project.five.pos.sale.SaleDAO;
 import project.five.pos.sale.SaleDTO;
 
 public class PaymentPageAction implements ActionListener{
 
-	JFrame nextFrame;
 	JFrame presentFrame;
 
 	ArrayList<SaleDTO> cartlist; 
@@ -22,10 +23,8 @@ public class PaymentPageAction implements ActionListener{
 
 	SaleDAO dao = new SaleDAO(); 
 
-	public PaymentPageAction(JFrame presentFrame, JFrame nextFrame, 
+	public PaymentPageAction(JFrame presentFrame, 
 			DefaultTableModel dtm, int orderNumber, String device_id) {
-
-		this.nextFrame = nextFrame;
 		this.presentFrame = presentFrame;
 		this.dtm = dtm;
 		this.orderNumber = orderNumber;	
@@ -56,7 +55,12 @@ public class PaymentPageAction implements ActionListener{
 		try {
 			// 화면전환 생성자까지 받았을 때 적용
 			presentFrame.setVisible(false);
-			nextFrame.setVisible(true);
+			
+			try {
+				new PayPanel();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
 		} catch (NullPointerException npe) {
 			// 테이블모델만 받았을 때 적용

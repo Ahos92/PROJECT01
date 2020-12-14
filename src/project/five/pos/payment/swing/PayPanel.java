@@ -35,7 +35,7 @@ public class PayPanel extends JFrame {
 	ImageIcon bg = new ImageIcon(ImageIO.read(new File("assets/images/background.jpg")).getScaledInstance(1000, 1000, Image.SCALE_SMOOTH));
 	
 	//코로나 고정 이미지
-	final static String IMG_COVID = "C:\\자바 취업반 과정\\covid19.png";
+	final static String IMG_COVID = "assets/images/covid19.png";
 
 	static int price = 5000;
 	static int orderNumber = 1;
