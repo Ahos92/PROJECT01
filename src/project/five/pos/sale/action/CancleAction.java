@@ -12,37 +12,23 @@ import project.five.pos.sale.SaleDTO;
 
 public class CancleAction implements ActionListener {
 		
-	JFrame presentFrame;
-	JFrame pastFrame;
+	JFrame present_frame;
 	
 	DefaultTableModel dtm;
 	
-	public CancleAction(JFrame presentFrame, JFrame pastFrame, DefaultTableModel dtm) {
-		this.presentFrame = presentFrame;
-		this.pastFrame = pastFrame;
+	public CancleAction(JFrame present_frame, DefaultTableModel dtm) {
+		this.present_frame = present_frame;
 		this.dtm = dtm;
 	}
-
-	
-	public CancleAction(DefaultTableModel dtm) {
-		this.dtm = dtm;
-	}
-
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		// 주문내역 테이블 초기화
+	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
-		
 		try {
-			
-			// 화면전환 생성자 받았을 때 적용
-			presentFrame.setVisible(false);
-			pastFrame.setVisible(true);
+			// 판매프레임 생성
+			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {
-
 			System.err.println("장바구니 초기화!");
 		}
 	}

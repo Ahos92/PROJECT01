@@ -89,7 +89,7 @@ public class SaleDAO {
 		모드 2개로나눠서 
 			- 오토커밋 해제 모드(처음 주문결제 넘어갈 때) 
 			- 적용 모드(최종 결제 완료) 
-		할 예정(미정)
+			할 예정(미정)
 	 */
 	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber, String device_id) {
 
@@ -102,17 +102,19 @@ public class SaleDAO {
 						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 
+			java.sql.Timestamp now = java.sql.Timestamp.valueOf(LocalDateTime.now());
+
 			for (int i = 0; i < cartlist.size(); i++) {
-				String day = "2020-12-12";
-				java.sql.Timestamp now = java.sql.Timestamp.valueOf(LocalDateTime.now());
 				
 				ps.setInt(1, orderNumber); // order_no
 				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
 				ps.setInt(3, cartlist.get(i).getOrder_count()); // selected_count				
 				// 어차피 한번 계산한 값 들고오기 (주문 가격)
-				ps.setInt(4, cartlist.get(i).getProduct_price() * cartlist.get(i).getOrder_count());
-				ps.setInt(5, Integer.parseInt(device_id));
-				ps.setTimestamp(6, now);
+				ps.setInt(4, cartlist.get(i).getProduct_price()
+						* cartlist.get(i).getOrder_count()); // total_price
+				ps.setInt(5, Integer.parseInt(device_id)); // device_id
+				ps.setTimestamp(6, now); // saled_date
+				
 				ps.addBatch();
 
 			}
@@ -132,7 +134,10 @@ public class SaleDAO {
 		return cartlist;
 	}	
 
-	// 신규 주문번호 판별을 위함
+	
+	/*
+	 	최신 주문번호 판별
+	*/ 
 	public int MaxOrderNumber() {
 
 		int max = 0;
@@ -159,6 +164,11 @@ public class SaleDAO {
 		return max;
 	}
 
+	
+	/*
+	 	cart TABLE 모든 정보를 담은 객체 반환 
+	 		- 조회하고 싶은 컬럼 추가, 삭제 할수 있음
+	 */
 	public ArrayList<SaleDTO> searchAllCart() {
 
 		cartlist = new ArrayList<>();
@@ -196,7 +206,9 @@ public class SaleDAO {
 
 	
 	/*
-	 	조건에 맞는 데이터
+	 	조건에 맞는 cart TABLE 정순 데이터
+	 		- 정렬 기준 컬럼 이름, 값
+	 		- 조건에 맞는 상품 정보만 담은 객체 반환 
 	 */
 	public ArrayList<SaleDTO> searchCart(String column_name, String column_data) {
 
@@ -235,6 +247,10 @@ public class SaleDAO {
 
 	}
 
+	
+	/*
+	  	존재하는 포스기계 인지 판별, 기계 로그인 할 때 사용
+	 */
 	public boolean searchPOS(int device_id, String device_pw) {
 		
 		conn = DBManager.getConnection();
@@ -263,6 +279,11 @@ public class SaleDAO {
 		
 	}
 	
+	
+	/*
+	  	판매될 상품의 총 가격 
+	  		- 주문 번호로 판별
+	 */
 	public int SumByOrderNum(int orderNumber) {
 		int sum = 0;
 		conn = DBManager.getConnection();
@@ -286,6 +307,11 @@ public class SaleDAO {
 		return sum;
 	}
 	
+	
+	/*
+	  	몇 종류의 상품을 선택 했는지에 대한 메서드
+	  		- 주문번호로 판별
+	 */
 	public int CountOrderNum(int orderNumber) {
 		int cnt = 0;
 		conn = DBManager.getConnection();
@@ -308,6 +334,8 @@ public class SaleDAO {
 		
 		return cnt;
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		SaleDAO dao = new SaleDAO();

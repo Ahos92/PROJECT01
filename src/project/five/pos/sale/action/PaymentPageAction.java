@@ -15,91 +15,80 @@ import project.five.pos.sale.SaleDTO;
 
 public class PaymentPageAction implements ActionListener{
 
-	JFrame presentFrame;
+	JFrame present_frame;
 
-	ArrayList<SaleDTO> cartlist, orderList, updateCart; 
+	ArrayList<SaleDTO> cart_list, order_list, update_cart; 
 	SaleDTO updateDTO;
-	int orderNumber, orderCount, price;
+	int order_num, order_cnt, price;
 
 	DefaultTableModel dtm;
 	String device_id;
-	
+
 	ArrayList<String> lists;
-	
+
 	SaleDAO dao = new SaleDAO(); 
 
-	public PaymentPageAction(JFrame presentFrame, 
-			DefaultTableModel dtm, int orderNumber, int orderCount, String device_id) {
-		this.presentFrame = presentFrame;
+	public PaymentPageAction(JFrame present_frame, 
+			DefaultTableModel dtm, int order_num, int order_cnt, String device_id) {
+		this.present_frame = present_frame;
 		this.dtm = dtm;
-		this.orderNumber = orderNumber;	
-		this.orderCount = orderCount;
+		this.order_num = order_num;	
+		this.order_cnt = order_cnt;
 		this.device_id = device_id;
 	}
 
 	/*
 	 	업데이트된 정보 전달 받아서
-	 	 - saveCartlist() 이용 
-	 	 - 데이터 저장 (정산에 활용)
+	 	 - savecart_list() 이용 
+	 	 - 데이터 저장 (DB cartTABLE에 저장)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
-		dao.saveCartlist(getUpdateDTO(), orderNumber, device_id);
+		dao.saveCartlist(getUpdateDTO(), order_num, device_id);
 		
-		// 생성자 변수에 따른 코드
 		try {
-			// 화면전환 생성자까지 받았을 때 적용
-			presentFrame.setVisible(false);
-			
-			try {
-				// 결제화면에 넘겨줄 데이터 주문번호, 총가격, 상품 이름
-				orderList = dao.searchCart("order_no", String.valueOf(orderNumber));
-				price = dao.SumByOrderNum(orderNumber);
-				lists = new ArrayList<>();
-				for (int i = 0; i < orderCount; i++) {
-					String format = String.format("%s (%s)",  
-														  orderList.get(i).getProduct_name(),
-														  orderList.get(i).getTermsofcondition());
-					if (format.contains("null")) {
-						lists.add(orderList.get(i).getProduct_name());
-					} else {
-						lists.add(format);
-					}
-				}	
-				
-				new PayPanel();
-				
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			// 결제화면에 넘겨줄 데이터 주문번호, 총가격, 상품 이름
+			order_list = dao.searchCart("order_no", String.valueOf(order_num));
+			price = dao.SumByOrderNum(order_num);
+			lists = new ArrayList<>();
+			for (int i = 0; i < order_cnt; i++) {
+				String format = String.format("%s (%s)",  
+						order_list.get(i).getProduct_name(),
+						order_list.get(i).getTermsofcondition());
+				if (format.contains("null")) {
+					lists.add(order_list.get(i).getProduct_name());
+				} else {
+					lists.add(format);
+				}
+			}	
+			// 생성자 매개변수로 넘겨줄 예정
+			new PayPanel();
 
-		} catch (NullPointerException npe) {
-			// 테이블모델만 받았을 때 적용
-			presentFrame.setVisible(false);
-			System.err.println("결제창 넘어감!!");
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-
+		
+		present_frame.dispose();
 	}
 
 	/*
 	    주문내역 추가, 수정, 삭제 전달받아서 
-	     - 업데이트 하기 
+	     - 실시간 업데이트 하기 
 	     - cart TABLE에 최종적으로 저장시킬 데이터 만드는 메서드
 	 */
 	private ArrayList<SaleDTO> getUpdateDTO() {
-		updateCart = new ArrayList<>();
+		update_cart = new ArrayList<>();
 		updateDTO = new SaleDTO();
 		if (dtm.getRowCount() == 0) {		
 			System.err.println("결제할 품목이 없습니다.");		
 
 		} else {
 			for (int i = 0; i < dtm.getRowCount(); i++) {
-				updateCart.add(dao.testOrder((String)dtm.getValueAt(i, 0), 
+				update_cart.add(dao.testOrder((String)dtm.getValueAt(i, 0), 
 						(String)dtm.getValueAt(i, 1), 
 						(Integer)dtm.getValueAt(i, 2)));
 			}
 		}
-		return updateCart;
+		return update_cart;
 	}
 }

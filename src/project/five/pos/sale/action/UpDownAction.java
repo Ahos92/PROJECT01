@@ -19,8 +19,8 @@ public class UpDownAction extends DefaultCellEditor {
 
 	String text;
 	
-	public UpDownAction(JCheckBox checkBox, JTable table, String text) {
-		super(checkBox);
+	public UpDownAction(JCheckBox check_box, JTable table, String text) {
+		super(check_box);
 		this.table = table;
 		button = new JButton(text);
 		button.setOpaque(true);
@@ -28,15 +28,15 @@ public class UpDownAction extends DefaultCellEditor {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				int cntCol = 2;
-				int priceCol = 5;
-				int product_cnt = (int)table.getValueAt(row, cntCol);
-				int price = (int)table.getValueAt(row, priceCol) / product_cnt;
+				int cnt_col = 2;
+				int price_col = 5;
+				int product_cnt = (int)table.getValueAt(row, cnt_col);
+				int result_price = (int)table.getValueAt(row, price_col) / product_cnt;
 
 				if (button.getText().equals("▲")) {
 			
-					table.setValueAt(++product_cnt, row, cntCol);
-					table.setValueAt(product_cnt * price, row, priceCol);
+					table.setValueAt(++product_cnt, row, cnt_col);
+					table.setValueAt(product_cnt * result_price, row, price_col);
 					
 				} else if (button.getActionCommand().equals("▼")) {
 	
@@ -44,8 +44,8 @@ public class UpDownAction extends DefaultCellEditor {
 						System.err.println("최소 1개이상 주문입니다!");
 					}else {
 						
-						table.setValueAt(--product_cnt, row, cntCol);
-						table.setValueAt(product_cnt * price, row, priceCol);
+						table.setValueAt(--product_cnt, row, cnt_col);
+						table.setValueAt(product_cnt * result_price, row, price_col);
 					}
 					
 				}

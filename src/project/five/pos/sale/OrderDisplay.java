@@ -14,26 +14,23 @@ import project.five.pos.sale.render.*;
 
 public class OrderDisplay extends JFrame {
 
-	JPanel southPanel;
-	JPanel centerPanel;
+	JPanel south_p, center_p;
 
-	// 결제, 취소 버튼	
-	JButton payBtn;
-	JButton cancleBtn;
+	JButton pay_btn, cancle_btn;
+
+	JLabel info_lab;
 	
-	
-	// 주문내역 정보 라벨
-	JLabel info_label;
-	
-	// 주문내역 테이블
-	JTable table;
+	JTable cart_table;
+	DefaultTableModel dtm;
 	JScrollPane scroll;
 	String[] header= {"메뉴", "옵션", "수량", "▲", "▼", "가격", "취소"};
-	Object[][] selectlist;
-	int cellBtnSize;
-	ArrayList<SaleDTO> cartlist;
-	int orderCount, orderNumber;
-
+	Object[][] select_list;
+	int cell_btn_size;
+	
+	ArrayList<SaleDTO> cart_list;
+	int order_cnt, order_num;
+	SaleDAO dao;
+	
 	Font font;
 						// 패널로 보낸다 생각하면 
 						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
@@ -41,69 +38,68 @@ public class OrderDisplay extends JFrame {
 		// 더미 데이터
 		// 	 버튼으로 상품의 정보 전달 받음 (한번의 주문량)
 		// 새로운 주문번호 들어올때 1증가
-		SaleDAO dao = new SaleDAO();
-		cartlist = new ArrayList<>();
-		orderNumber = dao.MaxOrderNumber();
-		orderNumber++;
-//		cartlist.add(dao.testOrder("아메리카노", "HOT", 2));
-		cartlist.add(dao.testOrder("아메리카노", "ICE", 1));
-		cartlist.add(dao.testOrder("홍차", "HOT", 1));
-		cartlist.add(dao.testOrder("케이크", null, 1));
-//		cartlist.add(dao.testOrder("빙수", null, 1));
-		orderCount = cartlist.size();	
+		dao = new SaleDAO();
+		cart_list = new ArrayList<>();
+		order_num = dao.MaxOrderNumber();
+		order_num++;
+//		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
+		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
+		cart_list.add(dao.testOrder("홍차", "HOT", 1));
+		cart_list.add(dao.testOrder("케이크", null, 1));
+//		cart_list.add(dao.testOrder("빙수", null, 1));
+		order_cnt = cart_list.size();	
 	
 		setLayout(new BorderLayout());
-		southPanel = new JPanel();
-		centerPanel = new JPanel();
 		
-		// 주문번호, 주문내역 라벨 표시
-		info_label = new JLabel("주문 내역");
-		add(info_label, BorderLayout.NORTH);
+		south_p = new JPanel();
+		center_p = new JPanel();
 		
-		// 주문 내역 화면
+		// 주문내역 라벨
+		info_lab = new JLabel("주문 내역");
+			
+		// 주문 내역 테이블
 		//	- 상품객체 정보 배열에 받아서 출력
-		selectlist = new Object[orderCount][6];
-		for (int i = 0; i < orderCount; i++) {
-			selectlist[i][0] = cartlist.get(i).getProduct_name();
-			selectlist[i][1] = cartlist.get(i).getTermsofcondition();
-			selectlist[i][2] = cartlist.get(i).getOrder_count();
-			selectlist[i][5] = cartlist.get(i).getProduct_price() * cartlist.get(i).getOrder_count();
+		select_list = new Object[order_cnt][6];
+		for (int i = 0; i < order_cnt; i++) {
+			select_list[i][0] = cart_list.get(i).getProduct_name();
+			select_list[i][1] = cart_list.get(i).getTermsofcondition();
+			select_list[i][2] = cart_list.get(i).getOrder_count();
+			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getOrder_count();
 		};
-		DefaultTableModel dtm = new DefaultTableModel(selectlist, header);
-		table = new JTable(dtm);
-		scroll = new JScrollPane(table);
-		
-		cellBtnSize = 40;
-		table.getColumn("취소").setCellRenderer(new DeleteBtnRender());
-		table.getColumn("취소").setCellEditor(new DeleteAction(new JCheckBox(), table, dtm));
-		table.getColumn("취소").setPreferredWidth(cellBtnSize);
-		
-		table.getColumn("▲").setCellRenderer(new UpDonwBtnRender("▲"));
-		table.getColumn("▲").setCellEditor(new UpDownAction(new JCheckBox(), table, "▲"));
-		table.getColumn("▲").setPreferredWidth(cellBtnSize);
-		
-		table.getColumn("▼").setCellRenderer(new UpDonwBtnRender("▼"));
-		table.getColumn("▼").setCellEditor(new UpDownAction(new JCheckBox(), table, "▼"));
-		table.getColumn("▼").setPreferredWidth(cellBtnSize);
-		
-		// 패널로 바꿀거면 참고하기
+		dtm = new DefaultTableModel(select_list, header);
+		cart_table = new JTable(dtm);
+		scroll = new JScrollPane(cart_table);
 		scroll.setPreferredSize(new Dimension(480, 100));
-		centerPanel.add(scroll);
-
-		payBtn = new SaleBtn("결제", 50);
-		cancleBtn = new SaleBtn("취소", 50);
+		
+		cell_btn_size = 40;	
+		cart_table.getColumn("취소").setCellRenderer(new DeleteBtnRender());
+		cart_table.getColumn("취소").setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
+		cart_table.getColumn("취소").setPreferredWidth(cell_btn_size);
+		
+		cart_table.getColumn("▲").setCellRenderer(new UpDonwBtnRender("▲"));
+		cart_table.getColumn("▲").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▲"));
+		cart_table.getColumn("▲").setPreferredWidth(cell_btn_size);
+		
+		cart_table.getColumn("▼").setCellRenderer(new UpDonwBtnRender("▼"));
+		cart_table.getColumn("▼").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▼"));
+		cart_table.getColumn("▼").setPreferredWidth(cell_btn_size);
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		//					패널용 생성자도 있음
-		payBtn.addActionListener(new PaymentPageAction(this, dtm, orderNumber, orderCount, device_id));
-		
+		pay_btn = new SaleBtn("결제", 50);
+		pay_btn.addActionListener(new PaymentPageAction(this, dtm, order_num, order_cnt, device_id));
+
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
-		cancleBtn.addActionListener(new CancleAction(dtm));
+		cancle_btn = new SaleBtn("취소", 50);
+		cancle_btn.addActionListener(new CancleAction(this, dtm));
 		
-		southPanel.add(payBtn);
-		southPanel.add(cancleBtn);
-		add(southPanel, BorderLayout.SOUTH);
-		add(centerPanel, BorderLayout.CENTER);
+		center_p.add(scroll);
+		south_p.add(pay_btn);
+		south_p.add(cancle_btn);
+		
+		add(info_lab, BorderLayout.NORTH);
+		add(south_p, BorderLayout.SOUTH);
+		add(center_p, BorderLayout.CENTER);
 		
 		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
 	}

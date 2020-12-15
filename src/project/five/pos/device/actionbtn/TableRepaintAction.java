@@ -12,7 +12,7 @@ import org.graalvm.compiler.lir.LIRInstruction.Def;
 
 import project.five.pos.device.InqTableModel;
 
-public class RepaintAction implements ActionListener {
+public class TableRepaintAction implements ActionListener {
 
 	String btn_text;
 	JComboBox<String> select_column;
@@ -20,7 +20,7 @@ public class RepaintAction implements ActionListener {
 	DefaultTableModel old_dtm;
 	DefaultTableModel new_dtm;
 	
-	public RepaintAction(String btn_text, DefaultTableModel old_dtm,
+	public TableRepaintAction(String btn_text, DefaultTableModel old_dtm,
 					JComboBox<String> select_column, JTextField select_data) {
 		this.btn_text = btn_text;
 		this.old_dtm = old_dtm;
