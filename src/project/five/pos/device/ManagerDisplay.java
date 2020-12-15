@@ -5,50 +5,52 @@ import java.awt.*;
 import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.device.btn.action.ChangeFrameBtn;
-import project.five.pos.device.btn.action.InquiryActionBtn;
+import project.five.pos.device.btn.DeviceBtn;
+import project.five.pos.device.btn.action.*;
 
 public class ManagerDisplay extends JFrame {
 	
 	// 결제내역, 판매상품, 회원정보조회, 메뉴로 돌아가기 버튼
-	JButton pay_history, sold_history, mem_info, back_to_menu, signup, product_manage;
+	JButton payHistory_btn, soldHistory_btn, memInfo_btn,
+	 		back_btn, signUp_btn, productManage_btn, settle_btn;
+	
+	JPanel center_p, south_p;
 	
 	public ManagerDisplay() {
-		setLayout(null);
+		setLayout(new BorderLayout());
 		
-		setPreferredSize(new Dimension(500, 100));
+		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 30));
+		south_p = new JPanel(new BorderLayout());
+
+		payHistory_btn = new DeviceBtn("결제 내역 조회", 130, 130, new LookUpAction(this));
 		
-		pay_history = new JButton("결제 내역 조회");
-		pay_history.setBounds(30, 50, 130, 130);
-		sold_history = new JButton("판매 내역 조회");
-		sold_history.setBounds(180, 50, 130, 130);
-		mem_info = new JButton("회원 정보 조회");
-		mem_info.setBounds(330, 50, 130, 130);
-		back_to_menu = new JButton("메뉴로 돌아가기");	
-		back_to_menu.setBounds(160, 500, 150, 30);
-		signup = new JButton("회원 가입");
-		signup.setBounds(30, 200, 130, 130);
-		product_manage = new JButton("상품 관리");
-		product_manage.setBounds(180, 200, 130, 130);
+		soldHistory_btn = new DeviceBtn("판매 내역 조회", 130, 130, new LookUpAction(this));
 		
-		pay_history.addActionListener(new InquiryActionBtn(this));
-		sold_history.addActionListener(new InquiryActionBtn(this));
-		mem_info.addActionListener(new InquiryActionBtn(this));
-		back_to_menu.addActionListener(new ChangeFrameBtn(this));
-		signup.addActionListener(new ChangeFrameBtn(this));
-		product_manage.addActionListener(new ChangeFrameBtn(this));
+		memInfo_btn = new DeviceBtn("회원 정보 조회", 130, 130, new LookUpAction(this));
 		
-		add(pay_history);
-		add(sold_history);
-		add(mem_info);
-		add(back_to_menu);	
-		add(signup);
-		add(product_manage);
+		signUp_btn =  new DeviceBtn("회원 가입", 130, 130, new ChangeFrameAction(this));
+	
+		productManage_btn = new DeviceBtn("상품 관리", 130, 130, new ChangeFrameAction(this));
+	
+		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this));
+
+		settle_btn = new DeviceBtn("정산", 60, 30, new SettleAction());
 		
-		TestSwingTools.initTestFrame(this, "관리자 모드", false);
+		center_p.add(payHistory_btn);
+		center_p.add(soldHistory_btn);
+		center_p.add(memInfo_btn);
+		center_p.add(signUp_btn);
+		center_p.add(productManage_btn);
+		south_p.add(back_btn, BorderLayout.WEST);	
+		south_p.add(settle_btn, BorderLayout.EAST);
+		
+		add(center_p, BorderLayout.CENTER);
+		add(south_p, BorderLayout.SOUTH);
+		
+		TestSwingTools.initTestFrame(this, "관리자 모드", true);
 	}
 	
 	public static void main(String[] args) {
-		new ManagerDisplay().setVisible(true);
+		new ManagerDisplay();
 	}
 }

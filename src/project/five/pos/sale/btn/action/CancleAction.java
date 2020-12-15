@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import project.five.pos.sale.SaleDTO;
-
 public class CancleAction implements ActionListener {
 		
 	JFrame present_frame;

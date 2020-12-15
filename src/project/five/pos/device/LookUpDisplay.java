@@ -12,77 +12,79 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.device.btn.action.ChangeFrameBtn;
+import project.five.pos.device.btn.action.ChangeFrameAction;
 import project.five.pos.device.btn.action.TableRepaintAction;
-import project.five.pos.device.table.InqTableModel;
+import project.five.pos.device.table.LookUpTableModel;
 import project.five.pos.sale.*;
 
 public class LookUpDisplay extends JFrame {
 
-	JComboBox<String> select_column;
-	JTextField select_data;
-	JLabel headLb, categoryLb, selectNameLb;
+	JComboBox<String> selectColumn_box;
+	JTextField selectData_tf;
+	JLabel head_lab, category_lab, selectName_lab;
 
-	JPanel northP, centerP, southP;
+	JPanel north_p, center_p, south_p;
 
-	JButton backBtn, searchBtn, allInqBtn;
+	JButton back_btn, search_btn, allInq_btn;
 
-	JTable table;
+	JTable lookUp_table;
 	JScrollPane scroll;
 	DefaultTableModel dtm;
+	
 	public LookUpDisplay(String btn_text) {
 		setLayout(new BorderLayout());
 
-		northP = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		centerP = new JPanel();
-		southP = new JPanel();	
+		north_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		center_p = new JPanel();
+		south_p = new JPanel();	
 		
 		// 헤드
-		headLb = new JLabel(btn_text);
+		head_lab = new JLabel(btn_text);
 
 		// 조회 테이블
-		dtm = new InqTableModel(btn_text);
-		table = new JTable(dtm);
-		table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
-		table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
-		scroll = new JScrollPane(table);
+		dtm = new LookUpTableModel(btn_text);
+		lookUp_table = new JTable(dtm);
+		lookUp_table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
+		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
+		scroll = new JScrollPane(lookUp_table);
 		scroll.setPreferredSize(new Dimension(480, 500));
 		// 검색 
 		String[] list = {"주문 번호", "상품 이름"};
-		select_column = new JComboBox<String>(list);
-		select_column.setPreferredSize(new Dimension(100, 20));
-		categoryLb = new JLabel("카테고리");
-		select_data = new JTextField(8);
-		selectNameLb = new JLabel("검색 명");
-		searchBtn = new JButton("검색");
-		searchBtn.addActionListener(new TableRepaintAction(btn_text, dtm,
-															select_column, select_data)); 
-		allInqBtn = new JButton("전체보기");
-		allInqBtn.addActionListener(new TableRepaintAction(btn_text, dtm,
-															select_column, select_data)); 	
+		selectColumn_box = new JComboBox<String>(list);
+		selectColumn_box.setPreferredSize(new Dimension(100, 20));
+		System.out.println(selectColumn_box.getItemCount());
+		category_lab = new JLabel("카테고리");
+		selectData_tf = new JTextField(8);
+		selectName_lab = new JLabel("검색 명");
+		search_btn = new JButton("검색");
+		search_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
+															selectColumn_box, selectData_tf)); 
+		allInq_btn = new JButton("전체보기");
+		allInq_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
+															selectColumn_box, selectData_tf)); 	
 				
 		// 뒤로가기
-		backBtn = new JButton("관리자 메뉴로 돌아가기");
-		backBtn.addActionListener(new ChangeFrameBtn(this));
+		back_btn = new JButton("관리자 메뉴로 돌아가기");
+		back_btn.addActionListener(new ChangeFrameAction(this));
 		
-		southP.add(backBtn);
-		centerP.add(scroll);
-		centerP.add(categoryLb);
-		centerP.add(select_column);
-		centerP.add(selectNameLb);
-		centerP.add(select_data);
-		centerP.add(searchBtn);
-		centerP.add(allInqBtn);
-		northP.add(headLb);
+		south_p.add(back_btn);
+		center_p.add(scroll);
+		center_p.add(category_lab);
+		center_p.add(selectColumn_box);
+		center_p.add(selectName_lab);
+		center_p.add(selectData_tf);
+		center_p.add(search_btn);
+		center_p.add(allInq_btn);
+		north_p.add(head_lab);
 		
-		add(northP, BorderLayout.NORTH);
-		add(centerP, BorderLayout.CENTER);
-		add(southP, BorderLayout.SOUTH);
+		add(north_p, BorderLayout.NORTH);
+		add(center_p, BorderLayout.CENTER);
+		add(south_p, BorderLayout.SOUTH);
 
-		TestSwingTools.initTestFrame(this, "INQ TEST", false);
+		TestSwingTools.initTestFrame(this, btn_text, true);
 	}
 
 	public static void main(String[] args) {
-		new LookUpDisplay("판매 내역 조회").setVisible(true);
+		new LookUpDisplay("판매 내역 조회");
 	}
 }

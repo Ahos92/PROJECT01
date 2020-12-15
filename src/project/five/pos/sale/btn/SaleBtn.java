@@ -1,14 +1,15 @@
 package project.five.pos.sale.btn;
 
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
 public class SaleBtn extends JButton {
 
-	String name;
-	
-	public SaleBtn(String name, int size) {
-		super.setText(name);
-		super.setSize(size, size);
+	public SaleBtn(String name, ActionListener action) {
+		setText(name);
+		addActionListener(action);
 	}
 	
 	

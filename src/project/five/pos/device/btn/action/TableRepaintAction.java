@@ -10,33 +10,32 @@ import javax.swing.table.DefaultTableModel;
 
 import org.graalvm.compiler.lir.LIRInstruction.Def;
 
-import project.five.pos.device.table.InqTableModel;
+import project.five.pos.device.table.LookUpTableModel;
 
 public class TableRepaintAction implements ActionListener {
 
 	String btn_text;
-	JComboBox<String> select_column;
-	JTextField select_data;
-	DefaultTableModel old_dtm;
-	DefaultTableModel new_dtm;
+	JComboBox<String> selectColumn_box;
+	JTextField selectData_tf;
+	DefaultTableModel old_dtm, new_dtm;
 	
 	public TableRepaintAction(String btn_text, DefaultTableModel old_dtm,
-					JComboBox<String> select_column, JTextField select_data) {
+					JComboBox<String> selectColumn_box, JTextField selectData_tf) {
 		this.btn_text = btn_text;
 		this.old_dtm = old_dtm;
-		this.select_column = select_column;
-		this.select_data = select_data;
+		this.selectColumn_box = selectColumn_box;
+		this.selectData_tf = selectData_tf;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("°Ë»ö")) {
-			new_dtm = new InqTableModel(btn_text, select_column, select_data);
+			new_dtm = new LookUpTableModel(btn_text, selectColumn_box, selectData_tf);
 			
 		} else {
-			new_dtm = new InqTableModel(btn_text);			
+			new_dtm = new LookUpTableModel(btn_text);			
 		}
 	
-		((InqTableModel)new_dtm).changeData(old_dtm, new_dtm);	
+		((LookUpTableModel)new_dtm).changeData(old_dtm, new_dtm);	
 	}
 }

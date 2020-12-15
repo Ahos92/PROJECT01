@@ -12,16 +12,17 @@ import java.util.Arrays;
 import java.util.Date;
 
 import project.five.pos.db.DBManager;
+import project.five.pos.db.PosVO;
 
-public class SaleDAO {
+public class SaleDAO{
 
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
 
-	SaleDTO saleDTO;
+	PosVO posVo;
 
-	ArrayList<SaleDTO> cartlist;
+	ArrayList<PosVO> cartlist;
 
 	public SaleDAO() {
 
@@ -31,9 +32,9 @@ public class SaleDAO {
 	   테스트 메서드
 	   	상품이 넘어오는거 가정
 	 */
-	public SaleDTO testOrder(String name, String opt, int count) {
+	public PosVO testOrder(String name, String opt, int count) {
 		// 상품 데이터 담을 객체
-		saleDTO = new SaleDTO();
+		posVo = new PosVO();
 
 		conn = DBManager.getConnection();
 
@@ -64,11 +65,11 @@ public class SaleDAO {
 				String pName = rs.getString("product_name");
 				String option = rs.getString("termsofcondition"); 
 
-				saleDTO.setProduct_no(rs.getInt("product_no"));
-				saleDTO.setProduct_name(pName);
-				saleDTO.setTermsofcondition(option);
-				saleDTO.setProduct_price(rs.getInt("product_price"));
-				saleDTO.setOrder_count(count);
+				posVo.setProduct_no(rs.getInt("product_no"));
+				posVo.setProduct_name(pName);
+				posVo.setTermsofcondition(option);
+				posVo.setProduct_price(rs.getInt("product_price"));
+				posVo.setOrder_count(count);
 
 				System.out.printf("%s(%s) %d개 주문\n", pName, option, count);
 			}
@@ -79,7 +80,7 @@ public class SaleDAO {
 			e.printStackTrace();
 		}
 
-		return saleDTO;
+		return posVo;
 	}
 
 
@@ -91,7 +92,7 @@ public class SaleDAO {
 			- 적용 모드(최종 결제 완료) 
 			할 예정(미정)
 	 */
-	public ArrayList<SaleDTO> saveCartlist(ArrayList<SaleDTO> cartlist, int orderNumber, String device_id) {
+	public ArrayList<PosVO> saveCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
 
 		try {
 			conn = DBManager.getConnection();
@@ -169,7 +170,7 @@ public class SaleDAO {
 	 	cart TABLE 모든 정보를 담은 객체 반환 
 	 		- 조회하고 싶은 컬럼 추가, 삭제 할수 있음
 	 */
-	public ArrayList<SaleDTO> searchAllCart() {
+	public ArrayList<PosVO> searchAllCart() {
 
 		cartlist = new ArrayList<>();
 
@@ -183,15 +184,15 @@ public class SaleDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				saleDTO = new SaleDTO();
+				posVo = new PosVO();
 				
-				saleDTO.setCart_no(rs.getInt("cart_no"));
-				saleDTO.setOrder_no(rs.getInt("order_no"));
-				saleDTO.setProduct_name(rs.getString("product_name"));
-				saleDTO.setSelected_item(rs.getInt("selected_item"));
-				saleDTO.setTotal_price(rs.getInt("total_price"));
+				posVo.setCart_no(rs.getInt("cart_no"));
+				posVo.setOrder_no(rs.getInt("order_no"));
+				posVo.setProduct_name(rs.getString("product_name"));
+				posVo.setSelected_item(rs.getInt("selected_item"));
+				posVo.setTotal_price(rs.getInt("total_price"));
 				
-				cartlist.add(saleDTO);
+				cartlist.add(posVo);
 			}
 		
 			DBManager.p_r_c_Close(ps, rs, conn);
@@ -210,7 +211,7 @@ public class SaleDAO {
 	 		- 정렬 기준 컬럼 이름, 값
 	 		- 조건에 맞는 상품 정보만 담은 객체 반환 
 	 */
-	public ArrayList<SaleDTO> searchCart(String column_name, String column_data) {
+	public ArrayList<PosVO> searchCart(String column_name, String column_data) {
 
 		cartlist = new ArrayList<>();
 
@@ -225,16 +226,16 @@ public class SaleDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				saleDTO = new SaleDTO();
+				posVo = new PosVO();
 				
-				saleDTO.setCart_no(rs.getInt("cart_no"));
-				saleDTO.setOrder_no(rs.getInt("order_no"));
-				saleDTO.setProduct_name(rs.getString("product_name"));
-				saleDTO.setTermsofcondition(rs.getString("termsofcondition"));
-				saleDTO.setSelected_item(rs.getInt("selected_item"));
-				saleDTO.setTotal_price(rs.getInt("total_price"));
+				posVo.setCart_no(rs.getInt("cart_no"));
+				posVo.setOrder_no(rs.getInt("order_no"));
+				posVo.setProduct_name(rs.getString("product_name"));
+				posVo.setTermsofcondition(rs.getString("termsofcondition"));
+				posVo.setSelected_item(rs.getInt("selected_item"));
+				posVo.setTotal_price(rs.getInt("total_price"));
 				
-				cartlist.add(saleDTO);
+				cartlist.add(posVo);
 			}
 		
 			DBManager.p_r_c_Close(ps, rs, conn);
@@ -247,38 +248,6 @@ public class SaleDAO {
 
 	}
 
-	
-	/*
-	  	존재하는 포스기계 인지 판별, 기계 로그인 할 때 사용
-	 */
-	public boolean searchPOS(int device_id, String device_pw) {
-		
-		conn = DBManager.getConnection();
-
-		try {
-			ps = conn.prepareStatement("select * from pos where device_id = ? and device_id = ?");
-
-			ps.setInt(1, device_id);
-			ps.setString(2, device_pw);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				System.out.println("로그인 성공");
-				return true;
-			} 
-			
-			DBManager.p_r_c_Close(ps, rs, conn);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		System.err.println("로그인 실패");
-		return false;
-		
-	}
-	
 	
 	/*
 	  	판매될 상품의 총 가격 

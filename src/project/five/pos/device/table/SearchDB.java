@@ -3,7 +3,7 @@ package project.five.pos.device.table;
 import java.util.ArrayList;
 
 import project.five.pos.sale.SaleDAO;
-import project.five.pos.sale.SaleDTO;
+import project.five.pos.db.PosVO;
 
 public class SearchDB {
 
@@ -13,9 +13,9 @@ public class SearchDB {
 	}
 	
 	SaleDAO dao;
-	ArrayList<SaleDTO> search_data;
+	ArrayList<PosVO> search_data;
 
-	public ArrayList<SaleDTO> allData() {
+	public ArrayList<PosVO> allData() {
 		
 		dao = new SaleDAO();
 		if (btn_text.equals("판매 내역 조회")) {
@@ -34,8 +34,10 @@ public class SearchDB {
 		return search_data;
 	}
 	
-	
-	public ArrayList<SaleDTO> searchData(String category, String data) {
+	/*
+	 	dto 합쳐서 각 테이블 가져오기
+	 */
+	public ArrayList<PosVO> searchData(String category, String data) {
 		
 		dao = new SaleDAO();
 		if (btn_text.equals("판매 내역 조회")) {

@@ -11,14 +11,14 @@ import javax.swing.table.DefaultTableModel;
 
 import project.five.pos.payment.swing.PayPanel;
 import project.five.pos.sale.SaleDAO;
-import project.five.pos.sale.SaleDTO;
+import project.five.pos.db.PosVO;
 
 public class PaymentPageAction implements ActionListener{
 
 	JFrame present_frame;
 
-	ArrayList<SaleDTO> cart_list, order_list, update_cart; 
-	SaleDTO updateDTO;
+	ArrayList<PosVO> cart_list, order_list, update_cart; 
+	PosVO updateDTO;
 	int order_num, order_cnt, price;
 
 	DefaultTableModel dtm;
@@ -76,9 +76,9 @@ public class PaymentPageAction implements ActionListener{
 	     - 실시간 업데이트 하기 
 	     - cart TABLE에 최종적으로 저장시킬 데이터 만드는 메서드
 	 */
-	private ArrayList<SaleDTO> getUpdateDTO() {
+	private ArrayList<PosVO> getUpdateDTO() {
 		update_cart = new ArrayList<>();
-		updateDTO = new SaleDTO();
+		updateDTO = new PosVO();
 		if (dtm.getRowCount() == 0) {		
 			System.err.println("결제할 품목이 없습니다.");		
 

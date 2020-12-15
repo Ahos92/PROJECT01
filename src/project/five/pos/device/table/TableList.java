@@ -2,15 +2,15 @@ package project.five.pos.device.table;
 
 import java.util.ArrayList;
 
-import project.five.pos.sale.SaleDTO;
+import project.five.pos.db.PosVO;
 
 public class TableList {
 
 	// 조회할 데이터 값
 	int row_length;
 	int column_length;
-	Object[][] inquiry_list;
-	int j;
+	Object[][] lookUp_list;
+	int column;
 
 	// 조회할 컬럼 값
 	ArrayList<String> head_data;
@@ -74,43 +74,43 @@ public class TableList {
 		return header;
 	}
 
-	public Object[][] data(ArrayList<SaleDTO> searchlist, String[] header) {
+	public Object[][] data(ArrayList<PosVO> searchlist, String[] header) {
 		row_length = searchlist.size();
 		column_length = header.length;		
 
-		inquiry_list = new Object[row_length][column_length];
+		lookUp_list = new Object[row_length][column_length];
 		
 		if (btn_text.equals("판매 내역 조회")) {
 			for (int i = 0; i < row_length; i++) {
-				j = 0;
-			inquiry_list[i][j] = searchlist.get(i).getCart_no();
-			inquiry_list[i][++j] = searchlist.get(i).getOrder_no();
-			inquiry_list[i][++j] = searchlist.get(i).getProduct_name();
-			inquiry_list[i][++j] = searchlist.get(i).getSelected_item();
-			inquiry_list[i][++j] = searchlist.get(i).getTotal_price();
+				column = 0;
+			lookUp_list[i][column] = searchlist.get(i).getCart_no();
+			lookUp_list[i][++column] = searchlist.get(i).getOrder_no();
+			lookUp_list[i][++column] = searchlist.get(i).getProduct_name();
+			lookUp_list[i][++column] = searchlist.get(i).getSelected_item();
+			lookUp_list[i][++column] = searchlist.get(i).getTotal_price();
 			};
 
 		} else if (btn_text.equals("결제 내역 조회")) { // Payment table 조회
 			for (int i = 0; i < row_length; i++) {
-				j = 0;
-				inquiry_list[i][j] = "Payment_no_test_" + i;//searchlist.get(i).getPayment_no();
-				inquiry_list[i][++j] = "Coupon_no_test_" + i;//searchlist.get(i).getCoupon_no();
-				inquiry_list[i][++j] = "Payment_type_test_" + i;//searchlist.get(i).getPayment_type();
-				inquiry_list[i][++j] = "Payment_date_test_" + i;//searchlist.get(i).getPayment_date ();
+				column = 0;
+				lookUp_list[i][column] = "Payment_no_test_" + i;//searchlist.get(i).getPayment_no();
+				lookUp_list[i][++column] = "Coupon_no_test_" + i;//searchlist.get(i).getCoupon_no();
+				lookUp_list[i][++column] = "Payment_type_test_" + i;//searchlist.get(i).getPayment_type();
+				lookUp_list[i][++column] = "Payment_date_test_" + i;//searchlist.get(i).getPayment_date ();
 			};
 			
 		} else if (btn_text.equals("회원 정보 조회")) { // customer table 조회
 			for (int i = 0; i < row_length; i++) {
-				j = 0;
-				inquiry_list[i][j] = "Customer_no_test_" + i;//searchlist.get(i).getCustomer_no();
-				inquiry_list[i][++j] = "Member_id_test_" + i;//searchlist.get(i).getMember_id();
-				inquiry_list[i][++j] = "Name_test_" + i;//searchlist.get(i).getLast_name() + getFirst_name();
-				inquiry_list[i][++j] = "Tel_test_" + i;//searchlist.get(i).getContact_no();
-				inquiry_list[i][++j] = "Grade_test_" + i;//searchlist.get(i).getMembership();
+				column = 0;
+				lookUp_list[i][column] = "Customer_no_test_" + i;//searchlist.get(i).getCustomer_no();
+				lookUp_list[i][++column] = "Member_id_test_" + i;//searchlist.get(i).getMember_id();
+				lookUp_list[i][++column] = "Name_test_" + i;//searchlist.get(i).getLast_name() + getFirst_name();
+				lookUp_list[i][++column] = "Tel_test_" + i;//searchlist.get(i).getContact_no();
+				lookUp_list[i][++column] = "Grade_test_" + i;//searchlist.get(i).getMembership();
 			};
 			
 		}
 			
-		return inquiry_list;
+		return lookUp_list;
 	}
 }

@@ -1,6 +1,6 @@
-package project.five.pos.sale;
+package project.five.pos.db;
 
-public class SaleDTO {
+public class PosVO {
 
 	// cart Table
 	private int cart_no;
@@ -20,6 +20,11 @@ public class SaleDTO {
 	private String branch_location;
 	private String phone_number;
 	
+	private String business_pw;
+	private String last_name;
+	private String first_name;
+	private String contact_no;
+	
 	// test product table
 	// int product_no;
 	private String product_name;
@@ -30,6 +35,38 @@ public class SaleDTO {
 	// 테스트용 추가 컬럼
 	private int order_count; // 12/04 추가
 	
+
+	public String getBusiness_pw() {
+		return business_pw;
+	}
+
+	public void setBusiness_pw(String business_pw) {
+		this.business_pw = business_pw;
+	}
+
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+
+	public String getFirst_name() {
+		return first_name;
+	}
+
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
+
+	public String getContact_no() {
+		return contact_no;
+	}
+
+	public void setContact_no(String contact_no) {
+		this.contact_no = contact_no;
+	}
 
 	public String getDevice_pw() {
 		return device_pw;
@@ -178,3 +215,4 @@ public class SaleDTO {
 	
 	
 }
+

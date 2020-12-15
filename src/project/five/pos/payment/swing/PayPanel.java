@@ -28,9 +28,6 @@ import javax.swing.border.BevelBorder;
 import project.five.pos.payment.swing.btn.action.BtnAction;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
 import project.five.pos.sale.SaleDAO;
-import project.five.pos.sale.SaleDTO;
-
-
 
 public class PayPanel extends JFrame {
 	

@@ -8,21 +8,18 @@ import javax.swing.JPanel;
 
 import project.five.pos.device.LookUpDisplay;
 
-public class InquiryActionBtn implements ActionListener{
+public class LookUpAction implements ActionListener{
 
-	JFrame manager_f;
-	JFrame inq_f;
-	
-	public InquiryActionBtn(JFrame manager_f) {
-		this.manager_f = manager_f;
+	JFrame manager_frame;
+
+	public LookUpAction(JFrame manager_frame) {
+		this.manager_frame = manager_frame;
 
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		inq_f = new LookUpDisplay(e.getActionCommand());
-		inq_f.setVisible(true);
-		manager_f.setVisible(false);
+		new LookUpDisplay(e.getActionCommand());
+		manager_frame.dispose();
 	}
 }

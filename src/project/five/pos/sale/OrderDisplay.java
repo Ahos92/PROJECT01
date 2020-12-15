@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.db.PosVO;
 import project.five.pos.sale.btn.SaleBtn;
 import project.five.pos.sale.btn.action.*;
 import project.five.pos.sale.btn.render.*;
@@ -28,7 +29,7 @@ public class OrderDisplay extends JFrame {
 	Object[][] select_list;
 	int cell_btn_size;
 	
-	ArrayList<SaleDTO> cart_list;
+	ArrayList<PosVO> cart_list;
 	int order_cnt, order_num;
 	SaleDAO dao;
 	
@@ -87,13 +88,11 @@ public class OrderDisplay extends JFrame {
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		//					패널용 생성자도 있음
-		pay_btn = new SaleBtn("결제", 50);
-		pay_btn.addActionListener(new PaymentPageAction(this, dtm, order_num, order_cnt, device_id));
+		pay_btn = new SaleBtn("결제", new PaymentPageAction(this, dtm, order_num, order_cnt, device_id));
 
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
-		cancle_btn = new SaleBtn("취소", 50);
-		cancle_btn.addActionListener(new CancleAction(this, dtm));
-		
+		cancle_btn = new SaleBtn("취소", new CancleAction(this, dtm));
+	
 		center_p.add(scroll);
 		south_p.add(pay_btn);
 		south_p.add(cancle_btn);

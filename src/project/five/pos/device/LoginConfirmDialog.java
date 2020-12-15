@@ -6,23 +6,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class ConfirmDialog extends JDialog {
+public class LoginConfirmDialog extends JDialog {
 
-	private JLabel msg;
+	private JLabel msg_lab;
 	private JPanel south_p;
-	private JButton check;
+	private JButton check_btn;
 	
-	public ConfirmDialog(JFrame frame, String title) {
+	public LoginConfirmDialog(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
-		setSize(200, 130);
+		setSize(250, 130);
 		setLocationRelativeTo(null);
 		
-		msg = new JLabel("아이디나 비밀번호가 맞지 않습니다!");
-		msg.setHorizontalAlignment(msg.CENTER);
+		msg_lab = new JLabel("아이디나 비밀번호가 맞지 않습니다!");
+		msg_lab.setHorizontalAlignment(msg_lab.CENTER);
 		
-		check = new JButton("확인");
-		check.addActionListener(new ActionListener() {
+		check_btn = new JButton("확인");
+		check_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -30,9 +30,9 @@ public class ConfirmDialog extends JDialog {
 		});
 		
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		south_p.add(check);
+		south_p.add(check_btn);
 		
-		add(msg, BorderLayout.CENTER);
+		add(msg_lab, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 	
 		setVisible(true);
