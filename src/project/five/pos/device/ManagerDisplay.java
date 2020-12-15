@@ -22,15 +22,15 @@ public class ManagerDisplay extends JFrame {
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 30));
 		south_p = new JPanel(new BorderLayout());
 
-		payHistory_btn = new DeviceBtn("결제 내역 조회", 130, 130, new LookUpAction(this));
+		payHistory_btn = new DeviceBtn("결제 내역 조회", 130, new LookUpAction(this));
 		
-		soldHistory_btn = new DeviceBtn("판매 내역 조회", 130, 130, new LookUpAction(this));
+		soldHistory_btn = new DeviceBtn("판매 내역 조회", 130, new LookUpAction(this));
 		
-		memInfo_btn = new DeviceBtn("회원 정보 조회", 130, 130, new LookUpAction(this));
+		memInfo_btn = new DeviceBtn("회원 정보 조회", 130, new LookUpAction(this));
 		
-		signUp_btn =  new DeviceBtn("회원 가입", 130, 130, new ChangeFrameAction(this));
+		signUp_btn =  new DeviceBtn("회원 가입", 130, new ChangeFrameAction(this));
 	
-		productManage_btn = new DeviceBtn("상품 관리", 130, 130, new ChangeFrameAction(this));
+		productManage_btn = new DeviceBtn("상품 관리", 130, new ChangeFrameAction(this));
 	
 		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this));
 

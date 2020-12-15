@@ -146,12 +146,12 @@ public class SaleDAO{
 		conn = DBManager.getConnection();
 
 		try {
-			ps = conn.prepareStatement("select order_no from cart order by order_no asc");
+			ps = conn.prepareStatement("select max(order_no) from cart");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				max = rs.getInt("order_no");
+				max = rs.getInt("max(order_no)");
 			}
 
 			System.out.println("현재 주문 번호 : " + max);
@@ -308,6 +308,6 @@ public class SaleDAO{
 	
 	public static void main(String[] args) {
 		SaleDAO dao = new SaleDAO();
-		System.out.println(dao.CountOrderNum(2));
+		System.out.println(dao.MaxOrderNumber());
 	}
 }
