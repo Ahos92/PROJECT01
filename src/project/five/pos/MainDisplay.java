@@ -9,32 +9,33 @@ import project.five.pos.device.actionbtn.ChangeFrameBtn;
 public class MainDisplay extends JFrame {
 
 	// 관리자 모드, 판매모드
-	JButton manageBtn, saleBtn;
-	JPanel centerP, southP;
-	JLabel deviceId;
+	JButton manage_btn, sale_btn;
+	JPanel center_p, south_p;
+	JLabel deviceId_lab;
 	
 	public MainDisplay(String device_id) {
 		setLayout(new BorderLayout());
 		
-		centerP = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 250));
-		southP = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 250));
+		south_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		deviceId = new JLabel("DEVICE_ID : " + device_id);
+		deviceId_lab = new JLabel("DEVICE_ID : " + device_id);
 		
-		manageBtn =  new JButton("관리자");
-		manageBtn.setPreferredSize(new Dimension(130, 130));
-		saleBtn =  new JButton("판매");
-		saleBtn.setPreferredSize(new Dimension(130, 130));
+		manage_btn =  new JButton("관리자");
+		manage_btn.setPreferredSize(new Dimension(130, 130));
+		manage_btn.addActionListener(new ChangeFrameBtn(this));
+
+		sale_btn =  new JButton("판매");
+		sale_btn.setPreferredSize(new Dimension(130, 130));
+		sale_btn.addActionListener(new ChangeFrameBtn(this));
 		
-		manageBtn.addActionListener(new ChangeFrameBtn(this));
-		saleBtn.addActionListener(new ChangeFrameBtn(this));
 		
-		centerP.add(manageBtn);
-		centerP.add(saleBtn);
-		southP.add(deviceId);
+		center_p.add(manage_btn);
+		center_p.add(sale_btn);
+		south_p.add(deviceId_lab);
 		
-		add(centerP, BorderLayout.CENTER);
-		add(southP, BorderLayout.SOUTH);
+		add(center_p, BorderLayout.CENTER);
+		add(south_p, BorderLayout.SOUTH);
 		
 		TestSwingTools.initTestFrame(this, "main", true);
 	}

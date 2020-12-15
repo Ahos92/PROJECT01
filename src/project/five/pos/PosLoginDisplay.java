@@ -12,24 +12,24 @@ import project.five.pos.sale.SaleDAO;
 public class PosLoginDisplay extends JFrame {
 
 	Font font;
-	JLabel id_l, pw_l;
+	JLabel id_lab, pw_lab;
 	JTextField id_tf, pw_tf;
 	JButton login_btn;
 	
 	public PosLoginDisplay() {
 		font = new Font("바탕", 10, 20);
 		
-		id_l = new JLabel("Device_id");
-		id_l.setBounds(500, 150, 100, 30);
-		id_l.setFont(font);
+		id_lab = new JLabel("Device_id");
+		id_lab.setBounds(500, 150, 100, 30);
+		id_lab.setFont(font);
 		
 		id_tf = new JTextField(20);
 		id_tf.setBounds(600, 150, 120, 30);
 		id_tf.setFont(font);
 		
-		pw_l = new JLabel("Password");
-		pw_l.setBounds(500, 200, 100, 30);
-		pw_l.setFont(font);		
+		pw_lab = new JLabel("Password");
+		pw_lab.setBounds(500, 200, 100, 30);
+		pw_lab.setFont(font);		
 		
 		pw_tf = new JTextField(20);
 		pw_tf.setBounds(600, 200, 120, 30);
@@ -43,19 +43,17 @@ public class PosLoginDisplay extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				SaleDAO dao = new SaleDAO();
 				if (dao.searchPOS(Integer.parseInt(id_tf.getText()), pw_tf.getText())) {
-					// 메인 디스플레이 호출  
-					// 디바이스 아이디도 메인으로 넘겨주고 나머지 패널로 바꿔서 화면전환하기
-					new MainDisplay(id_tf.getText());
-					setVisible(false);
+					new MainDisplay(id_tf.getText());			
+					dispose();
 				} else {
 					new ConfirmDialog(f, "로그인 실패!");
 				}
 			}
 		});
 
-		add(id_l);
+		add(id_lab);
 		add(id_tf);
-		add(pw_l);
+		add(pw_lab);
 		add(pw_tf);
 		add(login_btn);
 		
