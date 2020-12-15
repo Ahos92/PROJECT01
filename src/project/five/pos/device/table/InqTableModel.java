@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.table;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class InqTableModel extends DefaultTableModel {
 	// 전체조회 모델 , 조건조회 모델
 	TableList list;
 	Object[][] inquiry_list; 
-	String[] header;
+	String[] table_header;
 	ArrayList<SaleDTO> search_data;
 
 	@Override
@@ -24,10 +24,10 @@ public class InqTableModel extends DefaultTableModel {
 	public InqTableModel(String btn_text) {
 		list = new TableList(btn_text);
 		search_data = new SearchDB(btn_text).allData();
-		header = list.header();
-		inquiry_list = list.data(search_data, header);
+		table_header = list.header();
+		inquiry_list = list.data(search_data, table_header);
 
-		super.setDataVector(inquiry_list, header);
+		super.setDataVector(inquiry_list, table_header);
 	}
 
 	public InqTableModel(String btn_text, JComboBox<String> select_column, JTextField select_data) {	
@@ -41,17 +41,17 @@ public class InqTableModel extends DefaultTableModel {
 
 		list = new TableList(btn_text);
 		search_data = new SearchDB(btn_text).searchData(category, data);
-		header = list.header();
-		inquiry_list = list.data(search_data, header);
+		table_header = list.header();
+		inquiry_list = list.data(search_data, table_header);
 
-		super.setDataVector(inquiry_list, header);
+		super.setDataVector(inquiry_list, table_header);
 
 	}
 
 	public void changeData(DefaultTableModel old_dtm, DefaultTableModel new_dtm) {
 		old_dtm.setNumRows(0);
 		old_dtm.setNumRows(inquiry_list.length);
-		old_dtm.setDataVector(inquiry_list, header);	
+		old_dtm.setDataVector(inquiry_list, table_header);	
 	}
 
 	@Override

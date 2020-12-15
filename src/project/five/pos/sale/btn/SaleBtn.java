@@ -1,4 +1,4 @@
-package project.five.pos.sale;
+package project.five.pos.sale.btn;
 
 import javax.swing.JButton;
 

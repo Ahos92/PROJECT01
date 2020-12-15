@@ -1,4 +1,4 @@
-package project.five.pos.device.actionbtn;
+package project.five.pos.device.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.graalvm.compiler.lir.LIRInstruction.Def;
 
-import project.five.pos.device.InqTableModel;
+import project.five.pos.device.table.InqTableModel;
 
 public class TableRepaintAction implements ActionListener {
 

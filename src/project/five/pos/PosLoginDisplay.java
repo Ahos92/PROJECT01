@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.device.subdisplay.ConfirmDialog;
+import project.five.pos.device.ConfirmDialog;
 import project.five.pos.sale.SaleDAO;
 
 public class PosLoginDisplay extends JFrame {

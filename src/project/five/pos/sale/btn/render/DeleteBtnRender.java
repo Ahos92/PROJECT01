@@ -1,4 +1,4 @@
-package project.five.pos.sale.render;
+package project.five.pos.sale.btn.render;
 
 import java.awt.Component;
 import java.awt.Font;

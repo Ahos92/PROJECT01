@@ -1,4 +1,4 @@
-package project.five.pos.device.actionbtn;
+package project.five.pos.device.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import project.five.pos.device.subdisplay.InquiryDisplay;
+import project.five.pos.device.LookUpDisplay;
 
 public class InquiryActionBtn implements ActionListener{
 
@@ -21,7 +21,7 @@ public class InquiryActionBtn implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		inq_f = new InquiryDisplay(e.getActionCommand());
+		inq_f = new LookUpDisplay(e.getActionCommand());
 		inq_f.setVisible(true);
 		manager_f.setVisible(false);
 	}

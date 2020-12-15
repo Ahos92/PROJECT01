@@ -1,12 +1,12 @@
-package project.five.pos.device.subdisplay;
+package project.five.pos.device;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-import project.five.pos.device.actionbtn.ChangeFrameBtn;
-import project.five.pos.device.actionbtn.InquiryActionBtn;
 import project.five.pos.TestSwingTools;
+import project.five.pos.device.btn.action.ChangeFrameBtn;
+import project.five.pos.device.btn.action.InquiryActionBtn;
 
 public class ManagerDisplay extends JFrame {
 	

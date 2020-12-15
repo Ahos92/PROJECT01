@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import project.five.pos.device.actionbtn.ChangeFrameBtn;
+import project.five.pos.device.btn.action.ChangeFrameBtn;
 
 public class MainDisplay extends JFrame {
 

@@ -1,4 +1,4 @@
-package project.five.pos.device.actionbtn;
+package project.five.pos.device.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import project.five.pos.MainDisplay;
-import project.five.pos.device.subdisplay.ConfirmDialog;
-import project.five.pos.device.subdisplay.LoginDialog;
-import project.five.pos.device.subdisplay.ManagerDisplay;
+import project.five.pos.device.ConfirmDialog;
+import project.five.pos.device.LoginDialog;
+import project.five.pos.device.ManagerDisplay;
 import project.five.pos.manage.ProductManage;
 import project.five.pos.membership.gui.JoinFrame;
 import project.five.pos.membership.gui.LoginFrame;

@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.table;
 
 import java.util.ArrayList;
 

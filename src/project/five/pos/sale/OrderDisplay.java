@@ -9,8 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.sale.action.*;
-import project.five.pos.sale.render.*;
+import project.five.pos.sale.btn.SaleBtn;
+import project.five.pos.sale.btn.action.*;
+import project.five.pos.sale.btn.render.*;
 
 public class OrderDisplay extends JFrame {
 

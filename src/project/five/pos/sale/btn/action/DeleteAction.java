@@ -1,4 +1,4 @@
-package project.five.pos.sale.action;
+package project.five.pos.sale.btn.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -9,47 +9,29 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-public class UpDownAction extends DefaultCellEditor {
+public class DeleteAction extends DefaultCellEditor {
 	protected JButton button;
 
 	private boolean isPushed;
 
 	JTable table;
+	DefaultTableModel dtm;
 
-	String text;
-	
-	public UpDownAction(JCheckBox check_box, JTable table, String text) {
-		super(check_box);
+	public DeleteAction(JCheckBox checkBox, JTable table, DefaultTableModel dtm) {
+		super(checkBox);
 		this.table = table;
-		button = new JButton(text);
+		this.dtm = dtm;
+		button = new JButton();
 		button.setOpaque(true);
-	
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				int cnt_col = 2;
-				int price_col = 5;
-				int product_cnt = (int)table.getValueAt(row, cnt_col);
-				int result_price = (int)table.getValueAt(row, price_col) / product_cnt;
-
-				if (button.getText().equals("▲")) {
-			
-					table.setValueAt(++product_cnt, row, cnt_col);
-					table.setValueAt(product_cnt * result_price, row, price_col);
-					
-				} else if (button.getActionCommand().equals("▼")) {
-	
-					if (product_cnt <= 1) {
-						System.err.println("최소 1개이상 주문입니다!");
-					}else {
-						
-						table.setValueAt(--product_cnt, row, cnt_col);
-						table.setValueAt(product_cnt * result_price, row, price_col);
-					}
-					
-				}
-				//버튼 사용 중지 알아내서 버그 수정하기
+				dtm.removeRow(row);
+				/*
+				 * 버튼 사용 중지 알아내서 버그 수정하기
+				 */
 				fireEditingStopped();
 			}
 		});
@@ -57,7 +39,14 @@ public class UpDownAction extends DefaultCellEditor {
 
 	public Component getTableCellEditorComponent(JTable table, Object value,
 			boolean isSelected, int row, int column) {
-		button.setBackground(isSelected?table.getSelectionBackground():table.getBackground());
+		if (isSelected) {
+			button.setForeground(table.getSelectionForeground());
+			button.setBackground(table.getSelectionBackground());
+		} else {
+			button.setForeground(table.getForeground());
+			button.setBackground(table.getBackground());
+		}
+		button.setText("X");
 		isPushed = true;
 		return button;
 	}
@@ -75,11 +64,10 @@ public class UpDownAction extends DefaultCellEditor {
 	protected void fireEditingStopped() {
 		try {
 			super.fireEditingStopped();
-
+			
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println("버튼 사용 중지");
 		}
 	}
 }
-
 

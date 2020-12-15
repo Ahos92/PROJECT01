@@ -1,4 +1,4 @@
-package project.five.pos.device.subdisplay;
+package project.five.pos.device;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -12,12 +12,12 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.device.*;
-import project.five.pos.device.actionbtn.ChangeFrameBtn;
-import project.five.pos.device.actionbtn.TableRepaintAction;
+import project.five.pos.device.btn.action.ChangeFrameBtn;
+import project.five.pos.device.btn.action.TableRepaintAction;
+import project.five.pos.device.table.InqTableModel;
 import project.five.pos.sale.*;
 
-public class InquiryDisplay extends JFrame {
+public class LookUpDisplay extends JFrame {
 
 	JComboBox<String> select_column;
 	JTextField select_data;
@@ -30,7 +30,7 @@ public class InquiryDisplay extends JFrame {
 	JTable table;
 	JScrollPane scroll;
 	DefaultTableModel dtm;
-	public InquiryDisplay(String btn_text) {
+	public LookUpDisplay(String btn_text) {
 		setLayout(new BorderLayout());
 
 		northP = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -83,6 +83,6 @@ public class InquiryDisplay extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new InquiryDisplay("판매 내역 조회").setVisible(true);
+		new LookUpDisplay("판매 내역 조회").setVisible(true);
 	}
 }
