@@ -149,12 +149,17 @@ public class ProductManage extends JFrame implements ActionListener{
 		JButton del;
 		
 		public TableCell() {
+			
 			del = new JButton("삭제");
 			del.addActionListener(e -> {
 				int result = JOptionPane.showConfirmDialog(null, "정말 삭제하시겠습니까?",
 						"Delete Menu",JOptionPane.YES_NO_OPTION);
 				if(result == JOptionPane.YES_OPTION) {
 					int row = table.getSelectedRow();
+					if(row == -1)
+						row+=1;
+					System.out.println(row);
+					System.out.println(model.getValueAt(row, 0).toString());
 					delD = new DeleteMenu(model.getValueAt(row, 0).toString());
 					model.setRowCount(0);
 					select();
