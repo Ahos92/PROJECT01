@@ -113,7 +113,6 @@ public class JoinFrame extends JFrame {
 					dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "회원가입이 실패하였습니다.");
-					dispose();
 				}	
 			}
 		});

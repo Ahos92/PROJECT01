@@ -65,8 +65,8 @@ public class OrderDisplay extends JFrame {
 		for (int i = 0; i < order_cnt; i++) {
 			select_list[i][0] = cart_list.get(i).getProduct_name();
 			select_list[i][1] = cart_list.get(i).getTermsofcondition();
-			select_list[i][2] = cart_list.get(i).getOrder_count();
-			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getOrder_count();
+			select_list[i][2] = cart_list.get(i).getSelected_item();
+			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getSelected_item();
 		};
 		dtm = new DefaultTableModel(select_list, header);
 		cart_table = new JTable(dtm);

@@ -155,6 +155,8 @@ public class ProductManage extends JFrame implements ActionListener{
 						"Delete Menu",JOptionPane.YES_NO_OPTION);
 				if(result == JOptionPane.YES_OPTION) {
 					int row = table.getSelectedRow();
+					if(row == -1)
+						row+=1;
 					delD = new DeleteMenu(model.getValueAt(row, 0).toString());
 					model.setRowCount(0);
 					select();

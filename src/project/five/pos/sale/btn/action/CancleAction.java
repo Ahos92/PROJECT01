@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import project.five.pos.sale.Sale;
+
 public class CancleAction implements ActionListener {
 		
 	JFrame present_frame;
@@ -23,7 +25,7 @@ public class CancleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
 		try {
-			// 판매프레임 생성
+			new Sale();
 			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {

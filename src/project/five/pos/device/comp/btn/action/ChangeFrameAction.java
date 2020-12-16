@@ -8,6 +8,7 @@ import project.five.pos.MainDisplay;
 import project.five.pos.device.*;
 import project.five.pos.manage.ProductManage;
 import project.five.pos.membership.gui.*;
+import project.five.pos.sale.Sale;
 
 public class ChangeFrameAction implements ActionListener{
 
@@ -64,6 +65,8 @@ public class ChangeFrameAction implements ActionListener{
 			
 		} else if(check.equals("정산")) {
 			new SettleDialog(present_frame, check);
+		} else if (check.equals("판매")) {
+			changeable_frame = new Sale();
 		}
 
 		// dialog 띄울 때 변할 화면 Null

@@ -97,9 +97,9 @@ public class DeviceDAO {
 					+ "values (?, ?, ?, ?, ?)");
 			ps.setInt(1, business.getBusiness_id()); 	// business_id NUMBER(5) 
 			ps.setString(2, business.getBusiness_pw()); // business_pw VARCHAR2(20)
-			ps.setString(3, business.getLast_name()); 	// last_name VARCHAR2(20)
-			ps.setString(4, business.getFirst_name());	// first_name VARCHAR2(20)
-			ps.setString(5, business.getContact_no());	// contact_no VARCHAR2(30)
+			ps.setString(3, business.getB_last_name()); 	// last_name VARCHAR2(20)
+			ps.setString(4, business.getB_first_name());	// first_name VARCHAR2(20)
+			ps.setString(5, business.getB_contact_no());	// contact_no VARCHAR2(30)
 
 			try {
 				ps.addBatch();

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import project.five.pos.device.LookUpDisplay;
+import project.five.pos.membership.gui.MemberListFrame;
 
 public class LookUpAction implements ActionListener{
 

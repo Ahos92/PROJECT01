@@ -4,39 +4,122 @@ import java.util.regex.Pattern;
 
 public class PosVO {
 
-	// cart Table
-	private int cart_no;
-	private int order_no; // 12/04 Ãß°¡
-	private int product_no;
-	private int selected_item;
-	private int total_price; // 12/04 Ãß°¡
-	
-	// pos Table
-	private int device_id;
+	// pos table
+	private int device_id; // cart fk
 	private String device_pw;
-	
+
 	// branch table
-	private int branch_no;
-	private int business_id;
+	private int branch_no;// pos fk
+	// business_id
 	private String branch_name;
 	private String branch_location;
 	private String phone_number;
-	
+
+	// businessAdminister table
+	private int business_id;
 	private String business_pw;
-	private String last_name;
-	private String first_name;
-	private String contact_no;
-	
-	// test product table
-	// int product_no;
+	private String b_last_name;
+	private String b_first_name;
+	private String b_contact_no;
+
+	// cart Table
+	private int cart_no;
+	private int order_no;
+	private int selected_item;
+	private int total_price;
+	private String saled_date;
+
+	// product table
+	private int product_no; // cart fk
 	private String product_name;
 	private int product_price;
 	private int product_count;
 	private String product_category;
 	private String termsofcondition;
-	// Å×½ºÆ®¿ë Ãß°¡ ÄÃ·³
-	private int order_count; // 12/04 Ãß°¡
 	
+	private String m_first_name;
+	private String m_last_name;
+	private String m_contact_no;
+	private int amount_price;
+	private String membership;
+	private double accumulation_pct;
+	private int mileage;
+	private String customer_no;
+
+
+
+	
+	public String getSaled_date() {
+		return saled_date;
+	}
+
+	public void setSaled_date(String saled_date) {
+		this.saled_date = saled_date;
+	}
+
+	public String getM_first_name() {
+		return m_first_name;
+	}
+
+	public void setM_first_name(String m_first_name) {
+		this.m_first_name = m_first_name;
+	}
+
+	public String getM_last_name() {
+		return m_last_name;
+	}
+
+	public void setM_last_name(String m_last_name) {
+		this.m_last_name = m_last_name;
+	}
+
+	public String getM_contact_no() {
+		return m_contact_no;
+	}
+
+	public void setM_contact_no(String m_contact_no) {
+		this.m_contact_no = m_contact_no;
+	}
+
+	public int getAmount_price() {
+		return amount_price;
+	}
+
+	public void setAmount_price(int amount_price) {
+		this.amount_price = amount_price;
+	}
+
+	public String getMembership() {
+		return membership;
+	}
+
+	public void setMembership(String membership) {
+		this.membership = membership;
+	}
+
+	public double getAccumulation_pct() {
+		return accumulation_pct;
+	}
+
+	public void setAccumulation_pct(double accumulation_pct) {
+		this.accumulation_pct = accumulation_pct;
+	}
+
+	public int getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
+
+	public String getCustomer_no() {
+		return m_contact_no.substring(m_contact_no.length()-4);
+	}
+
+	public void setCustomer_no(String customer_no) {
+		this.customer_no = customer_no;
+	}
 
 	public String getBusiness_pw() {
 		return business_pw;
@@ -46,42 +129,42 @@ public class PosVO {
 		this.business_pw = business_pw;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getB_last_name() {
+		return b_last_name;
 	}
 
-	public void setLast_name(String last_name) {
+	public void setB_last_name(String b_last_name) {
 		String name_regex = "^[°¡-ÆR]*$";
-		if (Pattern.matches(name_regex, last_name)) {
-			this.last_name = last_name;
+		if (Pattern.matches(name_regex, b_last_name)) {
+			this.b_last_name = b_last_name;
 		} else {
-			this.last_name = null;
+			this.b_last_name = null;
 		}
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getB_first_name() {
+		return b_first_name;
 	}
 
-	public void setFirst_name(String first_name) {
+	public void setB_first_name(String b_first_name) {
 		String name_regex = "^[°¡-ÆR]*$";
-		if (Pattern.matches(name_regex, first_name)) {
-			this.first_name = first_name;
+		if (Pattern.matches(name_regex, b_first_name)) {
+			this.b_first_name = b_first_name;
 		} else {
-			this.first_name = null;
+			this.b_first_name = null;
 		}
 	}
 
-	public String getContact_no() {
-		return contact_no;
+	public String getB_contact_no() {
+		return b_contact_no;
 	}
 
-	public void setContact_no(String contact_no) {
+	public void setB_contact_no(String b_contact_no) {
 		String phoneNumber_regex = "01[016789]-\\d{3,4}-[0-9]{4}";
-		if (Pattern.matches(phoneNumber_regex, contact_no)) {			
-			this.contact_no = contact_no;
+		if (Pattern.matches(phoneNumber_regex, b_contact_no)) {			
+			this.b_contact_no = b_contact_no;
 		} else {
-			this.contact_no = null;
+			this.b_contact_no = null;
 		}		
 	}
 
@@ -148,88 +231,80 @@ public class PosVO {
 	public void setOrder_no(int order_no) {
 		this.order_no = order_no;
 	}
-	
-	public int getOrder_count() {
-		return order_count;
-	}
-
-	public void setOrder_count(int order_count) {
-		this.order_count = order_count;
-	}
 
 	public int getCart_no() {
 		return cart_no;
 	}
-	
+
 	public void setCart_no(int cart_no) {
 		this.cart_no = cart_no;
 	}
-	
+
 	public int getProduct_no() {
 		return product_no;
 	}
-	
+
 	public void setProduct_no(int product_no) {
 		this.product_no = product_no;
 	}
-	
+
 	public int getSelected_item() {
 		return selected_item;
 	}
-	
+
 	public void setSelected_item(int selected_item) {
 		this.selected_item = selected_item;
 	}
-	
+
 	public int getDevice_id() {
 		return device_id;
 	}
-	
+
 	public void setDevice_id(int device_id) {
 		this.device_id = device_id;
 	}
-	
+
 	public String getProduct_name() {
 		return product_name;
 	}
-	
+
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-	
+
 	public int getProduct_price() {
 		return product_price;
 	}
-	
+
 	public void setProduct_price(int product_price) {
 		this.product_price = product_price;
 	}
-	
+
 	public int getProduct_count() {
 		return product_count;
 	}
-	
+
 	public void setProduct_count(int product_count) {
 		this.product_count = product_count;
 	}
-	
+
 	public String getProduct_category() {
 		return product_category;
 	}
-	
+
 	public void setProduct_category(String product_category) {
 		this.product_category = product_category;
 	}
-	
+
 	public String getTermsofcondition() {
 		return termsofcondition;
 	}
-	
+
 	public void setTermsofcondition(String termsofcondition) {
 		this.termsofcondition = termsofcondition;
 	}
-	
-	
-	
+
+
+
 }
 

@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
+
+import project.five.pos.db.PosVO;
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 
 public class MemberDao {
 	
-	private MemberDao() {
+	public MemberDao() {
 		
 	}
 	
@@ -61,13 +64,13 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement("insert into customer values(?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, member.getCustomer_no());
-			pstmt.setString(3, member.getFirst_name());
 			pstmt.setString(2, member.getLast_name());			
+			pstmt.setString(3, member.getFirst_name());
 			pstmt.setString(4, member.getContact_no());
 			
-			pstmt.setInt(5, 0);	// member.getAmount_price()
-			pstmt.setString(6, "bronze");	// 등급	
-			pstmt.setDouble(7, 0.01);	// 적립률
+			pstmt.setString(5, "bronze");	// 등급	
+			pstmt.setDouble(6, 0.01);	// 적립률
+			pstmt.setInt(7, 0);	// member.getAmount_price()
 			pstmt.setInt(8, 0);		// member.getMileage()
 			
 
@@ -98,18 +101,18 @@ public class MemberDao {
 	}
 	
 	//성공 Vector<Member>, 실패 null
-	public Vector<Member> findByAll(){
+	public ArrayList<PosVO> findByAll(){
 		conn = DBConnection.getConnection();
-		Vector<Member> members = new Vector<>();
+		ArrayList<PosVO> members = new ArrayList<>();
 		try {
 			pstmt = conn.prepareStatement("select * from customer");
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Member member = new Member();
+				PosVO member = new PosVO();
 				member.setCustomer_no(rs.getString("customer_no"));
-				member.setFirst_name(rs.getString("first_name"));
-				member.setLast_name(rs.getString("last_name"));
-				member.setContact_no(rs.getString("contact_no"));
+				member.setM_first_name(rs.getString("first_name"));
+				member.setM_last_name(rs.getString("last_name"));
+				member.setM_contact_no(rs.getString("contact_no"));
 				member.setAmount_price(rs.getInt("Amount_price"));
 				member.setMembership(rs.getString("membership"));
 				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));

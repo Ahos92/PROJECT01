@@ -31,8 +31,6 @@ public class TableList {
 
 		} else if (btn_text.equals("회원 정보 조회")) {
 			String[] header = {"회원 번호", "이름", "전화 번호", "등급", "총 사용금액", "적립률", "마일리지"};
-			System.err.println("미구현 : CUSTOMER 파트 결합");
-			
 			return header;
 		}
 		return null;
@@ -66,11 +64,13 @@ public class TableList {
 		} else if (btn_text.equals("회원 정보 조회")) { // customer table 조회
 			for (int i = 0; i < row_length; i++) {
 				column = 0;
-				lookUp_list[i][column] = "Customer_no_test_" + i;//searchlist.get(i).getCustomer_no();
-				lookUp_list[i][++column] = "Member_id_test_" + i;//searchlist.get(i).getMember_id();
-				lookUp_list[i][++column] = "Name_test_" + i;//searchlist.get(i).getLast_name() + getFirst_name();
-				lookUp_list[i][++column] = "Tel_test_" + i;//searchlist.get(i).getContact_no();
-				lookUp_list[i][++column] = "Grade_test_" + i;//searchlist.get(i).getMembership();
+				lookUp_list[i][column] = searchlist.get(i).getCustomer_no();
+				lookUp_list[i][++column] = searchlist.get(i).getM_first_name() + searchlist.get(i).getM_last_name();
+				lookUp_list[i][++column] = searchlist.get(i).getM_contact_no();
+				lookUp_list[i][++column] = searchlist.get(i).getMembership();
+				lookUp_list[i][++column] = searchlist.get(i).getAmount_price();
+				lookUp_list[i][++column] = searchlist.get(i).getAccumulation_pct();
+				lookUp_list[i][++column] = searchlist.get(i).getMileage();
 			};
 			
 		}

@@ -64,9 +64,9 @@ public class ManagerSignUpDialog extends JDialog {
 				} catch (NumberFormatException nfe) {}
 				manager.setBusiness_id(b_id);
 				manager.setBusiness_pw(pw_tf.getText());
-				manager.setLast_name(lname_tf.getText());
-				manager.setFirst_name(fname_tf.getText());
-				manager.setContact_no(tel_tf.getText());
+				manager.setB_last_name(lname_tf.getText());
+				manager.setB_first_name(fname_tf.getText());
+				manager.setB_contact_no(tel_tf.getText());
 				
 				if (dao.SighUPManager(manager)) {
 					new ConfirmDialog(frame, "매니저 등록", "등록 완료!!");

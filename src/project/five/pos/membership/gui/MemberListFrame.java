@@ -87,59 +87,59 @@ public class MemberListFrame extends JFrame {
 		Vector<String> memberName = Sample.getMemberName();
 		// 2. 데이터
 		MemberDao dao = MemberDao.getInstance();
-		Vector<Member> members = dao.findByAll();
-		// 3. 테이블모델
-		DefaultTableModel tableModel = new DefaultTableModel(memberName, 0);
-
-		// 4. for문 돌면서 한 행씩 데이터 집어 넣기
-		for (int i = 0; i < members.size(); i++) {
-			Vector<Object> row = new Vector<>();
-			
-			row.addElement(members.get(i).getCustomer_no());
-			row.addElement(members.get(i).getLast_name());
-			row.addElement(members.get(i).getFirst_name());
-			row.addElement(members.get(i).getContact_no());
-			row.addElement(members.get(i).getAmount_price());
-			row.addElement(members.get(i).getMembership());
-			row.addElement(members.get(i).getAccumulation_pct());
-			row.addElement(members.get(i).getMileage());
-			
-			
-			
-			tableModel.addRow(row); // table모델에 행 넣기
-		}
-
-		JTable table = new JTable(tableModel);
-		JScrollPane scrollPane = new JScrollPane(table);
-
-		contentPane.add(scrollPane, BorderLayout.CENTER);
-
-		btnDelete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
-				
-				//행이 선택되지 않으면 row는 -1이 됨.
-				if(row < 0) {
-					row = table.getRowCount()-1;
-				}
-				Object id = table.getValueAt(row, 0);
-				//UI제거
-				tableModel.removeRow(row);
-				//DB제거
-				MemberDao dao = MemberDao.getInstance();
-			//	delete 구현하기	
-				dao.delete(username);
-			}
-		});
-
-		if (username == null) {
-			JOptionPane.showMessageDialog(null, "인증되지 않은 사용자입니다.");
-			dispose();
-		} else {
-			setVisible(true);
-		}
+//		Vector<Member> members = dao.findByAll();
+//		// 3. 테이블모델
+//		DefaultTableModel tableModel = new DefaultTableModel(memberName, 0);
+//
+//		// 4. for문 돌면서 한 행씩 데이터 집어 넣기
+//		for (int i = 0; i < members.size(); i++) {
+//			Vector<Object> row = new Vector<>();
+//			
+//			row.addElement(members.get(i).getCustomer_no());
+//			row.addElement(members.get(i).getLast_name());
+//			row.addElement(members.get(i).getFirst_name());
+//			row.addElement(members.get(i).getContact_no());
+//			row.addElement(members.get(i).getAmount_price());
+//			row.addElement(members.get(i).getMembership());
+//			row.addElement(members.get(i).getAccumulation_pct());
+//			row.addElement(members.get(i).getMileage());
+//			
+//			
+//			
+//			tableModel.addRow(row); // table모델에 행 넣기
+//		}
+//
+//		JTable table = new JTable(tableModel);
+//		JScrollPane scrollPane = new JScrollPane(table);
+//
+//		contentPane.add(scrollPane, BorderLayout.CENTER);
+//
+//		btnDelete.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int row = table.getSelectedRow();
+//				
+//				//행이 선택되지 않으면 row는 -1이 됨.
+//				if(row < 0) {
+//					row = table.getRowCount()-1;
+//				}
+//				Object id = table.getValueAt(row, 0);
+//				//UI제거
+//				tableModel.removeRow(row);
+//				//DB제거
+//				MemberDao dao = MemberDao.getInstance();
+//			//	delete 구현하기	
+//				dao.delete(username);
+//			}
+//		});
+//
+//		if (username == null) {
+//			JOptionPane.showMessageDialog(null, "인증되지 않은 사용자입니다.");
+//			dispose();
+//		} else {
+//			setVisible(true);
+//		}
 	}
 
 }

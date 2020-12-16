@@ -69,7 +69,7 @@ public class SaleDAO{
 				posVo.setProduct_name(pName);
 				posVo.setTermsofcondition(option);
 				posVo.setProduct_price(rs.getInt("product_price"));
-				posVo.setOrder_count(count);
+				posVo.setSelected_item(count);
 
 				System.out.printf("%s(%s) %d개 주문\n", pName, option, count);
 			}
@@ -109,12 +109,11 @@ public class SaleDAO{
 				
 				ps.setInt(1, orderNumber); // order_no
 				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
-				ps.setInt(3, cartlist.get(i).getOrder_count()); // selected_count				
+				ps.setInt(3, cartlist.get(i).getSelected_item()); // selected_count				
 				// 어차피 한번 계산한 값 들고오기 (주문 가격)
-				ps.setInt(4, cartlist.get(i).getProduct_price()
-						* cartlist.get(i).getOrder_count()); // total_price
-				ps.setInt(5, Integer.parseInt(device_id)); // device_id
-				ps.setTimestamp(6, now); // saled_date
+				ps.setTimestamp(4, now); // saled_date
+				ps.setInt(5, cartlist.get(i).getProduct_price() * cartlist.get(i).getSelected_item()); // total_price
+				ps.setInt(6, Integer.parseInt(device_id)); // device_id
 				
 				ps.addBatch();
 
@@ -306,8 +305,8 @@ public class SaleDAO{
 	
 	
 	
-	public static void main(String[] args) {
-		SaleDAO dao = new SaleDAO();
-		System.out.println(dao.MaxOrderNumber());
-	}
+//	public static void main(String[] args) {
+//		SaleDAO dao = new SaleDAO();
+//		System.out.println(dao.MaxOrderNumber());
+//	}
 }

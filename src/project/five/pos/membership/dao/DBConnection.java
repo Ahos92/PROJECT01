@@ -38,7 +38,7 @@ public class DBConnection {
 			conn = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost:1521/XEPDB1",
 					"hr",
-					"1234"
+					"hr"
 			);
 			System.out.println("DB와 연결되었습니다!");
 			
