@@ -1,5 +1,7 @@
 package project.five.pos.db;
 
+import java.util.regex.Pattern;
+
 public class PosVO {
 
 	// cart Table
@@ -49,7 +51,12 @@ public class PosVO {
 	}
 
 	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, last_name)) {
+			this.last_name = last_name;
+		} else {
+			this.last_name = null;
+		}
 	}
 
 	public String getFirst_name() {
@@ -57,7 +64,12 @@ public class PosVO {
 	}
 
 	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, first_name)) {
+			this.first_name = first_name;
+		} else {
+			this.first_name = null;
+		}
 	}
 
 	public String getContact_no() {
@@ -65,7 +77,12 @@ public class PosVO {
 	}
 
 	public void setContact_no(String contact_no) {
-		this.contact_no = contact_no;
+		String phoneNumber_regex = "01[016789]-\\d{3,4}-[0-9]{4}";
+		if (Pattern.matches(phoneNumber_regex, contact_no)) {			
+			this.contact_no = contact_no;
+		} else {
+			this.contact_no = null;
+		}		
 	}
 
 	public String getDevice_pw() {

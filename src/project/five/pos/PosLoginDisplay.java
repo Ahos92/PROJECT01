@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.device.DeviceDAO;
-import project.five.pos.device.LoginConfirmDialog;
+import project.five.pos.device.*;
 import project.five.pos.sale.SaleDAO;
 
 public class PosLoginDisplay extends JFrame {
@@ -26,7 +25,6 @@ public class PosLoginDisplay extends JFrame {
 
 		id_tf = new JTextField(20);
 		id_tf.setBounds(500, 150, 120, 30);
-		id_tf.setFont(font);
 
 		pw_lab = new JLabel("Password");
 		pw_lab.setBounds(400, 200, 100, 30);
@@ -34,7 +32,6 @@ public class PosLoginDisplay extends JFrame {
 
 		pw_tf = new JTextField(20);
 		pw_tf.setBounds(500, 200, 120, 30);
-		pw_tf.setFont(font);
 
 		JFrame f = this;
 		login_btn = new JButton("login");
@@ -43,16 +40,18 @@ public class PosLoginDisplay extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DeviceDAO dao = new DeviceDAO();
+				int id = 0;
 				try {
-					if (dao.searchPOS(Integer.parseInt(id_tf.getText()), pw_tf.getText())) {
-						new MainDisplay(id_tf.getText());			
-						dispose();
-					} else {
-						new LoginConfirmDialog(f, "로그인 실패!");
-					}
-				}catch (NumberFormatException nfe) {
-					new LoginConfirmDialog(f, "로그인 실패!");
+					id = Integer.parseInt(id_tf.getText());
+				}catch (NumberFormatException nfe) {}
+
+				if (dao.searchPOS(id, pw_tf.getText())) {
+					new MainDisplay(id_tf.getText());			
+					dispose();
+				} else {
+					new ConfirmDialog(f, "로그인 실패!", "아이디나 비밀번호가 맞지 않습니다!");
 				}
+
 			}
 		});
 

@@ -6,19 +6,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class LoginConfirmDialog extends JDialog {
+public class ConfirmDialog extends JDialog {
 
 	private JLabel msg_lab;
 	private JPanel south_p;
 	private JButton check_btn;
 	
-	public LoginConfirmDialog(JFrame frame, String title) {
+	public ConfirmDialog(JFrame frame, String title, String msg) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(250, 130);
 		setLocationRelativeTo(null);
 		
-		msg_lab = new JLabel("아이디나 비밀번호가 맞지 않습니다!");
+		msg_lab = new JLabel(msg);
 		msg_lab.setHorizontalAlignment(msg_lab.CENTER);
 		
 		check_btn = new JButton("확인");

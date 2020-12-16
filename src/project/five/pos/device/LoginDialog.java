@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.device.btn.action.ChangeFrameAction;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 
 public class LoginDialog extends JDialog {
 
@@ -19,6 +19,7 @@ public class LoginDialog extends JDialog {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(200, 130);
+		setResizable(false);
 		setLocationRelativeTo(null);
 
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));

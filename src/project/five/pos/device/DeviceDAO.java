@@ -94,40 +94,47 @@ public class DeviceDAO {
 
 		try {
 			ps = conn.prepareStatement("insert into businessadminister "
-									+ "values (?, ?, ?, ?, ?)");
+					+ "values (?, ?, ?, ?, ?)");
 			ps.setInt(1, business.getBusiness_id()); 	// business_id NUMBER(5) 
 			ps.setString(2, business.getBusiness_pw()); // business_pw VARCHAR2(20)
 			ps.setString(3, business.getLast_name()); 	// last_name VARCHAR2(20)
 			ps.setString(4, business.getFirst_name());	// first_name VARCHAR2(20)
 			ps.setString(5, business.getContact_no());	// contact_no VARCHAR2(30)
-			
+
 			try {
 				ps.addBatch();
-				
+
 			} catch (BatchUpdateException e) {
-				// 다이어로그 하나띄우기
 				System.err.println("아이디가 이미 있습니다.");
+				return false;
 			}
 			
-			ps.executeBatch();
+			try {
+				ps.executeBatch();
+
+			} catch (BatchUpdateException e) {
+				System.err.println("모든 항목을 정확하게 입력해주세요!");
+				e.printStackTrace();
+				return false;
+			}
 			
 			System.out.println("회원 가입이 완료되었습니다.");
 			return true;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		
+
 		return false;
 	}
-	
-//	public static void main(String[] args) {
-//		PosVO business = new PosVO(); 
-//		business.setBusiness_id(123);
-//		business.setBusiness_pw("45");
-//		business.setLast_name("김");
-//		business.setFirst_name("영호");
-//		business.setContact_no("010-0000-0000");
-//		new DeviceDAO().SighUPManager(business);
-//	}
+
+	//	public static void main(String[] args) {
+	//		PosVO business = new PosVO(); 
+	//		business.setBusiness_id(123);
+	//		business.setBusiness_pw("45");
+	//		business.setLast_name("김");
+	//		business.setFirst_name("영호");
+	//		business.setContact_no("010-0000-0000");
+	//		new DeviceDAO().SighUPManager(business);
+	//	}
 }

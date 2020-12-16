@@ -1,4 +1,4 @@
-package project.five.pos.device.btn;
+package project.five.pos.device.comp.btn;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -7,6 +7,8 @@ import javax.swing.JButton;
 
 public class DeviceBtn extends JButton {
 
+	public DeviceBtn() {}
+	
 	/* 
   		직사각형 버튼
 	 */

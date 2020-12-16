@@ -1,4 +1,4 @@
-package project.five.pos.device.btn.action;
+package project.five.pos.device.comp.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

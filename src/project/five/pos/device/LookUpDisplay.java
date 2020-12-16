@@ -12,8 +12,9 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.device.btn.action.ChangeFrameAction;
-import project.five.pos.device.btn.action.TableRepaintAction;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
+import project.five.pos.device.comp.btn.action.TableRepaintAction;
+import project.five.pos.device.table.ComboBoxList;
 import project.five.pos.device.table.LookUpTableModel;
 import project.five.pos.sale.*;
 
@@ -49,10 +50,9 @@ public class LookUpDisplay extends JFrame {
 		scroll = new JScrollPane(lookUp_table);
 		scroll.setPreferredSize(new Dimension(480, 500));
 		// 검색 
-		String[] list = {"주문 번호", "상품 이름"};
+		String[] list = new ComboBoxList(btn_text).getArr();
 		selectColumn_box = new JComboBox<String>(list);
 		selectColumn_box.setPreferredSize(new Dimension(100, 20));
-		System.out.println(selectColumn_box.getItemCount());
 		category_lab = new JLabel("카테고리");
 		selectData_tf = new JTextField(8);
 		selectName_lab = new JLabel("검색 명");

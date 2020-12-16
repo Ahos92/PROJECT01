@@ -5,8 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.device.btn.DeviceBtn;
-import project.five.pos.device.btn.action.*;
+import project.five.pos.device.comp.btn.DeviceBtn;
+import project.five.pos.device.comp.btn.action.*;
 
 public class ManagerDisplay extends JFrame {
 	
@@ -18,6 +18,7 @@ public class ManagerDisplay extends JFrame {
 	
 	public ManagerDisplay() {
 		setLayout(new BorderLayout());
+		setResizable(false);
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 30));
 		south_p = new JPanel(new BorderLayout());
@@ -34,7 +35,7 @@ public class ManagerDisplay extends JFrame {
 	
 		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this));
 
-		settle_btn = new DeviceBtn("정산", 60, 30, new SettleAction());
+		settle_btn = new DeviceBtn("정산", 60, 30, new ChangeFrameAction(this));
 		
 		center_p.add(payHistory_btn);
 		center_p.add(soldHistory_btn);
