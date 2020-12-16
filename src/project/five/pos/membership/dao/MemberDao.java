@@ -1,19 +1,18 @@
 package project.five.pos.membership.dao;
 
 import java.sql.Connection;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 
 public class MemberDao {
 	
-	private MemberDao() {}
+	private MemberDao() {
+		
+	}
 	
 	private static MemberDao instance = new MemberDao();
 	
@@ -26,18 +25,17 @@ public class MemberDao {
 	private ResultSet rs; //Query 결과 커서
 	
 	//성공 1, 실패 -1, 없음 0
-	public int findByUsernameAndPassword(String username, String password) {
+	public int findByUsernameAndPassword(String customer_no) {
 		//1. DB 연결
 		conn = DBConnection.getConnection();
 		
 		try {
 			//2. Query 작성
-			pstmt = conn.prepareStatement("select * from member where username = ? and password = ?");
+			pstmt = conn.prepareStatement("select * from customer where customer_no = ?");
 			
 			//3. Query ? 완성 (index 1번 부터 시작)
 			//setString, setInt, setDouble, setTimeStamp 등이 있음.
-			pstmt.setString(1, username);
-			pstmt.setString(2, password);
+			pstmt.setString(1, customer_no);
 			
 			//4. Query 실행
 			//(1) executeQuery() = select = ResultSet 리턴
@@ -60,24 +58,20 @@ public class MemberDao {
 	//성공 1, 실패 -1, 
 	public int save(Member member) {
 		conn = DBConnection.getConnection();
-		
-		
-		
 		try {
-			pstmt = conn.prepareStatement("insert into member values(member_seq.nextval, ?,?,?,?,?,?,?,?,?)");
-//			pstmt.setString(1, member.getUsername());
-			pstmt.setString(1, member.getUsername());
-			pstmt.setString(2, member.getPassword());			
-			pstmt.setString(3, member.getName());
-			pstmt.setString(4, member.getBirth());
-			pstmt.setString(5, member.getPhone());
+			pstmt = conn.prepareStatement("insert into customer values(?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt.setString(1, member.getCustomer_no());
+			pstmt.setString(3, member.getFirst_name());
+			pstmt.setString(2, member.getLast_name());			
+			pstmt.setString(4, member.getContact_no());
 			
-			// 12.09 추가 ---------------------------------------
-			pstmt.setInt(6, member.getAmount());
-			pstmt.setString(7, member.getGrade());
-			pstmt.setDouble(8, member.getDiscount_pct());
-			pstmt.setDouble(9, member.getSave_pct());
-			// --------------------------------------------------
+			pstmt.setInt(5, 0);	// member.getAmount_price()
+			pstmt.setString(6, "bronze");	// 등급	
+			pstmt.setDouble(7, 0.01);	// 적립률
+			pstmt.setInt(8, 0);		// member.getMileage()
+			
+
+
 			
 			pstmt.executeUpdate(); //return값은 처리된 레코드의 개수
 			return 1;
@@ -88,12 +82,12 @@ public class MemberDao {
 	}
 	
 	// 회원 삭제
-	public int delete(String username) {
+	public int delete(String customer_no) {
 		conn = DBConnection.getConnection();
 
 		try {
-			pstmt = conn.prepareStatement("delete from member where username = ?");
-			pstmt.setString(1, username);
+			pstmt = conn.prepareStatement("delete from customer where customer_no = ?");
+			pstmt.setString(1, customer_no);
 			
 			pstmt.executeUpdate(); 
 			return 1;
@@ -108,16 +102,18 @@ public class MemberDao {
 		conn = DBConnection.getConnection();
 		Vector<Member> members = new Vector<>();
 		try {
-			pstmt = conn.prepareStatement("select * from member");
+			pstmt = conn.prepareStatement("select * from customer");
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Member member = new Member();
-				member.setId(rs.getLong("id"));
-				member.setUsername(rs.getString("username"));
-				member.setPassword(rs.getString("password"));
-				member.setName(rs.getString("name"));
-				member.setBirth(rs.getString("Birth"));
-				member.setPhone(rs.getString("phone"));
+				member.setCustomer_no(rs.getString("customer_no"));
+				member.setFirst_name(rs.getString("first_name"));
+				member.setLast_name(rs.getString("last_name"));
+				member.setContact_no(rs.getString("contact_no"));
+				member.setAmount_price(rs.getInt("Amount_price"));
+				member.setMembership(rs.getString("membership"));
+				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));
+				member.setMileage(rs.getInt("mileage"));
 				members.add(member);
 			}
 			return members;

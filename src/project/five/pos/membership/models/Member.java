@@ -1,118 +1,103 @@
 package project.five.pos.membership.models;
 
 public class Member {
-	private long id;
-	private String username;
-	private String password;
-	private String name;
-	private String Birth;
-	private String phone;
-	
-	private int amount;
-	private String grade;
-	private double discount_pct;
-	private double save_pct;
+	private String first_name;
+	private String last_name;
+	private String contact_no;
+	private int amount_price;
+	private String membership;
+	private double accumulation_pct;
+	private int mileage;
+	private String customer_no;
 	
 	public Member() {
 	
 	}
 	
-	public Member(long id, String username, String password, String name, String Birth, String phone,
-			int amount, String grade, double discount_pct, double save_pct) {	
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.Birth = Birth;
-		this.phone = phone;
+	public Member( String customer_no, String first_name, String last_name, String contact_no,
+			int amount_price, String membership, double accumulation_pct, int mileage) {	
 		
-		this.amount = amount;
-		this.grade = grade;
-		this.discount_pct = discount_pct;
-		this.save_pct = save_pct;
+		this.customer_no = customer_no;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.contact_no = contact_no;
+		this.amount_price = amount_price;
+		this.membership = membership;
+		this.accumulation_pct = accumulation_pct;
+		this.mileage = mileage;
 		
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;	
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getBirth() {
-		return Birth;
-	}
-
-	public void setBirth(String Birth) {
-		this.Birth = Birth;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	// 12.09 추가사항 ----------------------------------------------
-	public int getAmount() {
-		return amount;
+	public String getCustomer_no() {
+		return contact_no.substring(contact_no.length()-4);
 	}
 	
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setCustomer_no(String contact_no) {
+		this.customer_no = contact_no;
+	}
+
+	public String getFirst_name() {
+		return first_name;
 	}
 	
-	public String getGrade() {
-		return grade;
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
 	}
 	
-	public void setGrade(String grade) {
-		this.grade = grade;
+	
+	public String getLast_name() {
+		return last_name;
 	}
 	
-	public double getDiscount_pct() {
-		return discount_pct;
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
 	}
 	
-	public void setDiscount_pct(double discount_pct) {
-		this.discount_pct = discount_pct;
+	
+	public String getContact_no() {
+		return contact_no;
 	}
 	
-	public double getSave_pct() {
-		return save_pct;
+	public void setContact_no(String contact_no) {
+		this.contact_no = contact_no;
 	}
 	
-	public void setSave_pct(double save_pct) {
-		this.save_pct = save_pct;
+	
+	public int getAmount_price() {
+		return amount_price;
 	}
 	
+	public void setAmount_price(int amount_price) {
+		this.amount_price = amount_price;
+	}
+	
+	
+	public String getMembership() {
+		return membership;
+	}
+	
+	public void setMembership(String membership) {
+		this.membership = membership;
+	}
+	
+	
+	public double getAccumulation_pct() {
+		return accumulation_pct;
+	}
+	
+	public void setAccumulation_pct(double accumulation_pct) {
+		this.accumulation_pct = accumulation_pct;
+	}
+	
+	
+	public int getMileage() {
+		return mileage;
+	}
+	
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
 	
 
 }
+

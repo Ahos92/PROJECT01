@@ -2,6 +2,7 @@ package project.five.pos.membership.gui;
 
 import java.awt.EventQueue;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,18 +11,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import project.five.pos.membership.gui.LoginFrame;
 import project.five.pos.membership.dao.MemberDao;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField tfUsername; 
-	private JPasswordField tfPassword;
+	private JTextField tfPhnoe; 
 	private JButton loginBtn, joinBtn;
 
 	/**
@@ -52,37 +50,24 @@ public class LoginFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("username");		
+		JLabel lblLogin = new JLabel("user ID");		
 		lblLogin.setBounds(41, 52, 69, 35);
 		contentPane.add(lblLogin);
 		
-		JLabel lblPassword = new JLabel("password");	
-		lblPassword.setBounds(41, 103, 69, 35);
-		contentPane.add(lblPassword);
 		
-		tfUsername = new JTextField();
-		tfUsername.setBounds(157, 52, 176, 35);
-		contentPane.add(tfUsername);
-		tfUsername.setColumns(10);
+		tfPhnoe = new JTextField();
+		tfPhnoe.setBounds(157, 52, 176, 35);
+		contentPane.add(tfPhnoe);
+		tfPhnoe.setColumns(10);
 		
 		joinBtn = new JButton("Sign UP");
-		joinBtn.setBounds(229, 154, 104, 29);
+		joinBtn.setBounds(200, 150, 100, 30);
 		contentPane.add(joinBtn);
 		
 		loginBtn = new JButton("Sign IN");
-		loginBtn.setBounds(108, 154, 106, 29);
+		loginBtn.setBounds(80, 150, 100, 30);
 		contentPane.add(loginBtn);
 		
-		
-		tfPassword = new JPasswordField();
-		tfPassword.setEchoChar('*');
-		//tfPassword = new JTextField();
-		tfPassword.setColumns(10);
-		tfPassword.setBounds(157, 103, 176, 35);
-		
-		
-		
-		contentPane.add(tfPassword);
 		
 		setVisible(true);
 		//회원가입 액션
@@ -99,15 +84,14 @@ public class LoginFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String username = tfUsername.getText();		
-				String password = tfPassword.getText();		
+				String id = tfPhnoe.getText();				
 				MemberDao dao = MemberDao.getInstance();
-				int result = dao.findByUsernameAndPassword(username, password);		
+				int result = dao.findByUsernameAndPassword(id);		
 				if(result == 1) {
 					//로그인 성공 메시지
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 					//회원 정보 리스트 화면 이동과 동시에 username 세션값으로 넘김.
-					MemberListFrame mlf = new MemberListFrame(username);
+					MemberListFrame mlf = new MemberListFrame(id);
 					//현재 화면 종료
 					dispose();
 				}else {

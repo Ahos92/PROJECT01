@@ -2,12 +2,10 @@ package project.five.pos.membership.gui;
 
 import java.awt.EventQueue;
 
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
+import project.five.pos.membership.gui.JoinFrame;
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 
@@ -24,15 +22,12 @@ public class JoinFrame extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblJoin;
 	private JButton joinCompleteBtn;
-	private JTextField tfUsername;
-	private JTextField tfPassword;
-	private JTextField tfName;
-	private JTextField tfBirth;
-	private JTextField tfPhone;
+	
+	private JTextField tfFirst_name;	// 성
+	private JTextField tfLast_name;		// 이름
+	private JTextField tfContact_no;	// 전화번호
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,9 +41,6 @@ public class JoinFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public JoinFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(430, 490);
@@ -63,54 +55,37 @@ public class JoinFrame extends JFrame {
 		lblJoin.setFont(f1); 
 		lblJoin.setBounds(159, 41, 101, 20);
 		contentPane.add(lblJoin);
+
 		
-		JLabel lblUsername = new JLabel("password");	// JLabel lblUsername = new JLabel("password");
-		lblUsername.setBounds(69, 163, 69, 20);
-		contentPane.add(lblUsername);
+		JLabel lblName_first = new JLabel("First Name");
+		lblName_first.setBounds(69, 113, 69, 20);		// 69, 210, 69, 20
+		contentPane.add(lblName_first);
 		
-		JLabel label = new JLabel("id");
-		label.setBounds(69, 113, 69, 20);
-		contentPane.add(label);
+		JLabel lblName_last = new JLabel("Last Name");
+		lblName_last.setBounds(69, 163, 69, 20);		// 69, 210, 69, 20
+		contentPane.add(lblName_last);					
 		
-		JLabel lblName = new JLabel("name");
-		lblName.setBounds(69, 210, 69, 20);
-		contentPane.add(lblName);
+		JLabel lblConatact_no = new JLabel("Phone");
+		lblConatact_no.setBounds(69, 213, 69, 20);			// 69, 304, 69, 20
+		contentPane.add(lblConatact_no);
 		
-		JLabel lbBirth = new JLabel("Birth");		
-		lbBirth.setBounds(69, 257, 69, 20);			
-		contentPane.add(lbBirth);					
+		tfFirst_name = new JTextField();
+		tfFirst_name.setColumns(10);
+		tfFirst_name.setBounds(159, 106, 186, 35);	// 159, 203, 186, 35
+		contentPane.add(tfFirst_name);
 		
-		JLabel lblPhone = new JLabel("phone");
-		lblPhone.setBounds(69, 304, 69, 20);
-		contentPane.add(lblPhone);
+		tfLast_name = new JTextField();
+		tfLast_name.setColumns(10);
+		tfLast_name.setBounds(159, 156, 186, 35);	// new
+		contentPane.add(tfLast_name);
 		
-		tfUsername = new JTextField();
-		tfUsername.setColumns(10);
-		tfUsername.setBounds(159, 106, 186, 35);
-		contentPane.add(tfUsername);
-		
-		tfPassword = new JTextField();
-		tfPassword.setColumns(10);
-		tfPassword.setBounds(159, 156, 186, 35);
-		contentPane.add(tfPassword);
-		
-		tfName = new JTextField();
-		tfName.setColumns(10);
-		tfName.setBounds(159, 203, 186, 35);
-		contentPane.add(tfName);
-		
-		tfBirth = new JTextField();
-		tfBirth.setColumns(10);
-		tfBirth.setBounds(159, 250, 186, 35);
-		contentPane.add(tfBirth);
-		
-		tfPhone = new JTextField();
-		tfPhone.setColumns(10);
-		tfPhone.setBounds(159, 297, 186, 35);
-		contentPane.add(tfPhone);
+		tfContact_no = new JTextField();
+		tfContact_no.setColumns(10);
+		tfContact_no.setBounds(159, 206, 186, 35);	// 159, 297, 186, 35
+		contentPane.add(tfContact_no);
 		
 		joinCompleteBtn = new JButton("회원가입완료");
-		joinCompleteBtn.setBounds(206, 363, 139, 29);
+		joinCompleteBtn.setBounds(206, 256, 139, 29);
 		contentPane.add(joinCompleteBtn);
 		
 		setVisible(true);
@@ -120,11 +95,15 @@ public class JoinFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Member member = new Member();
-				member.setUsername(tfUsername.getText());
-				member.setPassword(tfPassword.getText());
-				member.setName(tfName.getText());
-				member.setBirth(tfBirth.getText());
-				member.setPhone(tfPhone.getText());
+				member.setContact_no(tfContact_no.getText());
+				member.setLast_name(tfLast_name.getText());
+				member.setFirst_name(tfFirst_name.getText());
+				
+				member.setAmount_price(0);
+				member.setAccumulation_pct(0.01);
+				member.setCustomer_no("");
+				member.setMembership("bronze");
+				member.setMileage(0);
 				
 				MemberDao dao = MemberDao.getInstance();
 				int result = dao.save(member);
