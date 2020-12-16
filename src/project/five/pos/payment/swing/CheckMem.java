@@ -26,8 +26,13 @@ public class CheckMem extends JFrame {
 	static PreparedStatement ps;
 	static ResultSet rs;
 	
-	String mobileNo ="";
-	static String memberName ="";
+	static String mobileNo;
+	static String memberName;
+	static String memberGrade;
+	static double memberPct;
+	static int memberPrice;
+	static int memberMileage;
+	static boolean memberOn = false;
 	
 	PayPanel main;
 	
@@ -57,15 +62,14 @@ public class CheckMem extends JFrame {
 		JPanel chk_mem = new JPanel(new FlowLayout());
 		JButton yes_mem = new JButton("확인");
 		JButton no_mem = new JButton("취소");
-		
-		JLabel iamMem = new JLabel("멤버임");
-		
+				
 		// 다음 결제 프로세스 창
 		yes_mem.addMouseListener(new MouseAdapter() {
 					
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					
+					memberName = "";
 					mobileNo = "";
 					if(e.getButton() == MouseEvent.BUTTON1) {
 							mobileNo += first_no.getText();
@@ -73,35 +77,43 @@ public class CheckMem extends JFrame {
 							mobileNo += middle_no.getText();
 							mobileNo += "-";
 							mobileNo += last_no.getText();
-							
-							//System.out.println(mobileNo);
-							
+																				
 							try {
 								conn = DBManager.getConnection();
 
-								ps = conn.prepareStatement("SELECT last_name, first_name FROM customer "
+								ps = conn.prepareStatement("SELECT last_name, first_name, membership,"
+										+ " accumulation_pct, amount_price, mileage FROM customer "
 										+ "WHERE contact_no = ?");
 								
 								ps.setString(1, mobileNo);
 								
 								rs = ps.executeQuery();
 								
-								memberName = "";
+								
 								
 								if(rs.next()) {
 									
 									do {
 										memberName += rs.getString("last_name");
 										memberName += rs.getString("first_name");
+										memberGrade = rs.getString("membership");
+										memberPct = rs.getDouble("accumulation_pct");
+										memberPrice = rs.getInt("amount_price");
+										memberMileage = rs.getInt("mileage");
 										
 										
-//										System.out.printf("%-15s%-10s\n",
-//												rs.getString("last_name"),
-//												rs.getString("first_name")
-//												
-//												);
+										
+										System.out.printf("%-15s%-10s%-10s%-10d%-10d%-10d\n",
+												rs.getString("last_name"),
+												rs.getString("first_name"),
+												rs.getString("membership"),
+												rs.getInt("accumulation_pct"),
+												rs.getInt("amount_price"),
+												rs.getInt("mileage")
+												
+												);
 										//System.out.println(memberName);
-										
+										CheckMem.memberOn = true;
 										new Correct(main);
 								
 										dispose();
@@ -117,7 +129,6 @@ public class CheckMem extends JFrame {
 								ps.close();
 								conn.close();
 									
-
 							} catch (SQLException ex) {
 								ex.printStackTrace();
 							}
@@ -149,10 +160,7 @@ public class CheckMem extends JFrame {
 		
 		chk_mem.add(yes_mem);
 		chk_mem.add(no_mem);
-		
-		
-		
-		
+								
 		chk_membership.add(explain);
 		chk_membership.add(thr_txt);
 		chk_membership.add(chk_mem);
@@ -164,8 +172,5 @@ public class CheckMem extends JFrame {
 		
 		this.add(chk_membership, BorderLayout.CENTER);
 	}
-	
-
-
-	
+		
 }

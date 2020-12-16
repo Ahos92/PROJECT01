@@ -2,12 +2,14 @@ package project.five.pos.payment.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,16 +26,16 @@ public class Correct extends JFrame{
 		
 		setTitle("멤버쉽 확인");
 		
-        JPanel NewWindowContainer = new JPanel(new GridLayout(2,1,1,1));
+        JPanel NewWindowContainer = new JPanel();
         
         setContentPane(NewWindowContainer);
         
         JLabel NewLabel = new JLabel("멤버쉽 정보가 확인 되었습니다.");
-        JButton recognize = new JButton("체크");
-       
+             
         JPanel mem = new JPanel(new BorderLayout(0, 0));
         mem.setOpaque(false);
-        iamMem = new JLabel(CheckMem.memberName + "님 반갑습니다.\n오늘도 좋은 하루 되세요", JLabel.CENTER);
+        iamMem = new JLabel("<html>" + CheckMem.memberName + "님 반갑습니다. 오늘도 좋은 하루 되세요<br/>마일리지 : "
+        + CheckMem.memberMileage +"<br/>마일리지 사용은 1000원 이상부터 가능합니다.</html>", JLabel.CENTER);
         iamMem.setFont(new Font("Serif", Font.BOLD, 14));
         mem.add(iamMem);
         
@@ -41,24 +43,20 @@ public class Correct extends JFrame{
         
         iamMem.setForeground(Color.WHITE);
          
-		recognize.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JButton btn = (JButton) e.getSource();
-					if(btn.getText().equals("체크")) {
-						PayPanel.card.show(PayPanel.card_panel, "멤버");
-						
-						dispose();				
-				}
-			}
-			
-		});
-		
         NewWindowContainer.add(NewLabel);
-        NewWindowContainer.add(recognize);
-        
-        
+              
+        NewWindowContainer.addMouseListener(new MouseAdapter() {
+        	
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		if(e.getButton() == MouseEvent.BUTTON1)
+        			
+        			PayPanel.card.show(PayPanel.card_panel, "멤버");
+        			dispose();
+        	
+        	}
+        });
+                
         setSize(400,100);
         setResizable(false);
         setLocation(800, 400);
