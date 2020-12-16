@@ -2,13 +2,13 @@ package project.five.pos.membership.gui;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
+import project.five.pos.membership.gui.MemberListFrame;
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 import project.five.pos.membership.util.Sample;
@@ -67,7 +67,7 @@ public class MemberListFrame extends JFrame {
 
 		southPanel = new JPanel(new GridLayout(1, 2));
 		JButton btnDelete = new JButton("삭제");
-		JButton btnLogout = new JButton("로그 아웃");
+		JButton btnLogout = new JButton("로그아웃");
 		southPanel.add(btnDelete);
 		southPanel.add(btnLogout);
 		contentPane.add(southPanel, BorderLayout.SOUTH);
@@ -94,21 +94,19 @@ public class MemberListFrame extends JFrame {
 		// 4. for문 돌면서 한 행씩 데이터 집어 넣기
 		for (int i = 0; i < members.size(); i++) {
 			Vector<Object> row = new Vector<>();
-			row.addElement(members.get(i).getId());
-			row.addElement(members.get(i).getUsername());
-			row.addElement(members.get(i).getPassword());
-			row.addElement(members.get(i).getName());
-			row.addElement(members.get(i).getBirth());
-			row.addElement(members.get(i).getPhone());
-			tableModel.addRow(row); // table모델에 행 넣기
 			
-			// 12.09 추가 --------------------------------------------------
-			row.addElement(members.get(i).getAmount());
-			row.addElement(members.get(i).getGrade());
-			row.addElement(members.get(i).getDiscount_pct());
-			row.addElement(members.get(i).getSave_pct());
+			row.addElement(members.get(i).getCustomer_no());
+			row.addElement(members.get(i).getLast_name());
+			row.addElement(members.get(i).getFirst_name());
+			row.addElement(members.get(i).getContact_no());
+			row.addElement(members.get(i).getAmount_price());
+			row.addElement(members.get(i).getMembership());
+			row.addElement(members.get(i).getAccumulation_pct());
+			row.addElement(members.get(i).getMileage());
+			
+			
+			
 			tableModel.addRow(row); // table모델에 행 넣기
-		
 		}
 
 		JTable table = new JTable(tableModel);
@@ -131,7 +129,8 @@ public class MemberListFrame extends JFrame {
 				tableModel.removeRow(row);
 				//DB제거
 				MemberDao dao = MemberDao.getInstance();
-//				dao.delete((int)id);
+			//	delete 구현하기	
+				dao.delete(username);
 			}
 		});
 
