@@ -76,21 +76,16 @@ public class PaidByCard extends JFrame{
 					String selectedCard = selectCode.getSelectedItem().toString();
 					
 					if(selectedCard.contains("IBK")) {
-						cardId = selectedCard.substring(1, 4);
-						// 테스트 코드
-						//System.out.println(cardId);
+						cardId = selectedCard.substring(1, 4);						
 					}
 					else {
-						cardId = selectedCard.substring(1, 3);
-						//System.out.println(cardId);
+						cardId = selectedCard.substring(1, 3);						
 					}
 					
 					cardNumber += first_cardNum.getText();
 					cardNumber += "-****-****-";
 					cardNumber += last_cardNum.getText();
-					// 테스트 코드
-					//System.out.println(cardNumber);
-					
+									
 					new SuccessCard();
 					dispose();
 					

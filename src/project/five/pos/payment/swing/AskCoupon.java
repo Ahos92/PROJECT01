@@ -43,27 +43,25 @@ public class AskCoupon extends JFrame {
 	
 	static Connection conn;
 	static PreparedStatement ps;
-	//static PreparedStatement ps2;
 	static ResultSet rs;
-	//static ResultSet rs2;
-	
-	
+		
 	int price;
 	static int change;
+	int actual_expenditure;
 	
 	static int couponPrice;
 	static int couponNo = 0;
 	static String couponName;
 	static String startDate;
 	static String expiredDate;
+	static LocalDate today;
 	
 	static int device_id = 1234;
 	
 	public AskCoupon(int price) {
 		this.price = price;
-		Container c = this.getContentPane();
 
-		LocalDate today = LocalDate.now();
+		today = LocalDate.now();
 		
 		setTitle("쿠폰");
 		
@@ -82,6 +80,18 @@ public class AskCoupon extends JFrame {
 		JPanel yesnobtn = new JPanel(new FlowLayout());
 		
 		JButton yes = new JButton("예");
+		
+		// 다음 결제 프로세스 창
+		yes.addMouseListener(new MouseAdapter() {
+					
+			@Override
+			public void mouseClicked(MouseEvent e) {
+						
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					((CardLayout)panel04.getLayout()).next(panel04);
+				}
+			}
+		});
 		
 		JPanel result_panel = new JPanel(new GridLayout(3,1,0,0));
 		result_panel.setOpaque(false);
@@ -112,86 +122,49 @@ public class AskCoupon extends JFrame {
 		JButton no = new JButton("아니요");
 		
 		no.addActionListener(new ActionListener() {
-
-			
-			
+						
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				
 				JButton btn = (JButton) e.getSource();
 				if(btn.getText().equals("아니요")) {
-															
-					try {
-						conn = DBManager.getConnection();
-						
-						String sql = "INSERT INTO payment VALUES (payy_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
-						
-						ps = conn.prepareStatement(sql);
-						
-						ps.setString(1, ClickedBtnAction.getPaymentType().toString());
-						ps.setString(2, today.toString());
-						ps.setString(3, PaidByCard.cardId);
-						ps.setString(4, PaidByCard.cardNumber);
-						ps.setInt(5, PaidByCash.i_money);
-						ps.setInt(6, couponNo);
-						ps.setInt(7, device_id);
-						
-						rs = ps.executeQuery();
-						
-						if(rs != null) rs.close();
-						if(ps != null) ps.close();
-						if(conn != null) conn.close();
-						
-						PaidByCard.cardId = "";
-						PaidByCard.cardNumber = "";
-						PaidByCash.i_money = 0;
-						couponNo = 0;
-						
-					} catch (SQLException e1) {					
-						e1.printStackTrace();
-					}
-																												
-					PayPanel.card_btn.setText("카드");
-					PayPanel.card_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-					PayPanel.cash_btn.setEnabled(true);
-						
-					PayPanel.cash_btn.setText("현금");
-					PayPanel.cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-					PayPanel.card_btn.setEnabled(true);
+					actual_expenditure = price;
 					
-					PayPanel.main_card.show(PayPanel.main_center_panel, "결제후");
-					dispose();				
-			}
-				
-			}
-			
-		});
-		
-		// 다음 결제 프로세스 창
-		yes.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				if(e.getButton() == MouseEvent.BUTTON1) {
-					((CardLayout)panel04.getLayout()).next(panel04);
+					if(CheckMem.memberOn == true && CheckMem.memberMileage > 1000) {
+						new AskMileage(today, actual_expenditure, couponNo, device_id);
+						
+						dispose();	
+						
+					}else if(CheckMem.memberOn == true){
+						
+						// 결제 정보 DB 전송
+						new PaymentQuery(today, actual_expenditure, couponNo, device_id);						
+						
+						// 적립 + 등급업 추가						
+						new MembershipQuery(actual_expenditure);
+
+						
+						// 메인 패널 초기화
+						new ResetMain();
+						dispose();	
+					}
+					
+					else {
+						
+						// 결제 정보 DB 전송
+						new PaymentQuery(today, actual_expenditure, couponNo, device_id);						
+																													
+						// 메인 패널 초기화
+						new ResetMain();
+						dispose();	
+					}
 				}
-			}
-		});
-		
-		// 결제 취소 버튼 (취소 클래스화 하기)
-		no.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
 				
-				if(e.getButton() == MouseEvent.BUTTON1) {
-					dispose();
-				}
 			}
+			
 		});
-		
+				
 		JLabel input_label = new JLabel("쿠폰번호를 입력해주세요", SwingConstants.CENTER);
 		
 		JPanel input_field = new JPanel(null);
@@ -255,47 +228,18 @@ public class AskCoupon extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				try {
-					conn = DBManager.getConnection();
-					
-					String sql = "INSERT INTO payment VALUES (payy_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
-					
-					ps = conn.prepareStatement(sql);
-					
-					ps.setString(1, ClickedBtnAction.getPaymentType().toString());
-					ps.setString(2, today.toString());
-					ps.setString(3, PaidByCard.cardId);
-					ps.setString(4, PaidByCard.cardNumber);
-					ps.setInt(5, PaidByCash.i_money);
-					ps.setInt(6, AskCoupon.couponNo);
-					ps.setInt(7, device_id);
-					
-					rs = ps.executeQuery();
-					
-					if(rs != null) rs.close();
-					if(ps != null) ps.close();
-					if(conn != null)conn.close();
-					
-					PaidByCard.cardId = "";
-					PaidByCard.cardNumber = "";
-					PaidByCash.i_money = 0;
-					couponNo = 0;
-					
-				} catch (SQLException e1) {					
-					e1.printStackTrace();
+				// 결제 정보 DB 전송
+				new PaymentQuery(today, actual_expenditure, couponNo, device_id);
+				
+				// 멤버 일때 적립
+				if(CheckMem.memberOn == true) {
+					new MembershipQuery(actual_expenditure);
 				}
 				
-				PayPanel.card_btn.setText("카드");
-				PayPanel.card_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-				PayPanel.cash_btn.setEnabled(true);
-					
-				PayPanel.cash_btn.setText("현금");
-				PayPanel.cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-				PayPanel.card_btn.setEnabled(true);
+				// 메인 패널 초기화
+				new ResetMain();	
 				
-				PayPanel.main_card.show(PayPanel.main_center_panel, "결제후");		
-				
-				
+				// 결제 성공
 				new SuccessPayment();
 				dispose();
 			}
@@ -319,6 +263,7 @@ public class AskCoupon extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton() == MouseEvent.BUTTON1) {
+					
 					//버튼 기능(함수 ClickedBtnAction)
 					PayPanel.main_card.show(PayPanel.main_center_panel, "결제전");	
 					
@@ -360,17 +305,10 @@ public class AskCoupon extends JFrame {
 										AskCoupon.couponPrice = rs.getInt("coupon_price");
 										AskCoupon.startDate = rs.getString("start_date").substring(0, 10);
 										AskCoupon.expiredDate = rs.getString("expired_date").substring(0, 10);
-										
-										// 테스트 코드
-//										System.out.printf("%-15s%-10d%-10s%-10s\n",
-//												rs.getString("coupon_name"),
-//												rs.getInt("coupon_price"),
-//												rs.getString("start_date").substring(0, 10),
-//												rs.getString("expired_date").substring(0, 10)
-//												);
-																												
+																																															
 										LocalDate stDate = LocalDate.parse(AskCoupon.startDate);
 										LocalDate exDate = LocalDate.parse(AskCoupon.expiredDate);
+										
 										// 기한이 지난 쿠폰
 										if(today.isBefore(stDate) || today.isAfter(exDate)) {
 											new ExpiredCoupon();
@@ -380,25 +318,21 @@ public class AskCoupon extends JFrame {
 										
 										((CardLayout)coupon_img.getLayout()).show(coupon_img, AskCoupon.couponName);
 										
+										//실 지출액
+										actual_expenditure = (price - AskCoupon.couponPrice);
 										// 거스름돈 계산
-										change = PaidByCash.i_money - (price - AskCoupon.couponPrice);
+										change = PaidByCash.i_money - actual_expenditure;
 										
 										if(ClickedBtnAction.getPaymentType().toString().contains("CARD")) {
-											JLabel calc_label2 = new JLabel("<html>카드 결제 입니다<br/>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + (price - AskCoupon.couponPrice) + " (원)<html>", SwingConstants.CENTER);
+											JLabel calc_label2 = new JLabel("<html>카드 결제 입니다<br/>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + actual_expenditure + " (원)<html>", SwingConstants.CENTER);
 											total_calc.add(calc_label2);
 											}
 										else {
-											JLabel calc_label = new JLabel("<html>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + (price - AskCoupon.couponPrice) + " (원)<br/>입금 금액 : " + PaidByCash.i_money + "(원)"
+											JLabel calc_label = new JLabel("<html>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + actual_expenditure + " (원)<br/>입금 금액 : " + PaidByCash.i_money + "(원)"
 													+ "<br/>거스름돈 : "+  change + "(원)</html>", SwingConstants.CENTER);
 											total_calc.add(calc_label);
 										}
-										
-										
-										
-										
-										// 테스트 코드
-										//System.out.println(change);
-										
+																																																												
 										// - 세번째 패널
 										coupon_name.add(coupon_label);
 										left_coupon.add(coupon_name);
