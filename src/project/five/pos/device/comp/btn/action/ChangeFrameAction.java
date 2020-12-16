@@ -6,9 +6,13 @@ import javax.swing.*;
 
 import project.five.pos.MainDisplay;
 import project.five.pos.device.*;
+import project.five.pos.device.comp.dialog.ConfirmDialog;
+import project.five.pos.device.comp.dialog.LoginDialog;
+import project.five.pos.device.comp.dialog.ManagerSignUpDialog;
+import project.five.pos.device.comp.dialog.SettleDialog;
 import project.five.pos.manage.ProductManage;
 import project.five.pos.membership.gui.*;
-import project.five.pos.sale.Sale;
+import project.five.pos.sale.SaleDisplay;
 
 public class ChangeFrameAction implements ActionListener{
 
@@ -65,9 +69,12 @@ public class ChangeFrameAction implements ActionListener{
 			
 		} else if(check.equals("정산")) {
 			new SettleDialog(present_frame, check);
-		} else if (check.equals("판매")) {
-			changeable_frame = new Sale();
-		}
+			
+		} else if (check.equals("판매") 
+				|| check.equals("취소하기")) {
+			changeable_frame = new SaleDisplay();
+			
+		} 
 
 		// dialog 띄울 때 변할 화면 Null
 		try {

@@ -28,19 +28,16 @@ import project.five.pos.TestSwingTools;
 import project.five.pos.db.MenuDAO;
 import project.five.pos.db.PosVO;
 
-public class Sale extends JFrame{
+public class SaleDisplay extends JFrame{
 	int count = 0;
     String show = "";
-    
-	
-	SaleDAO dao;
-	
-	public Sale() {
+ 
+	public SaleDisplay() {
 		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
         Container con = this.getContentPane();
         JScrollPane scroll;
         
-		dao = new SaleDAO();
+	
 		// 메뉴 패널
 		JPanel center_panel = new JPanel();
 		add(center_panel);
@@ -184,7 +181,7 @@ public class Sale extends JFrame{
 	
 	
 	public static void main(String[] args) {
-		new Sale();
+		new SaleDisplay();
 	}
 	
 }

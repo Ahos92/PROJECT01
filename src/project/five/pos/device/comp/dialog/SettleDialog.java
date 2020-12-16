@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.comp.dialog;
 
 import java.awt.BorderLayout;
 

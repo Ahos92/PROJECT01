@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class SaleBtn extends JButton {
+public class CartBtn extends JButton {
 
-	public SaleBtn(String name, ActionListener action) {
+	public CartBtn(String name, ActionListener action) {
 		setText(name);
 		addActionListener(action);
 	}

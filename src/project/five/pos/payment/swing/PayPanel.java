@@ -25,9 +25,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import project.five.pos.db.PosVO;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.payment.swing.btn.action.BtnAction;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
-import project.five.pos.sale.SaleDAO;
+import project.five.pos.sale.CartDAO;
 
 public class PayPanel extends JFrame {
 	
@@ -134,6 +136,8 @@ public class PayPanel extends JFrame {
 		cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		
 		JButton cancel_btn = new JButton("취소하기");
+		cancel_btn.addActionListener(new ChangeFrameAction(this));
+		
 		JButton payment_btn = new JButton("결제하기");
 		payment_btn.setEnabled(false);
 		

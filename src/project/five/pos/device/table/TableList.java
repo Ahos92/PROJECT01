@@ -25,8 +25,7 @@ public class TableList {
 			return header;
 
 		} else if (btn_text.equals("결제 내역 조회")) {
-			String[] header = {"결제 번호", "결제 수단", "카드 번호", "결제일", "결제 금액", "쿠폰 사용"};	
-			System.err.println("미구현 : PAYMENT 파트 결합");
+			String[] header = {"결제 번호", "결제 수단", "결제일", "은행 이름", "카드 번호", "결제 금액", "사용 금액", "쿠폰 사용"};	
 			return header;
 
 		} else if (btn_text.equals("회원 정보 조회")) {
@@ -55,17 +54,21 @@ public class TableList {
 		} else if (btn_text.equals("결제 내역 조회")) { // Payment table 조회
 			for (int i = 0; i < row_length; i++) {
 				column = 0;
-				lookUp_list[i][column] = "Payment_no_test_" + i;//searchlist.get(i).getPayment_no();
-				lookUp_list[i][++column] = "Coupon_no_test_" + i;//searchlist.get(i).getCoupon_no();
-				lookUp_list[i][++column] = "Payment_type_test_" + i;//searchlist.get(i).getPayment_type();
-				lookUp_list[i][++column] = "Payment_date_test_" + i;//searchlist.get(i).getPayment_date ();
+				lookUp_list[i][column] = searchlist.get(i).getPayment_no();
+				lookUp_list[i][++column] = searchlist.get(i).getPayment_type();
+				lookUp_list[i][++column] = searchlist.get(i).getPayment_date();
+				lookUp_list[i][++column] = searchlist.get(i).getBank_id();
+				lookUp_list[i][++column] = searchlist.get(i).getCard_num();
+				lookUp_list[i][++column] = searchlist.get(i).getAmount_of_money();
+				lookUp_list[i][++column] = searchlist.get(i).getActual_expenditure();
+				lookUp_list[i][++column] = searchlist.get(i).getCoupon_no();
 			};
 			
 		} else if (btn_text.equals("회원 정보 조회")) { // customer table 조회
 			for (int i = 0; i < row_length; i++) {
 				column = 0;
 				lookUp_list[i][column] = searchlist.get(i).getCustomer_no();
-				lookUp_list[i][++column] = searchlist.get(i).getM_first_name() + searchlist.get(i).getM_last_name();
+				lookUp_list[i][++column] = searchlist.get(i).getM_last_name() + searchlist.get(i).getM_first_name();
 				lookUp_list[i][++column] = searchlist.get(i).getM_contact_no();
 				lookUp_list[i][++column] = searchlist.get(i).getMembership();
 				lookUp_list[i][++column] = searchlist.get(i).getAmount_price();

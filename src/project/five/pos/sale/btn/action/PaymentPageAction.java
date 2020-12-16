@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 import project.five.pos.payment.swing.PayPanel;
-import project.five.pos.sale.SaleDAO;
+import project.five.pos.sale.CartDAO;
 import project.five.pos.db.PosVO;
 
 public class PaymentPageAction implements ActionListener{
@@ -26,7 +26,7 @@ public class PaymentPageAction implements ActionListener{
 
 	ArrayList<String> lists;
 
-	SaleDAO dao = new SaleDAO(); 
+	CartDAO dao = new CartDAO(); 
 
 	public PaymentPageAction(JFrame present_frame, 
 			DefaultTableModel dtm, int order_num, int order_cnt, String device_id) {

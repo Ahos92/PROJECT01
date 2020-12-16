@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import project.five.pos.sale.Sale;
+import project.five.pos.sale.SaleDisplay;
 
 public class CancleAction implements ActionListener {
 		
@@ -25,7 +25,7 @@ public class CancleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
 		try {
-			new Sale();
+			new SaleDisplay();
 			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {

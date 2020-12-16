@@ -1,4 +1,4 @@
-package project.five.pos.device;
+package project.five.pos.device.comp.dialog;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
 import project.five.pos.db.PosVO;
+import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.DeviceLab;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.action.PromptAction;

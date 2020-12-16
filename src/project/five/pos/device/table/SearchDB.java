@@ -2,7 +2,8 @@ package project.five.pos.device.table;
 
 import java.util.ArrayList;
 
-import project.five.pos.sale.SaleDAO;
+import project.five.pos.sale.CartDAO;
+import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
 import project.five.pos.membership.dao.MemberDao;
 
@@ -13,21 +14,22 @@ public class SearchDB {
 		this.btn_text = btn_text;
 	}
 	
-	SaleDAO sale;
+	CartDAO cart;
 	MemberDao member;
+	PosDAO pos;
 	ArrayList<PosVO> search_data;
 
 	public ArrayList<PosVO> allData() {
 		
-		sale = new SaleDAO();
+		cart = new CartDAO();
 		member = new MemberDao();
+		pos = new PosDAO();
 		
 		if (btn_text.equals("판매 내역 조회")) {
-			search_data = sale.searchAllCart();
+			search_data = cart.searchAllCart();
 			
 		} else if (btn_text.equals("결제 내역 조회")) {
-			 // payment 조회 쿼리 메서드 대입하기
-			search_data = new ArrayList<>(10);
+			search_data = pos.searchAllPayment();
 			
 		} else if (btn_text.equals("회원 정보 조회")) {	
 			search_data = member.findByAll();
@@ -42,20 +44,19 @@ public class SearchDB {
 	 */
 	public ArrayList<PosVO> searchData(String category, String data) {
 		
-		sale = new SaleDAO();
+		cart = new CartDAO();
 		member = new MemberDao();
+		pos = new PosDAO();
 		
 		if (btn_text.equals("판매 내역 조회")) {
-			search_data = sale.searchCart(category, data);
-			
+			search_data = cart.searchCart(category, data);
+		
 		} else if (btn_text.equals("결제 내역 조회")) {
-			 // payment 조회 쿼리 메서드 대입하기
-			search_data = new ArrayList<>(10);
-			
+			search_data = pos.searchPayment(category, data);
+
 		} else if (btn_text.equals("회원 정보 조회")) {
-			// customer 조회 쿼리 메서드 대입하기
-			search_data = new ArrayList<>(10); 
-			
+			search_data = member.searchMember(category, data); 
+		
 		}
 		
 		return search_data;

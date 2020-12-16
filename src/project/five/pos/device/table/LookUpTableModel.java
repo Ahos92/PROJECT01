@@ -42,20 +42,33 @@ public class LookUpTableModel extends DefaultTableModel {
 	 	선택된 컬럼 기준으로 잡아주기
 	 		- 정렬 기준 추가 가능 	
 	 */
-	private String selectedCategory (String btnNameToLookUp ,String selectedItem) {
-		category = null;
-		
-		if (btnNameToLookUp.equals("판매 내역 조회")) {
-			
+	private String selectedCategory (String selectedItem) {
 			if (selectedItem.equals("주문 번호")) {
-				category = "order_no";
+				return "order_no";
 				
 			} else if (selectedItem.equals("상품 이름")) {
-				category = "product_name";
+				return "product_name";
+	
+			} else if (selectedItem.equals("이름")) {
+				return "last_name||first_name";
+				
+			} else if (selectedItem.equals("전화번호")) {
+				return "contact_no";
+				
+			} else if (selectedItem.equals("등급")) {
+				return "membership";
+				
+			} else if (selectedItem.equals("결제일")) {
+				return "payment_date";
+				
+			} else if (selectedItem.equals("결제 금액")) {
+				return "Amount_of_money";
+				
+			} else if (selectedItem.equals("결제 수단")) {
+				return "payment_type";
 			}
-		} 
-		
-		return category;
+
+		return null;
 	}
 
 	/*
@@ -89,7 +102,7 @@ public class LookUpTableModel extends DefaultTableModel {
 	public LookUpTableModel(String btn_text, JComboBox<String> select_column, JTextField select_data) {	
 		selected_item = select_column.getSelectedItem().toString();
 		
-		category = selectedCategory(btn_text, selected_item);
+		category = selectedCategory(selected_item);
 		data = "\'" + select_data.getText() + "\'";
 
 		search_data = new SearchDB(btn_text).searchData(category, data);

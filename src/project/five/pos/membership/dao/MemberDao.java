@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import project.five.pos.db.DBManager;
 import project.five.pos.db.PosVO;
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
@@ -126,5 +127,43 @@ public class MemberDao {
 		}
 
 		return null;
+	}
+	
+	public ArrayList<PosVO> searchMember(String column_name, String column_data) {
+
+		ArrayList<PosVO> members = new ArrayList<>();
+
+		conn = DBManager.getConnection();
+
+		try {
+			pstmt = conn.prepareStatement("select * "
+										+ "from customer "
+										+ "where " + column_name + " = "+ column_data);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				PosVO member = new PosVO();
+				
+				member.setCustomer_no(rs.getString("customer_no"));
+				member.setM_first_name(rs.getString("first_name"));
+				member.setM_last_name(rs.getString("last_name"));
+				member.setM_contact_no(rs.getString("contact_no"));
+				member.setAmount_price(rs.getInt("Amount_price"));
+				member.setMembership(rs.getString("membership"));
+				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));
+				member.setMileage(rs.getInt("mileage"));
+				
+				members.add(member);
+			}
+		
+			DBManager.p_r_c_Close(pstmt, rs, conn);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return members;
+
 	}
 }

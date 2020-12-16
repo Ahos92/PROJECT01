@@ -30,13 +30,15 @@ public class PosVO {
 	private String saled_date;
 
 	// product table
-	private int product_no; // cart fk
+	private int product_no;
 	private String product_name;
 	private int product_price;
 	private int product_count;
 	private String product_category;
 	private String termsofcondition;
 	
+	// customer table
+	private String customer_no;
 	private String m_first_name;
 	private String m_last_name;
 	private String m_contact_no;
@@ -44,11 +46,82 @@ public class PosVO {
 	private String membership;
 	private double accumulation_pct;
 	private int mileage;
-	private String customer_no;
 
-
-
+	// payment table
+	private int payment_no;
+	private String payment_type;
+	private String payment_date;
+	private String bank_id;
+	private String card_num;
+	private int amount_of_money;
+	private int actual_expenditure;
+	private int coupon_no;
 	
+	
+	public int getActual_expenditure() {
+		return actual_expenditure;
+	}
+
+	public void setActual_expenditure(int actual_expenditure) {
+		this.actual_expenditure = actual_expenditure;
+	}
+
+	public int getPayment_no() {
+		return payment_no;
+	}
+
+	public void setPayment_no(int payment_no) {
+		this.payment_no = payment_no;
+	}
+
+	public String getPayment_type() {
+		return payment_type;
+	}
+
+	public void setPayment_type(String payment_type) {
+		this.payment_type = payment_type;
+	}
+
+	public String getPayment_date() {
+		return payment_date;
+	}
+
+	public void setPayment_date(String payment_date) {
+		this.payment_date = payment_date;
+	}
+
+	public String getBank_id() {
+		return bank_id;
+	}
+
+	public void setBank_id(String bank_id) {
+		this.bank_id = bank_id;
+	}
+
+	public String getCard_num() {
+		return card_num;
+	}
+
+	public void setCard_num(String card_num) {
+		this.card_num = card_num;
+	}
+
+	public int getAmount_of_money() {
+		return amount_of_money;
+	}
+
+	public void setAmount_of_money(int amount_of_money) {
+		this.amount_of_money = amount_of_money;
+	}
+
+	public int getCoupon_no() {
+		return coupon_no;
+	}
+
+	public void setCoupon_no(int coupon_no) {
+		this.coupon_no = coupon_no;
+	}
+
 	public String getSaled_date() {
 		return saled_date;
 	}

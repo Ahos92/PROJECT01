@@ -14,17 +14,17 @@ import java.util.Date;
 import project.five.pos.db.DBManager;
 import project.five.pos.db.PosVO;
 
-public class SaleDAO{
+public class CartDAO{
 
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
 
-	PosVO posVo;
+	PosVO cart;
 
 	ArrayList<PosVO> cartlist;
 
-	public SaleDAO() {
+	public CartDAO() {
 
 	}
 
@@ -34,7 +34,7 @@ public class SaleDAO{
 	 */
 	public PosVO testOrder(String name, String opt, int count) {
 		// 상품 데이터 담을 객체
-		posVo = new PosVO();
+		cart = new PosVO();
 
 		conn = DBManager.getConnection();
 
@@ -65,11 +65,11 @@ public class SaleDAO{
 				String pName = rs.getString("product_name");
 				String option = rs.getString("termsofcondition"); 
 
-				posVo.setProduct_no(rs.getInt("product_no"));
-				posVo.setProduct_name(pName);
-				posVo.setTermsofcondition(option);
-				posVo.setProduct_price(rs.getInt("product_price"));
-				posVo.setSelected_item(count);
+				cart.setProduct_no(rs.getInt("product_no"));
+				cart.setProduct_name(pName);
+				cart.setTermsofcondition(option);
+				cart.setProduct_price(rs.getInt("product_price"));
+				cart.setSelected_item(count);
 
 				System.out.printf("%s(%s) %d개 주문\n", pName, option, count);
 			}
@@ -80,7 +80,7 @@ public class SaleDAO{
 			e.printStackTrace();
 		}
 
-		return posVo;
+		return cart;
 	}
 
 
@@ -97,7 +97,7 @@ public class SaleDAO{
 		try {
 			conn = DBManager.getConnection();
 
-			//conn.setAutoCommit(false);
+			conn.setAutoCommit(false);
 
 			String sql = "insert into cart "
 						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
@@ -183,15 +183,15 @@ public class SaleDAO{
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				posVo = new PosVO();
+				cart = new PosVO();
 				
-				posVo.setCart_no(rs.getInt("cart_no"));
-				posVo.setOrder_no(rs.getInt("order_no"));
-				posVo.setProduct_name(rs.getString("product_name"));
-				posVo.setSelected_item(rs.getInt("selected_item"));
-				posVo.setTotal_price(rs.getInt("total_price"));
+				cart.setCart_no(rs.getInt("cart_no"));
+				cart.setOrder_no(rs.getInt("order_no"));
+				cart.setProduct_name(rs.getString("product_name"));
+				cart.setSelected_item(rs.getInt("selected_item"));
+				cart.setTotal_price(rs.getInt("total_price"));
 				
-				cartlist.add(posVo);
+				cartlist.add(cart);
 			}
 		
 			DBManager.p_r_c_Close(ps, rs, conn);
@@ -221,28 +221,29 @@ public class SaleDAO{
 					+ " from cart inner join product using(product_no)"
 					+ " where " + column_name + " = " + column_data
 					+ " order by cart_no asc");
-
-			rs = ps.executeQuery();
-
+			try {
+				rs = ps.executeQuery();
+			} catch (SQLSyntaxErrorException sse) {
+				System.err.println("잘못된 입력");
+			}
 			while (rs.next()) {
-				posVo = new PosVO();
+				cart = new PosVO();
 				
-				posVo.setCart_no(rs.getInt("cart_no"));
-				posVo.setOrder_no(rs.getInt("order_no"));
-				posVo.setProduct_name(rs.getString("product_name"));
-				posVo.setTermsofcondition(rs.getString("termsofcondition"));
-				posVo.setSelected_item(rs.getInt("selected_item"));
-				posVo.setTotal_price(rs.getInt("total_price"));
+				cart.setCart_no(rs.getInt("cart_no"));
+				cart.setOrder_no(rs.getInt("order_no"));
+				cart.setProduct_name(rs.getString("product_name"));
+				cart.setTermsofcondition(rs.getString("termsofcondition"));
+				cart.setSelected_item(rs.getInt("selected_item"));
+				cart.setTotal_price(rs.getInt("total_price"));
 				
-				cartlist.add(posVo);
+				cartlist.add(cart);
 			}
 		
 			DBManager.p_r_c_Close(ps, rs, conn);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("잘못된 입력");
 		}
-
 		return cartlist;
 
 	}
@@ -303,10 +304,8 @@ public class SaleDAO{
 		return cnt;
 	}
 	
-	
-	
 //	public static void main(String[] args) {
-//		SaleDAO dao = new SaleDAO();
-//		System.out.println(dao.MaxOrderNumber());
+//		CartDAO dao = new CartDAO();
+//		System.out.println(dao.searchMember("last_name||first_name", "\'김영호\'"));
 //	}
 }
