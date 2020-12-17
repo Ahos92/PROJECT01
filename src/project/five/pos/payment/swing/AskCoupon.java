@@ -3,7 +3,6 @@ package project.five.pos.payment.swing;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -14,25 +13,24 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
-import project.five.pos.payment.swing.btn.action.NumberField;
 
 // 주의할점
 //라벨에 버튼 넣을수 없음 = 둘 다 컴포넌트 이기 때문에
@@ -50,18 +48,28 @@ public class AskCoupon extends JFrame {
 	int actual_expenditure;
 	
 	static int couponPrice;
-	static int couponNo = 0;
+	static String couponNo;
 	static String couponName;
+
 	static String startDate;
 	static String expiredDate;
+
 	static LocalDate today;
+	static LocalDateTime today2;
+	static Timestamp tstp2;
 	
 	static int device_id = 1004;
 	
 	public AskCoupon(int price) {
 		this.price = price;
-
+		
+		// 쿠폰 날짜 비교
 		today = LocalDate.now();
+		
+		// 결제 시간 출력용
+		today2 =LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+		
+		tstp2 = Timestamp.valueOf(today2);
 		
 		setTitle("쿠폰");
 		
@@ -131,32 +139,43 @@ public class AskCoupon extends JFrame {
 				if(btn.getText().equals("아니요")) {
 					actual_expenditure = price;
 					
-					if(CheckMem.memberOn == true && CheckMem.memberMileage > 1000) {
-						new AskMileage(today, actual_expenditure, couponNo, device_id);
+					if(CheckMem.memberOn == true && CheckMem.memberMileage >= 1000) {
+						new AskMileage(tstp2, price, actual_expenditure, couponNo, device_id);
 						
 						dispose();	
 						
 					}else if(CheckMem.memberOn == true){
 						
 						// 결제 정보 DB 전송
-						new PaymentQuery(today, actual_expenditure, couponNo, device_id);						
+						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
 						
 						// 적립 + 등급업 추가						
 						new MembershipQuery(actual_expenditure);
 
 						
+						
 						// 메인 패널 초기화
 						new ResetMain();
+						
+						// 결제 성공
+						new SuccessPayment();
+						
 						dispose();	
 					}
 					
 					else {
 						
 						// 결제 정보 DB 전송
-						new PaymentQuery(today, actual_expenditure, couponNo, device_id);						
-																													
+						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
+						
+						
+						
 						// 메인 패널 초기화
 						new ResetMain();
+						
+						// 결제 성공
+						new SuccessPayment();
+						
 						dispose();	
 					}
 				}
@@ -229,13 +248,16 @@ public class AskCoupon extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				// 결제 정보 DB 전송
-				new PaymentQuery(today, actual_expenditure, couponNo, device_id);
+				new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);
 				
 				// 멤버 일때 적립
 				if(CheckMem.memberOn == true) {
 					new MembershipQuery(actual_expenditure);
 				}
 				
+				//쿠폰번호 초기화
+				couponNo = "";
+								
 				// 메인 패널 초기화
 				new ResetMain();	
 				
@@ -278,10 +300,10 @@ public class AskCoupon extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					
-					couponNo = 0;
+					
 					
 					if(e.getButton() == MouseEvent.BUTTON1) {
-							couponNo = Integer.parseInt(input_text.getText());
+							couponNo = input_text.getText();
 							
 							try {
 								conn = DBManager.getConnection();
@@ -289,7 +311,7 @@ public class AskCoupon extends JFrame {
 								ps = conn.prepareStatement("SELECT * FROM coupon "
 										+ "WHERE coupon_no = ?");
 								
-								ps.setInt(1, couponNo);
+								ps.setString(1, couponNo);
 								
 								rs = ps.executeQuery();
 								
@@ -300,7 +322,7 @@ public class AskCoupon extends JFrame {
 								if(rs.next()) {
 									
 									do {
-										AskCoupon.couponNo = rs.getInt("coupon_no");
+										AskCoupon.couponNo = rs.getString("coupon_no");
 										AskCoupon.couponName = rs.getString("coupon_name");
 										AskCoupon.couponPrice = rs.getInt("coupon_price");
 										AskCoupon.startDate = rs.getString("start_date").substring(0, 10);

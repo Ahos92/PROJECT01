@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
@@ -23,9 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import project.five.pos.db.DBManager;
-import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
-
 public class AskMileage extends JFrame{
 	
 	static Connection conn;
@@ -33,15 +30,18 @@ public class AskMileage extends JFrame{
 	static ResultSet rs;
 
 	LocalDate today;
+	Timestamp tstp2;
+	int price;
 	int actual_expenditure;
-	int couponNo;
+	String couponNo;
 	int device_id;
 	
 	static int ml_as_you_wish = 0;
 	static int expenditure_ml = 0;
 	
-	public AskMileage(LocalDate today, int actual_expenditure, int couponNo, int device_id) {
-		this.today = today;
+	public AskMileage(Timestamp tstp2, int price, int actual_expenditure, String couponNo, int device_id) {
+		this.tstp2 = tstp2;
+		this.price = price;
 		this.actual_expenditure = actual_expenditure;
 		this.couponNo = couponNo;
 		this.device_id = device_id;
@@ -88,13 +88,17 @@ public class AskMileage extends JFrame{
 				if(btn.getText().equals("아니요")) {
 										
 					// 결제 정보 DB 전송
-					new PaymentQuery(today, actual_expenditure, couponNo, device_id);
+					new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);
 					
 					// 적립 + 등급업 추가						
 					new MembershipQuery(actual_expenditure);
 					
 					// 메인 패널 초기화																							
 					new ResetMain();
+					
+					// 결제 성공
+					new SuccessPayment();
+					
 					dispose();
 					
 					
@@ -161,13 +165,20 @@ public class AskMileage extends JFrame{
 				if(btn.getText().equals("확인")) {
 																
 					// 결제 정보 DB 전송 (마일리지 적용값 전송)
-					new PaymentQuery(today, expenditure_ml, couponNo, device_id);
+					new PaymentQuery(tstp2, price, expenditure_ml, couponNo, device_id);
 					
 					// 적립 + 등급업 추가 (마일리지 적용 금액)						
 					new MembershipQuery(expenditure_ml, ml_as_you_wish);
 					
+					//마일리지 입력값 초기화
+					ml_as_you_wish = 0;
+					
 					// 메인 패널 초기화
 					new ResetMain();
+					
+					// 결제 성공
+					new SuccessPayment();
+					
 					dispose();	
 					
 				}
@@ -194,6 +205,7 @@ public class AskMileage extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				
 				if(e.getButton() == MouseEvent.BUTTON1) {
 					
@@ -227,6 +239,7 @@ public class AskMileage extends JFrame{
 					}
 																									
 				}
+				
 			}
 		});
 		

@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+
 
 import project.five.pos.db.DBManager;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
@@ -15,14 +16,16 @@ public class PaymentQuery {
 	static PreparedStatement ps;
 	static ResultSet rs;
 	
-	LocalDate today;
-	int actual_expenditure;
-	int couponNo;
-	int device_id;
 
+	Timestamp tstp2;
+	int price;
+	int actual_expenditure;
+	String couponNo;
+	int device_id;
 	
-	public PaymentQuery(LocalDate today, int actual_expenditure, int couponNo, int device_id) {
-		this.today = today;
+	public PaymentQuery(Timestamp tstp2, int price, int actual_expenditure, String couponNo, int device_id) {
+		this.tstp2 = tstp2;
+		this.price = price;
 		this.actual_expenditure = actual_expenditure;
 		this.couponNo = couponNo;
 		this.device_id = device_id;
@@ -31,18 +34,22 @@ public class PaymentQuery {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "INSERT INTO payment VALUES (payy_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO payment VALUES (payy_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, ClickedBtnAction.getPaymentType().toString());
-			ps.setString(2, today.toString());
+			ps.setObject(2, tstp2);
 			ps.setString(3, PaidByCard.cardId);
 			ps.setString(4, PaidByCard.cardNumber);
 			ps.setInt(5, PaidByCash.i_money);
-			ps.setInt(6, actual_expenditure);
-			ps.setInt(7, couponNo);
-			ps.setInt(8, device_id);
+			ps.setInt(6, price);
+			ps.setInt(7, actual_expenditure);
+			ps.setInt(8, AskMileage.ml_as_you_wish);
+			ps.setString(9, couponNo);
+			ps.setInt(10, device_id);
+			
+			
 			
 			rs = ps.executeQuery();
 			
@@ -53,7 +60,7 @@ public class PaymentQuery {
 			PaidByCard.cardId = "";
 			PaidByCard.cardNumber = "";
 			PaidByCash.i_money = 0;				
-			couponNo = 0;
+			couponNo = "";
 			
 		} catch (SQLException e1) {					
 			e1.printStackTrace();
