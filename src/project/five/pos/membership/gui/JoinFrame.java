@@ -95,26 +95,34 @@ public class JoinFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Member member = new Member();
+				
 				member.setContact_no(tfContact_no.getText());
 				member.setLast_name(tfLast_name.getText());
 				member.setFirst_name(tfFirst_name.getText());
-				
 				member.setAmount_price(0);
 				member.setAccumulation_pct(0.01);
 				member.setCustomer_no("");
 				member.setMembership("bronze");
-				member.setMileage(0);
+				member.setMileage(0);	
+				
 				
 				MemberDao dao = MemberDao.getInstance();
 				int result = dao.save(member);
-				
+//				int check = dao.getIdByCheck(member);
+	
 				if(result == 1) {
 					JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 					dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "회원가입이 실패하였습니다.");
 					dispose();
-				}	
+				}
+				
+
+				
+
+
+				
 			}
 		});
 

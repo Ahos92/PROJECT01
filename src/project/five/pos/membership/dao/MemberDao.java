@@ -23,7 +23,7 @@ public class MemberDao {
 	private Connection conn; //DB 연결 객체
 	private PreparedStatement pstmt; //Query 작성 객체
 	private ResultSet rs; //Query 결과 커서
-	
+		
 	//성공 1, 실패 -1, 없음 0
 	public int findByUsernameAndPassword(String customer_no) {
 		//1. DB 연결
@@ -55,9 +55,27 @@ public class MemberDao {
 		return -1; //로그인 실패
 	}
 	
+	// 아이디 중복확인
+    public int getIdByCheck(Member member) {
+    	conn = DBConnection.getConnection();
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM cutomer WHERE customer_no = ?");
+            pstmt.setString(1, member.getCustomer_no());
+            rs = pstmt.executeQuery(); 
+            if (rs.next())
+                return 1; //레코드가 존재하면 1 (즉, 중복된 아이디 존재)
+ 
+        } catch (SQLException e) {
+        	e.printStackTrace();;
+        } 
+        return -1;
+ 
+    }
+	
 	//성공 1, 실패 -1, 
 	public int save(Member member) {
 		conn = DBConnection.getConnection();
+		
 		try {
 			pstmt = conn.prepareStatement("insert into customer values(?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, member.getCustomer_no());
@@ -68,17 +86,17 @@ public class MemberDao {
 			pstmt.setInt(5, 0);	// member.getAmount_price()
 			pstmt.setString(6, "bronze");	// 등급	
 			pstmt.setDouble(7, 0.01);	// 적립률
-			pstmt.setInt(8, 0);		// member.getMileage()
-			
-
-
-			
+			pstmt.setInt(8, 0);		// member.getMileage()	
 			pstmt.executeUpdate(); //return값은 처리된 레코드의 개수
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+			
+				
+		
 		return -1;
+			
 	}
 	
 	// 회원 삭제
