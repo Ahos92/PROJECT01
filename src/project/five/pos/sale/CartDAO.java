@@ -13,6 +13,7 @@ import java.util.Date;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.db.PosVO;
+import project.five.pos.db.Day;
 
 public class CartDAO{
 
@@ -24,6 +25,8 @@ public class CartDAO{
 
 	ArrayList<PosVO> cartlist;
 
+	String today;
+	
 	public CartDAO() {
 
 	}
@@ -86,19 +89,15 @@ public class CartDAO{
 
 	/* 
 	   장바구니 내역 cart TABLE에 저장
-		정산 관리 위한 데이터 저장
-		모드 2개로나눠서 
-			- 오토커밋 해제 모드(처음 주문결제 넘어갈 때) 
-			- 적용 모드(최종 결제 완료) 
-			할 예정(미정)
+		정산 관리 위한 넘겨줄 데이터 저장
 	 */
 	public ArrayList<PosVO> saveCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
 
 		try {
 			conn = DBManager.getConnection();
-
+			
 			conn.setAutoCommit(false);
-
+			
 			String sql = "insert into cart "
 						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
@@ -118,7 +117,7 @@ public class CartDAO{
 				ps.addBatch();
 
 			}
-
+			
 			int[] rows = ps.executeBatch();
 			if (rows.length == 0) {
 				System.err.println("결제 품목이 없습니다.");
@@ -176,10 +175,11 @@ public class CartDAO{
 		conn = DBManager.getConnection();
 
 		try {
+			today =new Day().TodayYmd();
 			ps = conn.prepareStatement("select *"
 									+ " from cart inner join product using(product_no)"
-									+ " order by cart_no asc");
-
+									+ " where saled_date like \'%" + today
+									+ "%\' order by cart_no asc");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -217,6 +217,10 @@ public class CartDAO{
 		conn = DBManager.getConnection();
 
 		try {
+			if (column_name.equals("product_name")) {
+				column_data = "\'" + column_data + "\'";
+			} 
+			
 			ps = conn.prepareStatement("select *"
 					+ " from cart inner join product using(product_no)"
 					+ " where " + column_name + " = " + column_data
@@ -277,6 +281,30 @@ public class CartDAO{
 	}
 	
 	
+	public int SumByToday() {
+		int sum = 0;
+		conn = DBManager.getConnection();
+		
+		try {
+			today = new Day().TodayYmd();
+			String sql = "select sum(total_price) from cart where saled_date like \'%" + today + "%\'";
+			ps = conn.prepareStatement(sql);
+			
+			System.out.println("총 매출 쿼리 : " + sql);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				sum = rs.getInt("sum(total_price)");
+				System.out.println(today + "날의 총 매출 : " + sum);
+			}
+			
+		} catch (SQLException e) {
+
+		}
+		
+		return sum;
+	}
+	
 	/*
 	  	몇 종류의 상품을 선택 했는지에 대한 메서드
 	  		- 주문번호로 판별
@@ -286,7 +314,6 @@ public class CartDAO{
 		conn = DBManager.getConnection();
 		
 		try {
-			
 			String sql = "select count(cart_no) from cart where order_no = ?";
 			ps = conn.prepareStatement(sql);
 			
@@ -304,8 +331,8 @@ public class CartDAO{
 		return cnt;
 	}
 	
-//	public static void main(String[] args) {
-//		CartDAO dao = new CartDAO();
-//		System.out.println(dao.searchMember("last_name||first_name", "\'김영호\'"));
-//	}
+	public static void main(String[] args) {
+		CartDAO dao = new CartDAO();
+		System.out.println(dao.SumByToday());
+	}
 }

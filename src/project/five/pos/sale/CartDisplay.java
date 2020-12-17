@@ -88,7 +88,7 @@ public class CartDisplay extends JFrame {
 
 		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
 		//					패널용 생성자도 있음
-		pay_btn = new CartBtn("결제", new PaymentPageAction(this, dtm, order_num, order_cnt, device_id));
+		pay_btn = new CartBtn("결제", new PaymentPageAction(this, dtm, order_num, device_id));
 
 		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
 		cancle_btn = new CartBtn("취소", new CancleAction(this, dtm));

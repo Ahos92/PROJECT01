@@ -136,9 +136,16 @@ public class MemberDao {
 		conn = DBManager.getConnection();
 
 		try {
-			pstmt = conn.prepareStatement("select * "
-										+ "from customer "
-										+ "where " + column_name + " = "+ column_data);
+			String sql = "";
+			if (column_name.equals("last_name||first_name") 
+					|| column_name.equals("contact_no")) {
+				sql = "select * from customer where " + column_name + " like \'%" + column_data + "%\'";
+			} else {
+				sql = "select * from customer where " + column_name + " = \'" + column_data + "\'";
+			}
+			System.out.println(column_data);
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
 

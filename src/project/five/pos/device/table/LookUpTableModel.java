@@ -61,8 +61,8 @@ public class LookUpTableModel extends DefaultTableModel {
 			} else if (selectedItem.equals("결제일")) {
 				return "payment_date";
 				
-			} else if (selectedItem.equals("결제 금액")) {
-				return "Amount_of_money";
+			} else if (selectedItem.equals("사용 금액▲")) {
+				return "actual_expenditure";
 				
 			} else if (selectedItem.equals("결제 수단")) {
 				return "payment_type";
@@ -103,8 +103,15 @@ public class LookUpTableModel extends DefaultTableModel {
 		selected_item = select_column.getSelectedItem().toString();
 		
 		category = selectedCategory(selected_item);
-		data = "\'" + select_data.getText() + "\'";
-
+		data = select_data.getText();
+		
+//		if (selected_item.equals("이름")
+//				|| selected_item.equals("결제일")) {
+//			data = "\'%" + select_data.getText() + "%\'";
+//		} else {
+//			data = "\'" + select_data.getText() + "\'";
+//		}
+		
 		search_data = new SearchDB(btn_text).searchData(category, data);
 
 		list = new TableList(btn_text);

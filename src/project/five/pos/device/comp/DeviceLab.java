@@ -10,6 +10,7 @@ public class DeviceLab extends JLabel {
 	
 	public DeviceLab(String lab_txt, int width, int heghit) {
 		setText(lab_txt);
-		setPreferredSize(new Dimension(50, 30));
+		setPreferredSize(new Dimension(width, heghit));
+		setHorizontalAlignment(JLabel.CENTER);
 	}
 }

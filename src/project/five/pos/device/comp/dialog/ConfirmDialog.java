@@ -16,6 +16,7 @@ public class ConfirmDialog extends JDialog {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(250, 130);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		
 		msg_lab = new JLabel(msg);

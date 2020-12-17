@@ -17,9 +17,9 @@ public class PaymentPageAction implements ActionListener{
 
 	JFrame present_frame;
 
-	ArrayList<PosVO> cart_list, order_list, update_cart; 
+	ArrayList<PosVO> update_cart; 
 	PosVO updateDTO;
-	int order_num, order_cnt, price;
+	int order_num, price;
 
 	DefaultTableModel dtm;
 	String device_id;
@@ -29,11 +29,10 @@ public class PaymentPageAction implements ActionListener{
 	CartDAO dao = new CartDAO(); 
 
 	public PaymentPageAction(JFrame present_frame, 
-			DefaultTableModel dtm, int order_num, int order_cnt, String device_id) {
+			DefaultTableModel dtm, int order_num, String device_id) {
 		this.present_frame = present_frame;
 		this.dtm = dtm;
 		this.order_num = order_num;	
-		this.order_cnt = order_cnt;
 		this.device_id = device_id;
 	}
 
@@ -44,24 +43,32 @@ public class PaymentPageAction implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		dao.saveCartlist(getUpdateDTO(), order_num, device_id);
-		
+			// AutoCommit 해제상태 , 데이터 만들어서 넘겨줄 역할만 하는 메서드
+			// 총 결제가 완료 되는 시점에 새로운 쿼리문 짜서 결제, 판매 내역 동시에 저장
+			 dao.saveCartlist(getUpdateDTO(), order_num, device_id);
 		try {
-			// 결제화면에 넘겨줄 데이터 주문번호, 총가격, 상품 이름
-			order_list = dao.searchCart("order_no", String.valueOf(order_num));
-			price = dao.SumByOrderNum(order_num);
+		
 			lists = new ArrayList<>();
-			for (int i = 0; i < order_cnt; i++) {
+//			price = dao.SumByOrderNum(order_num);
+			System.out.println("<결제 창으로 넘긴 목록 >");
+			for (int i = 0; i < update_cart.size(); i++) {
 				String format = String.format("%s (%s)",  
-						order_list.get(i).getProduct_name(),
-						order_list.get(i).getTermsofcondition());
+						update_cart.get(i).getProduct_name(),
+						update_cart.get(i).getTermsofcondition());
 				if (format.contains("null")) {
-					lists.add(order_list.get(i).getProduct_name());
+					lists.add(update_cart.get(i).getProduct_name());
 				} else {
 					lists.add(format);
 				}
+				price += update_cart.get(i).getSelected_item() * update_cart.get(i).getProduct_price();
+				System.out.println("상품 이름 : " + lists.get(i));
+				System.out.println("상품 선택 : " + update_cart.get(i).getSelected_item() + " 개");
+				System.out.println("각 상품 가격 : " + update_cart.get(i).getProduct_price() + " 원");
 			}	
-			// 생성자 매개변수로 넘겨줄 예정
+			System.out.println("주문 번호 : "+ order_num);
+			System.out.println("총 가격 : " + price);
+			
+			// 결제화면에 넘겨줄 데이터 주문번호(order_num), 총가격(price), List<상품 이름>
 			new PayPanel();
 
 		} catch (IOException e1) {

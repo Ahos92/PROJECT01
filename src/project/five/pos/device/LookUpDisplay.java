@@ -62,7 +62,7 @@ public class LookUpDisplay extends JFrame {
 		allInq_btn = new JButton("전체보기");
 		allInq_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
 															selectColumn_box, selectData_tf)); 	
-				
+		
 		// 뒤로가기
 		back_btn = new JButton("관리자 메뉴로 돌아가기");
 		back_btn.addActionListener(new ChangeFrameAction(this));
@@ -76,6 +76,12 @@ public class LookUpDisplay extends JFrame {
 		center_p.add(search_btn);
 		center_p.add(allInq_btn);
 		north_p.add(head_lab);
+		
+		JLabel info;
+		if (btn_text.equals("결제 내역 조회")) {
+			 info = new JLabel("결제일로 검색 하실 경우 결제'일' 만 입력해야 정보를 얻으 실수 있습니다.");
+			 center_p.add(info);
+		}
 		
 		add(north_p, BorderLayout.NORTH);
 		add(center_p, BorderLayout.CENTER);
