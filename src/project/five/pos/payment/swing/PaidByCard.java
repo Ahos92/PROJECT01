@@ -82,12 +82,24 @@ public class PaidByCard extends JFrame{
 						cardId = selectedCard.substring(1, 3);						
 					}
 					
-					cardNumber += first_cardNum.getText();
-					cardNumber += "-****-****-";
-					cardNumber += last_cardNum.getText();
-									
-					new SuccessCard();
-					dispose();
+					if(first_cardNum.getText().length() < 4 || second_cardNum.getText().length() < 4
+							|| third_cardNum.getText().length() < 4 || last_cardNum.getText().length() < 4) {
+						new NotenoughNo();
+					}
+					else {					
+						cardNumber += first_cardNum.getText();
+						cardNumber += "-****-****-";
+						cardNumber += last_cardNum.getText();
+						
+						
+						
+						new SuccessCard();
+						dispose();
+						
+						selectedCard = "";
+					}
+					
+					
 					
 					
 				}
