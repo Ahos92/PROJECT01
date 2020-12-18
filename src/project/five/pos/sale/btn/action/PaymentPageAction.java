@@ -18,7 +18,7 @@ public class PaymentPageAction implements ActionListener{
 	JFrame present_frame;
 
 	ArrayList<PosVO> update_cart; 
-	PosVO updateDTO;
+	PosVO updateVO;
 	int order_num, price;
 
 	DefaultTableModel dtm;
@@ -49,7 +49,6 @@ public class PaymentPageAction implements ActionListener{
 		try {
 		
 			lists = new ArrayList<>();
-//			price = dao.SumByOrderNum(order_num);
 			System.out.println("<결제 창으로 넘긴 목록 >");
 			for (int i = 0; i < update_cart.size(); i++) {
 				String format = String.format("%s (%s)",  
@@ -60,7 +59,7 @@ public class PaymentPageAction implements ActionListener{
 				} else {
 					lists.add(format);
 				}
-				price += update_cart.get(i).getSelected_item() * update_cart.get(i).getProduct_price();
+				price += update_cart.get(i).getTotal_price();
 				System.out.println("상품 이름 : " + lists.get(i));
 				System.out.println("상품 선택 : " + update_cart.get(i).getSelected_item() + " 개");
 				System.out.println("각 상품 가격 : " + update_cart.get(i).getProduct_price() + " 원");
@@ -85,15 +84,18 @@ public class PaymentPageAction implements ActionListener{
 	 */
 	private ArrayList<PosVO> getUpdateDTO() {
 		update_cart = new ArrayList<>();
-		updateDTO = new PosVO();
+		updateVO = new PosVO();
 		if (dtm.getRowCount() == 0) {		
 			System.err.println("결제할 품목이 없습니다.");		
 
 		} else {
 			for (int i = 0; i < dtm.getRowCount(); i++) {
-				update_cart.add(dao.testOrder((String)dtm.getValueAt(i, 0), 
-						(String)dtm.getValueAt(i, 1), 
-						(Integer)dtm.getValueAt(i, 2)));
+				updateVO.setProduct_name((String)dtm.getValueAt(i, 0));
+				updateVO.setTermsofcondition((String)dtm.getValueAt(i, 1));
+				updateVO.setSelected_item((Integer)dtm.getValueAt(i, 2));
+				updateVO.setTotal_price((Integer)dtm.getValueAt(i, 3));
+				updateVO.setProduct_price((Integer)dtm.getValueAt(i, 3) / (Integer)dtm.getValueAt(i, 2));
+				update_cart.add(updateVO);
 			}
 		}
 		return update_cart;

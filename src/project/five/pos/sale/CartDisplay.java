@@ -37,7 +37,6 @@ public class CartDisplay extends JFrame {
 						// 패널로 보낸다 생각하면 
 						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
 	public CartDisplay(String device_id, Object[][] list) {	
-		dao = new CartDAO();
 		
 //		cart_list = new ArrayList<>();
 //		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
@@ -58,6 +57,8 @@ public class CartDisplay extends JFrame {
 	
 		setLayout(new BorderLayout());
 		
+		dao = new CartDAO();
+		
 		south_p = new JPanel();
 		center_p = new JPanel();
 
@@ -72,23 +73,22 @@ public class CartDisplay extends JFrame {
 		scroll.setPreferredSize(new Dimension(480, 100));
 		
 		cell_btn_size = 40;	
-		cart_table.getColumn("취소").setCellRenderer(new DeleteBtnRender());
-		cart_table.getColumn("취소").setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
-		cart_table.getColumn("취소").setPreferredWidth(cell_btn_size);
 		
-		cart_table.getColumn("▲").setCellRenderer(new UpDonwBtnRender("▲"));
-		cart_table.getColumn("▲").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▲"));
-		cart_table.getColumn("▲").setPreferredWidth(cell_btn_size);
-		
-		cart_table.getColumn("▼").setCellRenderer(new UpDonwBtnRender("▼"));
-		cart_table.getColumn("▼").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▼"));
-		cart_table.getColumn("▼").setPreferredWidth(cell_btn_size);
+		createcellBtn(cart_table, "취소", cell_btn_size);
+//		cart_table.getColumn("취소").setCellRenderer(new DeleteBtnRender());
+//		cart_table.getColumn("취소").setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
+//		cart_table.getColumn("취소").setPreferredWidth(cell_btn_size);
+//		
+//		cart_table.getColumn("▲").setCellRenderer(new UpDonwBtnRender("▲"));
+//		cart_table.getColumn("▲").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▲"));
+//		cart_table.getColumn("▲").setPreferredWidth(cell_btn_size);
+//		
+//		cart_table.getColumn("▼").setCellRenderer(new UpDonwBtnRender("▼"));
+//		cart_table.getColumn("▼").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "▼"));
+//		cart_table.getColumn("▼").setPreferredWidth(cell_btn_size);
 
-		// 결제 버튼 -> cartTable에 데이터 저장(commit X) 및 현재Frame false , 다음프레임 true
-		//					패널용 생성자도 있음
 		pay_btn = new CartBtn("결제", new PaymentPageAction(this, dtm, order_num, device_id));
-
-		// 취소 버튼 -> (예전화면으로 돌아가고) 장바구니 초기화
+		
 		cancle_btn = new CartBtn("취소", new CancleAction(this, dtm));
 	
 		center_p.add(scroll);
@@ -100,6 +100,18 @@ public class CartDisplay extends JFrame {
 		add(center_p, BorderLayout.CENTER);
 		
 		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
+	}
+	
+	private void createcellBtn(JTable cart_table, String btn_txt, int cell_btn_size) {
+		if (btn_txt.equals("취소")) {
+			cart_table.getColumn(btn_txt).setCellRenderer(new DeleteBtnRender());
+			cart_table.getColumn(btn_txt).setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
+			cart_table.getColumn(btn_txt).setPreferredWidth(cell_btn_size);
+		} else {
+			cart_table.getColumn(btn_txt).setCellRenderer(new DeleteBtnRender());
+			cart_table.getColumn(btn_txt).setCellEditor(new UpDownAction(new JCheckBox(), cart_table, btn_txt));
+			cart_table.getColumn(btn_txt).setPreferredWidth(cell_btn_size);
+		}
 	}
 
 }
