@@ -58,7 +58,7 @@ public class LookUpTableModel extends DefaultTableModel {
 			} else if (selectedItem.equals("등급")) {
 				return "membership";
 				
-			} else if (selectedItem.equals("결제일")) {
+			} else if (selectedItem.equals("결제시간")) {
 				return "payment_date";
 				
 			} else if (selectedItem.equals("사용 금액▲")) {

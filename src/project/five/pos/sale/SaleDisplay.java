@@ -251,7 +251,7 @@ public class SaleDisplay extends JFrame{
 //                	Arrays.fill(cart[j], null);
 //                }
                 cartNo=0;
-                
+          
                 new CartDisplay("1234", cart);
                 dispose();
             }

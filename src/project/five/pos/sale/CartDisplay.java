@@ -2,6 +2,7 @@ package project.five.pos.sale;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -26,18 +27,13 @@ public class CartDisplay extends JFrame {
 	DefaultTableModel dtm;
 	JScrollPane scroll;
 	String[] header= {"메뉴", "옵션", "수량", "가격", "▲", "▼", "취소"};
-	Object[][] select_list;
 	int cell_btn_size;
 	
-	ArrayList<PosVO> cart_list;
-	int order_cnt, order_num;
+	int order_num;
 	CartDAO dao;
 	
-	Font font;
-						// 패널로 보낸다 생각하면 
-						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
-	public CartDisplay(String device_id, Object[][] list) {	
-		
+	public CartDisplay(String device_id, Object[][] select_list) {	
+//		// 테스트 데이터	
 //		cart_list = new ArrayList<>();
 //		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
 //		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
@@ -55,33 +51,39 @@ public class CartDisplay extends JFrame {
 //			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getSelected_item();
 //		};
 	
-		setLayout(new BorderLayout());
-		
 		dao = new CartDAO();
+		
+		setLayout(new BorderLayout());
 		
 		south_p = new JPanel();
 		center_p = new JPanel();
 
 		info_lab = new JLabel("주문 내역");
-			
+		
+		// 주문 번호
 		order_num = dao.MaxOrderNumber();
 		order_num++;
-		select_list = list;
+		
+		// 선택된 상품 테이블
 		dtm = new DefaultTableModel(select_list, header);
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
 		scroll.setPreferredSize(new Dimension(480, 100));
 		
-		cell_btn_size = 40;	
+		System.out.println((String)dtm.getValueAt(0, 0));
+		System.out.println((String)dtm.getValueAt(1, 0));
 		
+		// 수량 조절 버튼
+		cell_btn_size = 40;	
 		createcellBtn(cart_table, "취소", cell_btn_size);
 		
 		createcellBtn(cart_table, "▲", cell_btn_size);
 		
 		createcellBtn(cart_table, "▼", cell_btn_size);
 
+		// 결제
 		pay_btn = new CartBtn("결제", new PaymentPageAction(this, dtm, order_num, device_id));
-		
+		// 취소
 		cancle_btn = new CartBtn("취소", new CancleAction(this, dtm));
 	
 		center_p.add(scroll);
@@ -95,10 +97,13 @@ public class CartDisplay extends JFrame {
 		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
 	}
 	
+	/*
+	 *	테이블에 삽입할 버튼 만드는 메서드 		
+	 */
 	private void createcellBtn(JTable cart_table, String btn_txt, int cell_btn_size) {
 		if (btn_txt.equals("취소")) {
 			cart_table.getColumn(btn_txt).setCellRenderer(new DeleteBtnRender());
-			cart_table.getColumn(btn_txt).setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
+			cart_table.getColumn(btn_txt).setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm, this));
 			cart_table.getColumn(btn_txt).setPreferredWidth(cell_btn_size);
 		} else {
 			cart_table.getColumn(btn_txt).setCellRenderer(new UpDonwBtnRender(btn_txt));

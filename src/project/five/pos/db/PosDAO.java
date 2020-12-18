@@ -17,6 +17,8 @@ public class PosDAO {
 	PosVO pos;
 	ArrayList<PosVO> poslist;
 
+	String today;
+	
 	public PosDAO() {}
 	
 	public ArrayList<PosVO> searchAllPayment() {
@@ -26,7 +28,7 @@ public class PosDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			String today =String.format("\'%%%s%%\'", new Day().TodayYmd());
+			today =String.format("\'%%%s%%\'", new Day().TodayYmd());
 			ps = conn.prepareStatement("select *"
 									+ " from payment"
 									+ " where payment_date like " + today
@@ -71,10 +73,11 @@ public class PosDAO {
 //			SimpleDateFormat simple = new SimpleDateFormat("yy/MM/dd");
 //			Date now = new Date();
 //			String today = simple.format(now);
+			today = String.format("%s%%", new Day().TodayYmd());
 			
 			if (column_name.equals("payment_date")) {
 				sql = "select * from payment where " + column_name 
-							+ " like \'%"+ column_data + "%\' order by payment_date asc";
+							+ " like \'%"+ today + column_data + ":%\' order by payment_date asc";
 			} else if (column_name.equals("actual_expenditure")) {
 				sql = "select * from payment where " + column_name + " >= " + column_data 
 									+ " order by actual_expenditure desc";
@@ -94,7 +97,7 @@ public class PosDAO {
 				
 				pos.setPayment_no(rs.getInt("payment_no"));
 				pos.setPayment_type(rs.getString("payment_type"));
-				pos.setPayment_date(rs.getString("payment_date"));
+				pos.setPayment_date(rs.getString("payment_date").trim());
 				pos.setBank_id(rs.getString("bank_id"));
 				pos.setCard_num(rs.getString("card_num"));
 				pos.setAmount_of_money(rs.getInt("amount_of_money"));
