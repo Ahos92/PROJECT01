@@ -111,7 +111,7 @@ public class CartDAO{
 				ps.setInt(3, cartlist.get(i).getSelected_item()); // selected_count				
 				// 어차피 한번 계산한 값 들고오기 (주문 가격)
 				ps.setTimestamp(4, now); // saled_date
-				ps.setInt(5, cartlist.get(i).getProduct_price() * cartlist.get(i).getSelected_item()); // total_price
+				ps.setInt(5, cartlist.get(i).getTotal_price()); // total_price
 				ps.setInt(6, Integer.parseInt(device_id)); // device_id
 				
 				ps.addBatch();

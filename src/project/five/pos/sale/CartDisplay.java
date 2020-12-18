@@ -29,15 +29,11 @@ public class CartDisplay extends JFrame {
 	Object[][] select_list;
 	int cell_btn_size;
 	
-	ArrayList<PosVO> cart_list;
-	int order_cnt, order_num;
+	int order_num;
 	CartDAO dao;
 	
-	Font font;
-						// 패널로 보낸다 생각하면 
-						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
 	public CartDisplay(String device_id, Object[][] list) {	
-		
+//		// 테스트 코드
 //		cart_list = new ArrayList<>();
 //		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
 //		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
