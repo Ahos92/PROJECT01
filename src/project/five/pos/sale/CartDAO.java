@@ -33,7 +33,7 @@ public class CartDAO{
 	/*
 	 * 	마지막 결제 창에서 넘겨 받을 데이터 집어넣기
 	 */
-	public void saveCartlist() {
+	public void saveCartlist(int order_no, String prod_name, ArrayList<String> list) {
 		
 		conn = DBManager.getConnection();
 		
@@ -215,47 +215,47 @@ public class CartDAO{
 		- 결제 화면에 넘겨줄 데이터 저장
 		- 실시간 업데이트
 	 */
-	public ArrayList<PosVO> saveUpdateCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
-	
-		try {
-			conn = DBManager.getConnection();
-			
-//			conn.setAutoCommit(false);
-			
-			String sql = "insert into cart "
-						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
-			ps = conn.prepareStatement(sql);
-	
-			java.sql.Timestamp now = java.sql.Timestamp.valueOf(LocalDateTime.now());
-	
-			for (int i = 0; i < cartlist.size(); i++) {
-				
-				ps.setInt(1, orderNumber); // order_no
-				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
-				ps.setInt(3, cartlist.get(i).getSelected_item()); // selected_count				
-				// 어차피 한번 계산한 값 들고오기 (주문 가격)
-				ps.setTimestamp(4, now); // saled_date
-				ps.setInt(5, cartlist.get(i).getTotal_price()); // total_price
-				ps.setInt(6, Integer.parseInt(device_id)); // device_id
-				
-				ps.addBatch();
-	
-			}
-			
-			int[] rows = ps.executeBatch();
-			if (rows.length == 0) {
-				System.err.println("결제 품목이 없습니다.");
-			} else {
-				System.out.println(rows.length + "행이 변경 되었습니다.");
-			}
-			DBManager.p_c_Close(ps, conn);
-	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	
-		return cartlist;
-	}	
+//	public ArrayList<PosVO> saveUpdateCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
+//	
+//		try {
+//			conn = DBManager.getConnection();
+//			
+////			conn.setAutoCommit(false);
+//			
+//			String sql = "insert into cart "
+//						+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
+//			ps = conn.prepareStatement(sql);
+//	
+//			java.sql.Timestamp now = java.sql.Timestamp.valueOf(LocalDateTime.now());
+//	
+//			for (int i = 0; i < cartlist.size(); i++) {
+//				
+//				ps.setInt(1, orderNumber); // order_no
+//				ps.setInt(2, cartlist.get(i).getProduct_no()); // product_no
+//				ps.setInt(3, cartlist.get(i).getSelected_item()); // selected_count				
+//				// 어차피 한번 계산한 값 들고오기 (주문 가격)
+//				ps.setTimestamp(4, now); // saled_date
+//				ps.setInt(5, cartlist.get(i).getTotal_price()); // total_price
+//				ps.setInt(6, Integer.parseInt(device_id)); // device_id
+//				
+//				ps.addBatch();
+//	
+//			}
+//			
+//			int[] rows = ps.executeBatch();
+//			if (rows.length == 0) {
+//				System.err.println("결제 품목이 없습니다.");
+//			} else {
+//				System.out.println(rows.length + "행이 변경 되었습니다.");
+//			}
+//			DBManager.p_c_Close(ps, conn);
+//	
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	
+//		return cartlist;
+//	}	
 	//
 	//	
 	//	/*

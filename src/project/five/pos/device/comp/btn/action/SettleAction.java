@@ -26,10 +26,9 @@ public class SettleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		cart = new CartDAO();
 		pos = new PosDAO();		
-		// 판매한 금액 - 바로바로 저장 (파일 입력 or DB테이블)
-		cart.SumByToday();
 		
-		// 데이터--  한달치는 테이블에 담고 있고 / if 1년 보관 저장 할경우 파일 입출력 or 새로운 DB (판매, 결제 내역) 
+		cart.SumByToday();
+	
 		// 30일지난 데이터 테이블에서 삭제 (12/17 기준 cart table만 적용)	
 		pos.deleteAmonthAgoDate();
 
