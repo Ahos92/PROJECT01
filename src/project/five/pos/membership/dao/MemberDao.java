@@ -164,7 +164,7 @@ public class MemberDao {
 				members.add(member);
 			}
 		
-			DBManager.p_r_c_Close(pstmt, rs, conn);
+			DBManager.r_p_c_Close(rs, pstmt, conn);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

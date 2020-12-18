@@ -1,19 +1,13 @@
 package project.five.pos.device.comp.dialog;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+import java.awt.event.*;
 import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
-import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.DeviceLab;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.action.PromptAction;
@@ -57,7 +51,7 @@ public class ManagerSignUpDialog extends JDialog {
 		sign_btn = new DeviceBtn("µî·Ï", 60, 30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DeviceDAO dao = new DeviceDAO();
+				PosDAO dao = new PosDAO();
 				PosVO manager = new PosVO();
 				int b_id = 0;
 				try {

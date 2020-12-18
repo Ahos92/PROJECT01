@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import project.five.pos.db.PosDAO;
 import project.five.pos.device.*;
 import project.five.pos.device.comp.dialog.ConfirmDialog;
 import project.five.pos.sale.CartDAO;
@@ -40,7 +41,7 @@ public class PosLoginDisplay extends JFrame {
 		login_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DeviceDAO dao = new DeviceDAO();
+				PosDAO dao = new PosDAO();
 				int id = 0;
 				try {
 					id = Integer.parseInt(id_tf.getText());

@@ -54,7 +54,7 @@ public class CartDAO{
 			rs = ps.executeQuery();
 
 
-			DBManager.p_r_c_Close(ps, rs, conn);
+			DBManager.r_p_c_Close(rs, ps, conn);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class CartDAO{
 
 			System.out.println("현재 주문 번호 : " + max);
 
-			DBManager.p_r_c_Close(ps, rs, conn);
+			DBManager.r_p_c_Close(rs, ps, conn);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,7 +124,7 @@ public class CartDAO{
 				cartlist.add(cart);
 			}
 
-			DBManager.p_r_c_Close(ps, rs, conn);
+			DBManager.r_p_c_Close(rs, ps, conn);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -173,7 +173,7 @@ public class CartDAO{
 				cartlist.add(cart);
 			}
 
-			DBManager.p_r_c_Close(ps, rs, conn);
+			DBManager.r_p_c_Close(rs, ps, conn);
 
 		} catch (SQLException e) {
 			System.err.println("잘못된 입력");
@@ -181,40 +181,45 @@ public class CartDAO{
 		return cartlist;
 
 	}
-
 	
-	/*
-	 * 	하루치 판매금액
-	 */	
-	public int SumByToday() {
-		int sum = 0;
-		conn = DBManager.getConnection();
-
-		try {
-			today = new Day().TodayYmd();
-			String sql = "select sum(total_price) from cart where saled_date like \'%" + today + "%\'";
-			ps = conn.prepareStatement(sql);
-
-			System.out.println("총 매출 쿼리 : " + sql);
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				sum = rs.getInt("sum(total_price)");
-				System.out.println(today + "날의 총 매출 : " + sum);
-			}
-
-		} catch (SQLException e) {
-
-		}
-
-		return sum;
+	// TEST
+	public static void main(String[] args) {
+		CartDAO dao = new CartDAO();
 	}
-
-
-		/* 
-		- 결제 화면에 넘겨줄 데이터 저장
-		- 실시간 업데이트
-	 */
+	
+	
+//	/*
+//	 * 	하루치 판매금액
+//	 */	
+//	public int SumAmountByToday() {
+//		int sum = 0;
+//		conn = DBManager.getConnection();
+//
+//		try {
+//			today = new Day().TodayYmd();
+//			String sql = "select sum(total_price) from cart where saled_date like \'%" + today + "%\'";
+//			ps = conn.prepareStatement(sql);
+//
+//			System.out.println("총 매출 쿼리 : " + sql);
+//			rs = ps.executeQuery();
+//
+//			if (rs.next()) {
+//				sum = rs.getInt("sum(total_price)");
+//				System.out.println(today + "날의 총 매출 : " + sum);
+//			}
+//
+//		} catch (SQLException e) {
+//
+//		}
+//
+//		return sum;
+//	}
+//
+//	
+//		/* 
+//		- 결제 화면에 넘겨줄 데이터 저장
+//		- 실시간 업데이트
+//	 */
 //	public ArrayList<PosVO> saveUpdateCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
 //	
 //		try {
@@ -311,9 +316,4 @@ public class CartDAO{
 	//		
 	//		return cnt;
 	//	}
-
-	public static void main(String[] args) {
-		CartDAO dao = new CartDAO();
-		System.out.println(dao.SumByToday());
-	}
 }

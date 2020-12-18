@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import project.five.pos.MainDisplay;
+import project.five.pos.db.PosDAO;
 import project.five.pos.device.*;
 import project.five.pos.device.comp.dialog.ConfirmDialog;
 import project.five.pos.device.comp.dialog.LoginDialog;
@@ -37,7 +38,7 @@ public class ChangeFrameAction implements ActionListener{
 			changeable_frame = new MainDisplay("1234");
 
 		} else if(check.equals("·Î±×ÀÎ")){			
-			DeviceDAO dao = new DeviceDAO();
+			PosDAO dao = new PosDAO();
 			int id = 0;
 			String pw = pw_tf.getText();
 			try {
