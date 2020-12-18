@@ -46,8 +46,8 @@ public class CartDisplay extends JFrame {
 //		cart_list.add(dao.testOrder("케이크", null, 1));
 //		cart_list.add(dao.testOrder("빙수", null, 1));
 //		order_cnt = cart_list.size();	
-		// 주문 내역 테이블
-		//	- 상품객체 정보 배열에 받아서 출력
+// 주문 내역 테이블
+//	- 상품객체 정보 배열에 받아서 출력
 //		select_list = new Object[order_cnt][6];
 //		for (int i = 0; i < order_cnt; i++) {
 //			select_list[i][0] = cart_list.get(i).getProduct_name();
@@ -60,11 +60,9 @@ public class CartDisplay extends JFrame {
 		
 		south_p = new JPanel();
 		center_p = new JPanel();
-		
-		// 주문내역 라벨
+
 		info_lab = new JLabel("주문 내역");
 			
-
 		order_num = dao.MaxOrderNumber();
 		order_num++;
 		select_list = list;
@@ -104,8 +102,5 @@ public class CartDisplay extends JFrame {
 		TestSwingTools.initTestFrame(this, "장바구니 화면", true);
 	}
 
-	public static void main(String[] args) {
-
-	}
 }
 
