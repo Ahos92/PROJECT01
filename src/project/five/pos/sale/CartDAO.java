@@ -91,7 +91,7 @@ public class CartDAO{
 	   장바구니 내역 cart TABLE에 저장
 		정산 관리 위한 넘겨줄 데이터 저장
 	 */
-	public ArrayList<PosVO> saveCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
+	public ArrayList<PosVO> saveUpdateCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
 
 		try {
 			conn = DBManager.getConnection();

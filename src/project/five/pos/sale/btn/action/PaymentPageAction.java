@@ -45,7 +45,7 @@ public class PaymentPageAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 			// AutoCommit 해제상태 , 데이터 만들어서 넘겨줄 역할만 하는 메서드
 			// 총 결제가 완료 되는 시점에 새로운 쿼리문 짜서 결제, 판매 내역 동시에 저장
-			 dao.saveCartlist(getUpdateDTO(), order_num, device_id);
+			 dao.saveUpdateCartlist(getUpdateDTO(), order_num, device_id);
 		try {
 		
 			lists = new ArrayList<>();

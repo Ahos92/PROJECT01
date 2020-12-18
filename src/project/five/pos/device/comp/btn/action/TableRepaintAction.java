@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import org.graalvm.compiler.lir.LIRInstruction.Def;
-
 import project.five.pos.device.table.LookUpTableModel;
 
 public class TableRepaintAction implements ActionListener {
