@@ -75,17 +75,10 @@ public class CartDisplay extends JFrame {
 		cell_btn_size = 40;	
 		
 		createcellBtn(cart_table, "秒家", cell_btn_size);
-//		cart_table.getColumn("秒家").setCellRenderer(new DeleteBtnRender());
-//		cart_table.getColumn("秒家").setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
-//		cart_table.getColumn("秒家").setPreferredWidth(cell_btn_size);
-//		
-//		cart_table.getColumn("°").setCellRenderer(new UpDonwBtnRender("°"));
-//		cart_table.getColumn("°").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "°"));
-//		cart_table.getColumn("°").setPreferredWidth(cell_btn_size);
-//		
-//		cart_table.getColumn("″").setCellRenderer(new UpDonwBtnRender("″"));
-//		cart_table.getColumn("″").setCellEditor(new UpDownAction(new JCheckBox(), cart_table, "″"));
-//		cart_table.getColumn("″").setPreferredWidth(cell_btn_size);
+		
+		createcellBtn(cart_table, "°", cell_btn_size);
+		
+		createcellBtn(cart_table, "″", cell_btn_size);
 
 		pay_btn = new CartBtn("搬力", new PaymentPageAction(this, dtm, order_num, device_id));
 		
@@ -108,7 +101,7 @@ public class CartDisplay extends JFrame {
 			cart_table.getColumn(btn_txt).setCellEditor(new DeleteAction(new JCheckBox(), cart_table, dtm));
 			cart_table.getColumn(btn_txt).setPreferredWidth(cell_btn_size);
 		} else {
-			cart_table.getColumn(btn_txt).setCellRenderer(new DeleteBtnRender());
+			cart_table.getColumn(btn_txt).setCellRenderer(new UpDonwBtnRender(btn_txt));
 			cart_table.getColumn(btn_txt).setCellEditor(new UpDownAction(new JCheckBox(), cart_table, btn_txt));
 			cart_table.getColumn(btn_txt).setPreferredWidth(cell_btn_size);
 		}
