@@ -29,7 +29,7 @@ public class UpDownAction extends DefaultCellEditor {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
 				int cnt_col = 2;
-				int price_col = 5;
+				int price_col = 3;
 				int product_cnt = (int)table.getValueAt(row, cnt_col);
 				int result_price = (int)table.getValueAt(row, price_col) / product_cnt;
 
