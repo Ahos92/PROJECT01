@@ -228,7 +228,7 @@ public class SaleDisplay extends JFrame{
 					cart[cartNo][0]=namelist[j];
 					cart[cartNo][1]=condilist[j];
 					cart[cartNo][2]=count;
-					cart[cartNo][3]=pricelist[j];
+					cart[cartNo][3]=count * pricelist[j];
 					
 					cartNo+=1;
 					minus[j].setEnabled(false);

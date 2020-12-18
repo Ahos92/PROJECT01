@@ -31,67 +31,67 @@ public class CartDAO{
 
 	}
 
-	/*
-	   테스트 메서드
-	   	상품이 넘어오는거 가정
-	 */
-	public PosVO testOrder(String name, String opt, int count) {
-		// 상품 데이터 담을 객체
-		cart = new PosVO();
-
-		conn = DBManager.getConnection();
-
-		try {
-
-			// 옵션 값이 없을때
-			if (opt == null) {
-				ps = conn.prepareStatement("select *"
-						+ " from product"
-						+ " where product_name = ?"
-						);
-				ps.setString(1, name);
-
-			} else {
-				ps = conn.prepareStatement("select *"
-						+ " from product"
-						+ " where product_name = ?"
-						+ " and termsofcondition = ?"
-						);
-
-				ps.setString(1, name);
-				ps.setString(2, opt);
-			}
-			rs = ps.executeQuery();				
-
-			while (rs.next()) {
-
-				String pName = rs.getString("product_name");
-				String option = rs.getString("termsofcondition"); 
-
-				cart.setProduct_no(rs.getInt("product_no"));
-				cart.setProduct_name(pName);
-				cart.setTermsofcondition(option);
-				cart.setProduct_price(rs.getInt("product_price"));
-				cart.setSelected_item(count);
-
-				System.out.printf("%s(%s) %d개 주문\n", pName, option, count);
-			}
-
-			DBManager.p_r_c_Close(ps, rs, conn);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return cart;
-	}
+//	/*
+//	   테스트 메서드
+//	   	상품이 넘어오는거 가정
+//	 */
+//	public PosVO testOrder(String name, String opt, int count) {
+//		// 상품 데이터 담을 객체
+//		cart = new PosVO();
+//
+//		conn = DBManager.getConnection();
+//
+//		try {
+//
+//			// 옵션 값이 없을때
+//			if (opt == null) {
+//				ps = conn.prepareStatement("select *"
+//						+ " from product"
+//						+ " where product_name = ?"
+//						);
+//				ps.setString(1, name);
+//
+//			} else {
+//				ps = conn.prepareStatement("select *"
+//						+ " from product"
+//						+ " where product_name = ?"
+//						+ " and termsofcondition = ?"
+//						);
+//
+//				ps.setString(1, name);
+//				ps.setString(2, opt);
+//			}
+//			rs = ps.executeQuery();				
+//
+//			while (rs.next()) {
+//
+//				String pName = rs.getString("product_name");
+//				String option = rs.getString("termsofcondition"); 
+//
+//				cart.setProduct_no(rs.getInt("product_no"));
+//				cart.setProduct_name(pName);
+//				cart.setTermsofcondition(option);
+//				cart.setProduct_price(rs.getInt("product_price"));
+//				cart.setSelected_item(count);
+//
+//				System.out.printf("%s(%s) %d개 주문\n", pName, option, count);
+//			}
+//
+//			DBManager.p_r_c_Close(ps, rs, conn);
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return cart;
+//	}
 
 
 	/* 
 	   장바구니 내역 cart TABLE에 저장
 		정산 관리 위한 넘겨줄 데이터 저장
 	 */
-	public ArrayList<PosVO> saveCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
+	public ArrayList<PosVO> saveUpdateCartlist(ArrayList<PosVO> cartlist, int orderNumber, String device_id) {
 
 		try {
 			conn = DBManager.getConnection();
