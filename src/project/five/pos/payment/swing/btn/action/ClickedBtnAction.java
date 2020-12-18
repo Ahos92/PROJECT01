@@ -47,7 +47,7 @@ public class ClickedBtnAction implements ActionListener{
 			cash_btn.setEnabled(false);
 			new PaidByCard(price, card_btn, cash_btn, payment_btn);
 			
-			setPaymentType("CARD");
+			setPaymentType("카드");
 			payment_btn.setEnabled(true);
 			
 		}
@@ -67,7 +67,7 @@ public class ClickedBtnAction implements ActionListener{
 			card_btn.setEnabled(false);
 			new PaidByCash(price, card_btn, cash_btn, payment_btn);
 			
-			setPaymentType("CASH");
+			setPaymentType("현금");
 			payment_btn.setEnabled(true);
 		}
 		
