@@ -25,7 +25,7 @@ public class CartDisplay extends JFrame {
 	JTable cart_table;
 	DefaultTableModel dtm;
 	JScrollPane scroll;
-	String[] header= {"메뉴", "옵션", "수량", "▲", "▼", "가격", "취소"};
+	String[] header= {"메뉴", "옵션", "수량", "가격", "▲", "▼", "취소"};
 	Object[][] select_list;
 	int cell_btn_size;
 	
@@ -36,20 +36,25 @@ public class CartDisplay extends JFrame {
 	Font font;
 						// 패널로 보낸다 생각하면 
 						// 메인프레임에 전달 받은 값으로 값을 받을 수있음
-	public CartDisplay(String device_id) {	
-		// 더미 데이터
-		// 	 버튼으로 상품의 정보 전달 받음 (한번의 주문량)
-		// 새로운 주문번호 들어올때 1증가
+	public CartDisplay(String device_id, Object[][] list) {	
 		dao = new CartDAO();
-		cart_list = new ArrayList<>();
-		order_num = dao.MaxOrderNumber();
-		order_num++;
+		
+//		cart_list = new ArrayList<>();
 //		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
-		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
-		cart_list.add(dao.testOrder("홍차", "HOT", 1));
-		cart_list.add(dao.testOrder("케이크", null, 1));
+//		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
+//		cart_list.add(dao.testOrder("홍차", "HOT", 1));
+//		cart_list.add(dao.testOrder("케이크", null, 1));
 //		cart_list.add(dao.testOrder("빙수", null, 1));
-		order_cnt = cart_list.size();	
+//		order_cnt = cart_list.size();	
+		// 주문 내역 테이블
+		//	- 상품객체 정보 배열에 받아서 출력
+//		select_list = new Object[order_cnt][6];
+//		for (int i = 0; i < order_cnt; i++) {
+//			select_list[i][0] = cart_list.get(i).getProduct_name();
+//			select_list[i][1] = cart_list.get(i).getTermsofcondition();
+//			select_list[i][2] = cart_list.get(i).getSelected_item();
+//			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getSelected_item();
+//		};
 	
 		setLayout(new BorderLayout());
 		
@@ -59,15 +64,10 @@ public class CartDisplay extends JFrame {
 		// 주문내역 라벨
 		info_lab = new JLabel("주문 내역");
 			
-		// 주문 내역 테이블
-		//	- 상품객체 정보 배열에 받아서 출력
-		select_list = new Object[order_cnt][6];
-		for (int i = 0; i < order_cnt; i++) {
-			select_list[i][0] = cart_list.get(i).getProduct_name();
-			select_list[i][1] = cart_list.get(i).getTermsofcondition();
-			select_list[i][2] = cart_list.get(i).getSelected_item();
-			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getSelected_item();
-		};
+
+		order_num = dao.MaxOrderNumber();
+		order_num++;
+		select_list = list;
 		dtm = new DefaultTableModel(select_list, header);
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
@@ -105,7 +105,7 @@ public class CartDisplay extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new CartDisplay("1234");
+
 	}
 }
 

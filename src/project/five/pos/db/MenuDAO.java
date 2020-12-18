@@ -23,52 +23,64 @@ public class MenuDAO {
 	
 	static private String[] pnames;
 	static private Integer[] pprice;
+	static private String[] category;
 	
 	public MenuDAO() {
 		
 	}
 	
-	@SuppressWarnings("null")
-	public static String[] getPnames(){
-		String sql = "select product_name from product";
+	public static String[] getCategories(){
+		String sql = "select product_category from product group by product_category";
 		try {
 			conn = DBManager.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			
-			ArrayList<String> pnameList = new ArrayList<>();
+			ArrayList<String> categoryList = new ArrayList<>();
 			
 			while(rs.next()) {
-				pnameList.add(rs.getString("product_name"));
+				categoryList.add(rs.getString("product_category"));
 			}
 			
-			pnames = pnameList.toArray(new String[pnameList.size()]);
+			category = categoryList.toArray(new String[categoryList.size()]);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return pnames;
+		return category;
 	}
 	
-	public static Integer[] getPprices(){
-		String sql = "select product_price from product";
+	public static Object[][] getMenus(String cate){
+		String sql = "select product_name, product_price,"
+				+ "product_count, termsofcondition from product where product_category=?";
+		Object[][] menus=null;
+		int count=0;
 		try {
 			conn = DBManager.getConnection();
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, cate);
 			rs = ps.executeQuery();
-			
-			ArrayList<Integer> ppriceList = new ArrayList<Integer>();
-			
 			while(rs.next()) {
-				ppriceList.add(rs.getInt("product_price"));
+				count++;
 			}
+			System.out.println(count);
+			menus = new Object[count][4];
 			
-			pprice = ppriceList.toArray(new Integer[ppriceList.size()]);
+			rs = ps.executeQuery();
+			int i = 0;
+			while(rs.next()) {
+				menus[i][0] = rs.getString("product_name");
+				menus[i][1] = rs.getInt("product_price");
+				menus[i][2] = rs.getInt("product_count");
+				menus[i][3] = rs.getString("termsofcondition");
+				i+=1;
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return pprice;
+		return menus;
 	}
-
+	
+	
 }
