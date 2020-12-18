@@ -33,6 +33,8 @@ import project.five.pos.sale.CartDAO;
 
 public class PayPanel extends JFrame {
 	
+	JFrame frame;
+	
 	// 뒷 배경 이미지
 	ImageIcon bg = new ImageIcon(ImageIO.read(new File("assets/images/background.jpg")).getScaledInstance(1000, 1000, Image.SCALE_SMOOTH));
 	
@@ -40,8 +42,8 @@ public class PayPanel extends JFrame {
 	final static String IMG_COVID = "assets/images/covid19.png";
 
 
-	static int price = 5000;
-	static int orderNumber = 1;
+	static int price;
+	//static int orderNumber = 1;
 	static String lists = "아이스 아메리카노";
 	
 	static JPanel main_center_panel;
@@ -61,9 +63,13 @@ public class PayPanel extends JFrame {
 	static JButton card_btn;
 	static JButton cash_btn;
 	
+	static int order_num;
 	
-	public PayPanel() throws IOException {
+	public PayPanel(int order_num, int price) throws IOException {
 	
+		this.order_num = order_num;
+		this.price = price;
+		
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -141,7 +147,7 @@ public class PayPanel extends JFrame {
 		JButton payment_btn = new JButton("결제하기");
 		payment_btn.setEnabled(false);
 		
-		payment_btn.addActionListener(new BtnAction(payment_btn, price));
+		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num));
 		
 		
 		//버튼 기능(함수 ClickedBtnAction)
@@ -214,12 +220,12 @@ public class PayPanel extends JFrame {
 				
 	}
 	
-	public static void main(String[] args) {
-		try {
-			PayPanel main = new PayPanel();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws IOException {
+		
+		 new PayPanel(order_num, price);
+		
 	}
+
+	
 	
 }

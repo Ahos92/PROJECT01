@@ -47,7 +47,8 @@ public class PaymentPageAction implements ActionListener{
 			// 총 결제가 완료 되는 시점에 새로운 쿼리문 짜서 결제, 판매 내역 동시에 저장
 			 dao.saveUpdateCartlist(getUpdateDTO(), order_num, device_id);
 		try {
-		
+			
+			update_cart = getUpdateDTO();
 			lists = new ArrayList<>();
 			System.out.println("<결제 창으로 넘긴 목록 >");
 			for (int i = 0; i < update_cart.size(); i++) {
@@ -68,7 +69,7 @@ public class PaymentPageAction implements ActionListener{
 			System.out.println("총 가격 : " + price);
 			
 			// 결제화면에 넘겨줄 데이터 주문번호(order_num), 총가격(price), List<상품 이름>
-			new PayPanel();
+			new PayPanel(order_num, price);
 
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -84,12 +85,13 @@ public class PaymentPageAction implements ActionListener{
 	 */
 	private ArrayList<PosVO> getUpdateDTO() {
 		update_cart = new ArrayList<>();
-		updateVO = new PosVO();
+		
 		if (dtm.getRowCount() == 0) {		
 			System.err.println("결제할 품목이 없습니다.");		
 
 		} else {
 			for (int i = 0; i < dtm.getRowCount(); i++) {
+				updateVO = new PosVO();
 				updateVO.setProduct_name((String)dtm.getValueAt(i, 0));
 				updateVO.setTermsofcondition((String)dtm.getValueAt(i, 1));
 				updateVO.setSelected_item((Integer)dtm.getValueAt(i, 2));

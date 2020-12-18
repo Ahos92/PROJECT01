@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,6 +32,7 @@ import javax.swing.SwingConstants;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
+import project.five.pos.sale.SaleDisplay;
 
 // 주의할점
 //라벨에 버튼 넣을수 없음 = 둘 다 컴포넌트 이기 때문에
@@ -42,8 +44,13 @@ public class AskCoupon extends JFrame {
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
+	
+	
 		
 	int price;
+	JFrame frame;
+	int order_num;
+	
 	static int change;
 	int actual_expenditure;
 	
@@ -60,8 +67,10 @@ public class AskCoupon extends JFrame {
 	
 	static int device_id = 1234;
 	
-	public AskCoupon(int price) {
+	public AskCoupon(int price, JFrame frame, int order_num) {
 		this.price = price;
+		this.frame = frame;
+		this.order_num = order_num;
 		
 		// 쿠폰 날짜 비교
 		today = LocalDate.now();
@@ -115,10 +124,10 @@ public class AskCoupon extends JFrame {
 		order_cart.setForeground(Color.WHITE);
 		order_cart.setFont(new Font("Serif",Font.BOLD, 14));
 		
-		JLabel order_no = new JLabel("주문 번호 : ");
+		JLabel order_no = new JLabel("주문 번호 : " + order_num);
 		order_no.setForeground(Color.WHITE);
 		order_no.setFont(new Font("Serif",Font.BOLD, 36));
-		
+
 		order_list.add(order_cart);
 		
 		result_panel.add(result_explain);
@@ -288,7 +297,9 @@ public class AskCoupon extends JFrame {
 					
 					//버튼 기능(함수 ClickedBtnAction)
 					PayPanel.main_card.show(PayPanel.main_center_panel, "결제전");	
+					new SaleDisplay();
 					
+					frame.dispose();
 				}
 				
 			}

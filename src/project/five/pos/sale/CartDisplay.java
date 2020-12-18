@@ -45,6 +45,7 @@ public class CartDisplay extends JFrame {
 //		cart_list.add(dao.testOrder("케이크", null, 1));
 //		cart_list.add(dao.testOrder("빙수", null, 1));
 //		order_cnt = cart_list.size();	
+		
 // 주문 내역 테이블
 //	- 상품객체 정보 배열에 받아서 출력
 //		select_list = new Object[order_cnt][6];
