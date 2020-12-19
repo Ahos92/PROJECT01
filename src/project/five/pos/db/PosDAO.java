@@ -316,12 +316,8 @@ public class PosDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			today = new Day().TodayYmd();
-			System.out.println(today);
 			ps = conn.prepareStatement("select *"
-					+ " from cart inner join product using(product_no)"
-					+ " where saled_date like \'%" + today
-					+ "%\' order by cart_no asc");
+					+ " from cart inner join product using(product_no)");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -447,11 +443,7 @@ public class PosDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			today =String.format("\'%%%s%%\'", new Day().TodayYmd());
-			ps = conn.prepareStatement("select *"
-					+ " from payment"
-					+ " where payment_date like " + today
-					+ " order by payment_no asc");
+			ps = conn.prepareStatement("select * from payment");
 
 			rs = ps.executeQuery();
 
