@@ -35,7 +35,7 @@ public class CartDisplay extends JFrame {
 	
 	public CartDisplay(String device_id, Object[][] select_list) {	
 		pos = new PosDAO();
-		
+
 		setLayout(new BorderLayout());
 		
 		south_p = new JPanel();

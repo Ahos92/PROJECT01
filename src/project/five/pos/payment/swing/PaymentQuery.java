@@ -42,7 +42,13 @@ public class PaymentQuery {
 			ps.setObject(2, tstp2);
 			ps.setString(3, PaidByCard.cardId);
 			ps.setString(4, PaidByCard.cardNumber);
-			ps.setInt(5, PaidByCash.i_money);
+			
+			if(ClickedBtnAction.getPaymentType().toString().contains("Ä«µå")) {
+				ps.setInt(5, actual_expenditure);
+			}
+			else {
+				ps.setInt(5, PaidByCash.i_money);
+			}
 			ps.setInt(6, price);
 			ps.setInt(7, actual_expenditure);
 			ps.setInt(8, AskMileage.ml_as_you_wish);
