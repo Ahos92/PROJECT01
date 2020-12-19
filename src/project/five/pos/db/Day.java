@@ -18,12 +18,11 @@ public class Day {
 	
 	// 한달전 날짜
 	public String AmonthAgoYmd() {
-		SimpleDateFormat simple = new SimpleDateFormat("yy/MM/dd");
 		LocalDate amonth_ago = LocalDate.now().minusDays(30);
 		return amonth_ago.format(DateTimeFormatter.ofPattern("yy/MM/dd")).toString();
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new Day().TodayYmd());
+		System.out.println(new Day().AmonthAgoYmd());
 	}
 }

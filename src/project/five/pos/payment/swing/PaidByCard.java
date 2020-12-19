@@ -57,10 +57,10 @@ public class PaidByCard extends JFrame{
 		JLabel cStick3 = new JLabel("-");
 		JTextField last_cardNum = new JTextField(4);
 		
-		first_cardNum.addKeyListener(new NumberField());
-		second_cardNum.addKeyListener(new NumberField());
-		third_cardNum.addKeyListener(new NumberField());
-		last_cardNum.addKeyListener(new NumberField());
+		first_cardNum.addKeyListener(new NumberField(4));
+		second_cardNum.addKeyListener(new NumberField(4));
+		third_cardNum.addKeyListener(new NumberField(4));
+		last_cardNum.addKeyListener(new NumberField(4));
 		
 		JButton cardOkay = new JButton("»Æ¿Œ");
 		

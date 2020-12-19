@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+
 import project.five.pos.device.table.LookUpTableModel;
 
 public class TableRepaintAction implements ActionListener {

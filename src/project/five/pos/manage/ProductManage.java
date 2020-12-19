@@ -1,14 +1,9 @@
 package project.five.pos.manage;
 
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +19,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import project.five.pos.TestSwingTools;
+//import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.db.DBManager;
+import project.five.pos.device.comp.btn.DeviceBtn;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.manage.AddMenu;
 import project.five.pos.manage.UpdateMenu;
 import project.five.pos.manage.DeleteMenu;
@@ -33,7 +32,8 @@ public class ProductManage extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JButton jBtnAddRow;
-	private JButton jBtnEditRow;
+	private JButton jBtnEditRow; 
+	private JButton toMain; // 추가
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JPanel panel;
@@ -59,6 +59,7 @@ public class ProductManage extends JFrame implements ActionListener{
 	
 	
 	public ProductManage() {
+		TestSwingTools.initTestFrame(this, "Menu Management", true);
 		panel = new JPanel();
 		panel.setLayout(null); 
 		table = new JTable(model);
@@ -72,12 +73,17 @@ public class ProductManage extends JFrame implements ActionListener{
 		table.getColumnModel().getColumn(6).setCellRenderer(new TableCell());
 		table.getColumnModel().getColumn(6).setCellEditor(new TableCell());
 		
-		scrollPane.setSize(500,450);
-		scrollPane.setLocation(100, 210);
+		scrollPane.setSize(460,450);
+		scrollPane.setLocation(10, 230);
 		panel.add(scrollPane);
+		
+		
+		toMain = new DeviceBtn("메인으로", 100, new ChangeFrameAction(this));
+		toMain.setBounds(20, 10, 70, 70);
+		panel.add(toMain);
+		
 		add(panel);
-		setTitle("Menu Management Page");
-		setBounds(630, 180, 700, 800);
+		
 		select();
 		initialize(); // 값 변화
 		
@@ -117,13 +123,13 @@ public class ProductManage extends JFrame implements ActionListener{
 	private void initialize() {
 		// 테이블에 한줄 추가
 		jBtnAddRow = new JButton("메뉴 추가");
-		jBtnAddRow.setBounds(150, 100, 120, 40);
+		jBtnAddRow.setBounds(50, 110, 120, 40);
 		jBtnAddRow.addActionListener(this);
 		panel.add(jBtnAddRow);
 		
 		// 테이블 정보 수정
 		jBtnEditRow = new JButton("메뉴 수정");
-		jBtnEditRow.setBounds(400, 100, 120, 40);
+		jBtnEditRow.setBounds(315, 110, 120, 40);
 		jBtnEditRow.addActionListener(this);
 		panel.add(jBtnEditRow);
 				
@@ -149,6 +155,7 @@ public class ProductManage extends JFrame implements ActionListener{
 		JButton del;
 		
 		public TableCell() {
+			
 			del = new JButton("삭제");
 			del.addActionListener(e -> {
 				int result = JOptionPane.showConfirmDialog(null, "정말 삭제하시겠습니까?",
@@ -157,6 +164,8 @@ public class ProductManage extends JFrame implements ActionListener{
 					int row = table.getSelectedRow();
 					if(row == -1)
 						row+=1;
+					System.out.println(row);
+					System.out.println(model.getValueAt(row, 0).toString());
 					delD = new DeleteMenu(model.getValueAt(row, 0).toString());
 					model.setRowCount(0);
 					select();

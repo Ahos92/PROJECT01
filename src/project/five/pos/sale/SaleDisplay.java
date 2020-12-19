@@ -223,7 +223,7 @@ public class SaleDisplay extends JFrame{
 			ok[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					System.out.println("카트넘버 : "  + cartNo);
 					show = bt[j].getActionCommand();
 					cart[cartNo][0]=namelist[j];
 					cart[cartNo][1]=condilist[j];
@@ -251,7 +251,7 @@ public class SaleDisplay extends JFrame{
 //                	Arrays.fill(cart[j], null);
 //                }
                 cartNo=0;
-                
+
                 new CartDisplay("1234", cart);
                 dispose();
             }

@@ -15,7 +15,7 @@ public class ComboBoxList {
 			String[] list = {"주문 번호", "상품 이름"};
 			return list;
 		} else if (btn_txt.equals("결제 내역 조회")){
-			String[] list = {"결제일", "사용 금액▲", "결제 수단"};
+			String[] list = {"결제시간", "사용 금액▲", "결제 수단"};
 			return list;
 			
 		} else if (btn_txt.equals("회원 정보 조회")){
