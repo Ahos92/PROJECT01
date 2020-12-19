@@ -7,7 +7,10 @@ import javax.swing.JTextField;
 
 public class NumberField extends JTextField implements KeyListener{
 
-	public NumberField() {
+	int num;
+	
+	public NumberField(int num) {
+		this.num = num;
 		addKeyListener(this);
 	}
 	
@@ -24,7 +27,7 @@ public class NumberField extends JTextField implements KeyListener{
 			  return;
 		  }
 		  
-		  else if(src.getText().length() >= 4) {
+		  else if(src.getText().length() >= num) {
 			  e.consume();
 			  return;
 		  }	  

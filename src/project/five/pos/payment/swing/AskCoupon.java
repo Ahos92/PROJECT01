@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,6 +23,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,21 +34,19 @@ import javax.swing.SwingConstants;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
+import project.five.pos.payment.swing.btn.action.NumberField;
 import project.five.pos.sale.SaleDisplay;
 
 // 주의할점
 //라벨에 버튼 넣을수 없음 = 둘 다 컴포넌트 이기 때문에
 //패널에 넣으면 너무 커짐
 
-
 public class AskCoupon extends JFrame {
 	
 	static Connection conn;
 	static PreparedStatement ps;
 	static ResultSet rs;
-	
-	
-		
+			
 	int price;
 	JFrame frame;
 	int order_num;
@@ -67,7 +67,9 @@ public class AskCoupon extends JFrame {
 	
 	static int device_id = 1234;
 	
-	public AskCoupon(int price, JFrame frame, int order_num) {
+	JLabel order_cart;
+	
+	public AskCoupon(int price, JFrame frame, int order_num, ArrayList<String> lists2) {
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
@@ -120,15 +122,15 @@ public class AskCoupon extends JFrame {
 		JPanel order_list = new JPanel(new FlowLayout());
 		order_list.setOpaque(false);
 		
-		JLabel order_cart = new JLabel(PayPanel.lists);
-		order_cart.setForeground(Color.WHITE);
-		order_cart.setFont(new Font("Serif",Font.BOLD, 14));
 		
-		JLabel order_no = new JLabel("주문 번호 : " + order_num);
+		
+		for(int i = 0; i < lists2.size(); i++) {
+			order_list.add(new SetLabel(lists2.get(i), 36));
+		}
+				
+		JLabel order_no = new JLabel("주문 번호 : " + order_num, SwingConstants.CENTER);
 		order_no.setForeground(Color.WHITE);
 		order_no.setFont(new Font("Serif",Font.BOLD, 36));
-
-		order_list.add(order_cart);
 		
 		result_panel.add(result_explain);
 		result_panel.add(order_list);
@@ -160,9 +162,7 @@ public class AskCoupon extends JFrame {
 						
 						// 적립 + 등급업 추가						
 						new MembershipQuery(actual_expenditure);
-
-						
-						
+										
 						// 메인 패널 초기화
 						new ResetMain();
 						
@@ -176,9 +176,7 @@ public class AskCoupon extends JFrame {
 						
 						// 결제 정보 DB 전송
 						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
-						
-						
-						
+																	
 						// 메인 패널 초기화
 						new ResetMain();
 						
@@ -199,35 +197,8 @@ public class AskCoupon extends JFrame {
 		JTextField input_text = new JTextField(6);
 		input_text.setBounds(175,0,100,25);
 		
-		input_text.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				 
-				  JTextField src = (JTextField) e.getSource();
-				  
-				  if (!Character.isDigit(c)) {
-					  e.consume();
-					  return;
-				  }
-				  
-				  else if(src.getText().length() >= 6) {
-					  e.consume();
-					  return;
-				  }	  
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {	
-			}
-		});
-		
+		input_text.addKeyListener(new NumberField(6));
+					
 		JPanel input_btn = new JPanel(new FlowLayout());
 		JButton check = new JButton("확인");
 		JButton cancel = new JButton("취소");

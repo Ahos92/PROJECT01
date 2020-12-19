@@ -2,6 +2,7 @@ package project.five.pos.payment.swing.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,12 +20,14 @@ public class BtnAction implements ActionListener{
 	PayPanel main;
 	JFrame frame;
 	int order_num;
+	ArrayList<String> lists2;
 	
-	public BtnAction(JButton btn, int price, JFrame frame, int order_num) {
+	public BtnAction(JButton btn, int price, JFrame frame, int order_num, ArrayList<String> lists2) {
 		this.btn = btn;
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
+		this.lists2 =lists2;
 	}
 	public BtnAction(JButton btn) {
 		this.btn = btn;
@@ -46,7 +49,7 @@ public class BtnAction implements ActionListener{
 		}
 		
 		if(btn.getText().equals("결제하기")) {
-			new AskCoupon(price, frame, order_num);
+			new AskCoupon(price, frame, order_num, lists2);
 		}
 			
 	}

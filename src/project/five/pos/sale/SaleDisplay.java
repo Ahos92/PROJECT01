@@ -57,7 +57,7 @@ public class SaleDisplay extends JFrame{
 			categ.add(menu[i]);
 		}
 		upP.add(categ);
-
+		
 		String cate = menu[1].getActionCommand();
 		Object[][] menus = MenuDAO.getMenus(cate);
 		String[] namelist= new String[menus.length];

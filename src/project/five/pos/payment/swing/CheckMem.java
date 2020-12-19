@@ -56,8 +56,8 @@ public class CheckMem extends JFrame {
 		JLabel stick2 = new JLabel("-");
 		JTextField last_no = new JTextField(4);
 		
-		middle_no.addKeyListener(new NumberField());
-		last_no.addKeyListener(new NumberField());
+		middle_no.addKeyListener(new NumberField(4));
+		last_no.addKeyListener(new NumberField(4));
 		
 		JPanel chk_mem = new JPanel(new FlowLayout());
 		JButton yes_mem = new JButton("»Æ¿Œ");
