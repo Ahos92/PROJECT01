@@ -135,7 +135,12 @@ public class PosVO {
 	}
 
 	public void setM_first_name(String m_first_name) {
-		this.m_first_name = m_first_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, m_first_name)) {
+			this.m_first_name = m_first_name;
+		} else {
+			this.m_first_name = null;
+		}
 	}
 
 	public String getM_last_name() {
@@ -143,7 +148,12 @@ public class PosVO {
 	}
 
 	public void setM_last_name(String m_last_name) {
-		this.m_last_name = m_last_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, m_last_name)) {
+			this.m_last_name = m_last_name;
+		} else {
+			this.m_last_name = null;
+		}
 	}
 
 	public String getM_contact_no() {
@@ -151,7 +161,12 @@ public class PosVO {
 	}
 
 	public void setM_contact_no(String m_contact_no) {
-		this.m_contact_no = m_contact_no;
+		String phoneNumber_regex = "01[016789]-\\d{3,4}-[0-9]{4}";
+		if (Pattern.matches(phoneNumber_regex, m_contact_no)) {			
+			this.m_contact_no = m_contact_no;
+		} else {
+			this.m_contact_no = null;
+		}	
 	}
 
 	public int getAmount_price() {

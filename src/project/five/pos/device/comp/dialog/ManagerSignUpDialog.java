@@ -19,7 +19,6 @@ public class ManagerSignUpDialog extends JDialog {
 	JTextField id_tf, pw_tf, lname_tf, fname_tf, tel_tf;
 	JLabel id_lab, pw_lab, lname_lab, fname_lab, tel_lab;
 	JButton sign_btn;
-	
 	Font font;
 	
 	public ManagerSignUpDialog(JFrame frame, String title) {
@@ -28,6 +27,7 @@ public class ManagerSignUpDialog extends JDialog {
 		setSize(300, 350);
 		setResizable(false);// 사이즈 변경 불가
 		setLocationRelativeTo(null);
+		setModal(true);
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 		south_p = new JPanel();
@@ -53,6 +53,7 @@ public class ManagerSignUpDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				PosDAO dao = new PosDAO();
 				PosVO manager = new PosVO();
+				
 				int b_id = 0;
 				try {
 					b_id = Integer.parseInt(id_tf.getText());
@@ -64,10 +65,10 @@ public class ManagerSignUpDialog extends JDialog {
 				manager.setB_contact_no(tel_tf.getText());
 				
 				if (dao.SighUPManager(manager)) {
-					new ConfirmDialog(frame, "매니저 등록", "등록 완료!!");
+					JOptionPane.showMessageDialog(frame, "등록 완료!", "매니저 등록", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				} else {
-					new ConfirmDialog(frame, "매니저 등록", "정확히 입력해주세요!");
+					JOptionPane.showMessageDialog(frame, "정확히 입력해주세요", "매니저 등록", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

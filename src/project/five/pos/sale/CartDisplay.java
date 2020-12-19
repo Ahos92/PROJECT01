@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
 import project.five.pos.sale.btn.CartBtn;
 import project.five.pos.sale.btn.action.*;
@@ -30,28 +31,10 @@ public class CartDisplay extends JFrame {
 	int cell_btn_size;
 	
 	int order_num;
-	CartDAO dao;
+	PosDAO pos;
 	
 	public CartDisplay(String device_id, Object[][] select_list) {	
-//		// 테스트 데이터	
-//		cart_list = new ArrayList<>();
-//		cart_list.add(dao.testOrder("아메리카노", "HOT", 2));
-//		cart_list.add(dao.testOrder("아메리카노", "ICE", 1));
-//		cart_list.add(dao.testOrder("홍차", "HOT", 1));
-//		cart_list.add(dao.testOrder("케이크", null, 1));
-//		cart_list.add(dao.testOrder("빙수", null, 1));
-//		order_cnt = cart_list.size();	
-// 주문 내역 테이블
-//	- 상품객체 정보 배열에 받아서 출력
-//		select_list = new Object[order_cnt][6];
-//		for (int i = 0; i < order_cnt; i++) {
-//			select_list[i][0] = cart_list.get(i).getProduct_name();
-//			select_list[i][1] = cart_list.get(i).getTermsofcondition();
-//			select_list[i][2] = cart_list.get(i).getSelected_item();
-//			select_list[i][5] = cart_list.get(i).getProduct_price() * cart_list.get(i).getSelected_item();
-//		};
-	
-		dao = new CartDAO();
+		pos = new PosDAO();
 		
 		setLayout(new BorderLayout());
 		
@@ -61,7 +44,7 @@ public class CartDisplay extends JFrame {
 		info_lab = new JLabel("주문 내역");
 		
 		// 주문 번호
-		order_num = dao.MaxOrderNumber();
+		order_num = pos.MaxOrderNumber();
 		order_num++;
 		
 		// 선택된 상품 테이블
@@ -69,9 +52,6 @@ public class CartDisplay extends JFrame {
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
 		scroll.setPreferredSize(new Dimension(480, 100));
-		
-		System.out.println((String)dtm.getValueAt(0, 0));
-		System.out.println((String)dtm.getValueAt(1, 0));
 		
 		// 수량 조절 버튼
 		cell_btn_size = 40;	

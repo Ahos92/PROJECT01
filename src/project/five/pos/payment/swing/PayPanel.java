@@ -29,7 +29,6 @@ import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.payment.swing.btn.action.BtnAction;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
-import project.five.pos.sale.CartDAO;
 
 public class PayPanel extends JFrame {
 	

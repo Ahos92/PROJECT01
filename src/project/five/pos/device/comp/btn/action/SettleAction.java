@@ -5,16 +5,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import project.five.pos.db.PosDAO;
 import project.five.pos.device.comp.dialog.LoadingDialog;
-import project.five.pos.sale.CartDAO;
 
 public class SettleAction implements ActionListener {
 
 	PosDAO pos;
-	CartDAO cart;
-
 	JFrame frame;
 	JDialog dialog;
 	public SettleAction(JFrame frame, JDialog dialog) {
@@ -24,20 +22,18 @@ public class SettleAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		cart = new CartDAO();
+		
 		pos = new PosDAO();		
-	
+		
 		// pos.saveDailyAmount(); - 하루 매출 저장 
 		
-		// 30일지난 데이터 테이블에서 삭제 (12/17 기준 cart table만 적용)	
-		//	pos.deleteAmonthAgoDate(); - payment 삭제도 추가
-		
+		// pos.deleteAmonthAgoDate(); - 30일지난 데이터 테이블에서 삭제	
 		if (pos.saveDailyAmount() && pos.deleteAmonthAgoDate()) {
-			// 정산 중 입니다 팝업창 확인 누르면 프로그램 종료
 			new LoadingDialog(frame, "정산 중 ...", dialog);
 			
 		} else {
-			// 정상적인 처리가 되지 않았습니다. 팝업창 하나 생성
+			JOptionPane.showMessageDialog(frame, "정상적인 처리가 되지 않았습니다!!", "처리 오류!", 
+												JOptionPane.ERROR_MESSAGE);
 			dialog.dispose();
 		}
 	

@@ -21,6 +21,7 @@ public class LoginDialog extends JDialog {
 		setSize(200, 130);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setModal(true);
 
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		center_p = new JPanel(new GridLayout(2, 2, 0, 5));

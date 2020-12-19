@@ -7,7 +7,6 @@ import javax.swing.*;
 import project.five.pos.MainDisplay;
 import project.five.pos.db.PosDAO;
 import project.five.pos.device.*;
-import project.five.pos.device.comp.dialog.ConfirmDialog;
 import project.five.pos.device.comp.dialog.LoginDialog;
 import project.five.pos.device.comp.dialog.ManagerSignUpDialog;
 import project.five.pos.device.comp.dialog.SettleDialog;
@@ -49,14 +48,16 @@ public class ChangeFrameAction implements ActionListener{
 				changeable_frame = new ManagerDisplay();
 				System.out.println("로그인 성공!");
 			} else {
-				new ConfirmDialog(present_frame, "로그인 실패!", "아이디나 비밀번호가 맞지 않습니다!");
+				JOptionPane.showMessageDialog(present_frame, "아이디나 비밀번호가 맞지않습니다.", "오류", 
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else if(check.equals("관리자")) {
 			new LoginDialog(present_frame, "관리자 로그인");
 
 		} else if(check.equals("관리자 메뉴로 돌아가기") 
-				|| check.equals("아니요")) {
+				|| check.equals("아니요")
+				|| check.equals("메인으로")) {
 			changeable_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {

@@ -59,5 +59,16 @@ public class DBManager {
 
 	} 
 
+	public static void p2_p_c_Close(PreparedStatement ps2, PreparedStatement ps,  Connection conn) throws SQLException {
+		if (ps2 != null)
+			ps2.close();
+		if (ps != null)
+			ps.close();	
+		if (conn != null)
+			conn.close();
+		System.out.println("DB Á¾·á!");
+
+	} 
+	
 }
 
