@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import project.five.pos.db.PosVO;
 import project.five.pos.payment.swing.AskCoupon;
 import project.five.pos.payment.swing.CheckMem;
 import project.five.pos.payment.swing.PayPanel;
@@ -21,13 +22,15 @@ public class BtnAction implements ActionListener{
 	JFrame frame;
 	int order_num;
 	ArrayList<String> lists2;
+	ArrayList<PosVO> update_cart;
 	
-	public BtnAction(JButton btn, int price, JFrame frame, int order_num, ArrayList<String> lists2) {
+	public BtnAction(JButton btn, int price, JFrame frame, int order_num, ArrayList<String> lists2, ArrayList<PosVO> update_cart) {
 		this.btn = btn;
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
 		this.lists2 =lists2;
+		this.update_cart = update_cart;
 	}
 	public BtnAction(JButton btn) {
 		this.btn = btn;
@@ -49,7 +52,7 @@ public class BtnAction implements ActionListener{
 		}
 		
 		if(btn.getText().equals("결제하기")) {
-			new AskCoupon(price, frame, order_num, lists2);
+			new AskCoupon(price, frame, order_num, lists2, update_cart);
 		}
 			
 	}

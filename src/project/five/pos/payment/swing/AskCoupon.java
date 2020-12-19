@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import project.five.pos.db.DBManager;
+import project.five.pos.db.PosVO;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
 import project.five.pos.payment.swing.btn.action.NumberField;
 import project.five.pos.sale.SaleDisplay;
@@ -69,7 +70,7 @@ public class AskCoupon extends JFrame {
 	
 	JLabel order_cart;
 	
-	public AskCoupon(int price, JFrame frame, int order_num, ArrayList<String> lists2) {
+	public AskCoupon(int price, JFrame frame, int order_num, ArrayList<String> lists2, ArrayList<PosVO> update_cart) {
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
@@ -125,7 +126,7 @@ public class AskCoupon extends JFrame {
 		
 		
 		for(int i = 0; i < lists2.size(); i++) {
-			order_list.add(new SetLabel(lists2.get(i), 36));
+			order_list.add(new SetLabel(lists2.get(i), update_cart.get(i).getSelected_item(), 36));
 		}
 				
 		JLabel order_no = new JLabel("주문 번호 : " + order_num, SwingConstants.CENTER);
@@ -327,7 +328,7 @@ public class AskCoupon extends JFrame {
 										// 거스름돈 계산
 										change = PaidByCash.i_money - actual_expenditure;
 										
-										if(ClickedBtnAction.getPaymentType().toString().contains("CARD")) {
+										if(ClickedBtnAction.getPaymentType().toString().contains("카드")) {
 											JLabel calc_label2 = new JLabel("<html>카드 결제 입니다<br/>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + actual_expenditure + " (원)<html>", SwingConstants.CENTER);
 											total_calc.add(calc_label2);
 											}

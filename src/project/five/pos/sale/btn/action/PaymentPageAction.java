@@ -69,7 +69,7 @@ public class PaymentPageAction implements ActionListener{
 			System.out.println("총 가격 : " + price);
 			
 			// 결제화면에 넘겨줄 데이터 주문번호(order_num), 총가격(price), List<상품 이름>
-			new PayPanel(order_num, price, lists);
+			new PayPanel(order_num, price, lists, update_cart);
 
 		} catch (IOException e1) {
 			e1.printStackTrace();

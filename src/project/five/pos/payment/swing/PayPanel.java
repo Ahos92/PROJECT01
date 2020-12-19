@@ -59,7 +59,7 @@ public class PayPanel extends JFrame {
 	static JButton card_btn;
 	static JButton cash_btn;
 						
-	public PayPanel(int order_num, int price, ArrayList<String> lists2) throws IOException {
+	public PayPanel(int order_num, int price, ArrayList<String> lists2, ArrayList<PosVO> update_cart) throws IOException {
 					
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -83,6 +83,13 @@ public class PayPanel extends JFrame {
 		east_panel.setOpaque(false);
 		
 		main_center_panel.add("결제전", center_panel);
+		
+		JPanel productPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+		productPanel.setOpaque(false);
+		
+		JLabel stnsProduct = new JLabel("주문 하신 상품 리스트", SwingConstants.CENTER);
+		stnsProduct.setForeground(Color.WHITE);
+		stnsProduct.setFont(new Font("Serif",Font.BOLD, 14));
 		
 		JPanel productList = new JPanel(new FlowLayout());
 		productList.setOpaque(false);
@@ -113,6 +120,7 @@ public class PayPanel extends JFrame {
 				
 		JLabel total_price = new JLabel("총 결제할 금액 : " + price, SwingConstants.CENTER);
 		total_price.setForeground(Color.WHITE);
+		total_price.setFont(new Font("Serif",Font.BOLD, 16));
 				
 		//버튼 모음
 		ckmem_btn = new JButton("멤버쉽 입력");
@@ -134,7 +142,7 @@ public class PayPanel extends JFrame {
 		JButton payment_btn = new JButton("결제하기");
 		payment_btn.setEnabled(false);
 		
-		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num, lists2));
+		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num, lists2, update_cart));
 		
 		
 		//버튼 기능(함수 ClickedBtnAction)
@@ -170,11 +178,20 @@ public class PayPanel extends JFrame {
 		}
 		
 		for(int i = 0; i < lists2.size(); i++) {
-			productList.add(new SetLabel(lists2.get(i), 14));
+			productList.add(new SetLabel(lists2.get(i), update_cart.get(i).getSelected_item(), 14));
 		}
-				
+		
+		// 커피 이미지들 (보류)
+//		for(CfmenuEnum cfname : CfmenuEnum.values()) {
+//			productList.add(cfname.getCfname(), new CfmenuLabel(cfname));
+//		}
+		
+		//장바구니 리스트 패널들
+		productPanel.add(stnsProduct);
+		productPanel.add(productList);
+		
 		//장바구니 패널
-		center_panel.add(productList);
+		center_panel.add(productPanel);
 		
 		//멤버쉽 패널
 		center_panel.add(card_panel);
