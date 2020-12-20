@@ -1,4 +1,4 @@
-package project.five.pos.manage;
+package project.five.pos.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,53 +13,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import project.five.pos.db.DBManager;
 
-public class UpdateMenu extends JDialog implements ActionListener {
+public class AddMenu extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-
-	static Connection con;
-	static PreparedStatement pstmt;
-	static ResultSet rs;
 	
+	private Connection con;
+	private PreparedStatement pstmt;
 	
-	private int TextX = 100;
+	private int TextX = 20;
 	private JTextField[] rows = new JTextField[3];
+	private String[] category = {"","Coffee","Ade","Deserts"};
+	private String[] condition = {"","ICE","HOT"};
 	
 	private JPanel panel;
-	private JLabel title,list;
+    private JLabel title,list;
     private JButton saveB, exitB;
+    private JComboBox<String> categ, condi;
 	
-	UpdateMenu(JFrame owner, String str){
-		super(owner, str, true);
+	AddMenu(JFrame owner,String str){
+		super(owner,str,true);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
         add(panel);
         
-        title = new JLabel("[ UPDATE MENU ]");
-        title.setBounds(200, 10, 250, 50);
+        title = new JLabel("[ ADD MENU ]");
+        title.setBounds(225, 10, 250, 50);
         title.setFont(new Font("Courier",Font.PLAIN,20));
         title.setForeground (Color.GRAY);
         panel.add(title);
         
-        list = new JLabel("  메뉴이름                                가격                                      수량");
-        list.setBounds(120, 80, 500, 30);
+        list = new JLabel(" 메뉴이름                        가격                            수량                        카테고리                      구분");
+        list.setBounds(40, 80, 500, 30);
         panel.add(list);
         
         for(int i = 0; i<3;i++) {
         	rows[i] = new JTextField(10);
         	rows[i].setBounds(TextX, 105, 100, 35);
         	panel.add(rows[i]);
-        	TextX+=140;
+        	TextX+=110;
         }
+        
+        categ = new JComboBox<String>(category);
+        categ.setBounds(TextX, 105, 100, 35);
+        panel.add(categ);
+        
+        condi = new JComboBox<String>(condition);
+        condi.setBounds(TextX+110, 105, 100, 35);
+        panel.add(condi);
 
         saveB = new JButton("SAVE");
         saveB.setBounds(150, 190, 100, 30);
@@ -80,12 +89,12 @@ public class UpdateMenu extends JDialog implements ActionListener {
             }
         });
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveB) {
-			update();
-			for(int i=0;i<5;i++) {
+			add();
+			for(int i=0;i<3;i++) {
 				rows[i].setText("");
 			}
 		} else if(e.getSource() == exitB) {
@@ -93,25 +102,27 @@ public class UpdateMenu extends JDialog implements ActionListener {
 		}
 	}
 	
-	public void update() {
-		String sql = "UPDATE product SET product_price=?, product_count=?"
-				+ " WHERE product_name=?";
+	public void add() {
+		String sql = "insert into product values("
+				+ "product_seq.nextval,?,?,?,?,?)";
 		
 		try {
 			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, Integer.valueOf(rows[1].getText()));
-			pstmt.setInt(2, Integer.valueOf(rows[2].getText()));
-			pstmt.setString(3, rows[0].getText());
+			pstmt.setString(1, rows[0].getText());
+			pstmt.setInt(2, Integer.valueOf(rows[1].getText()));
+			pstmt.setInt(3, Integer.valueOf(rows[2].getText()));
+			pstmt.setString(4, categ.getSelectedItem().toString());
+			pstmt.setNString(5, condi.getSelectedItem().toString());
 			
 			int cnt = pstmt.executeUpdate();
 			
-			System.out.printf("%d행이 변경되었습니다.\n", cnt);
+			System.out.printf("%d행이 추가되었습니다.\n", cnt);
 			
 		} catch (Exception e1) {
 			System.out.println(e1.getMessage());
-		} finally {
+		}finally {
 			try {
 				pstmt.close();
 				con.close();

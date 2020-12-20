@@ -1,28 +1,27 @@
-package project.five.pos.sale.btn.render;
+package project.five.pos.cart.btn.render;
 
 import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
-public class DeleteBtnRender extends JButton implements TableCellRenderer {
-
-	Font font = new Font("±√º≠", Font.PLAIN, 10);
+public class UpDonwBtnRender extends JButton implements TableCellRenderer {
 	
-	public DeleteBtnRender() {
+	String UpDown;
+	Font font = new Font("πŸ≈¡", Font.CENTER_BASELINE, 10);
+	
+	public UpDonwBtnRender(String UpDown) {
+		this.UpDown = UpDown;
 		setOpaque(true);
 	}
-
+	
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		setBackground(isSelected?table.getSelectionBackground():table.getBackground());
-		setText("X");
+		setText(UpDown);	
 		setFont(font);
-		return this;
+	    return this;
 	}
 }
-
-

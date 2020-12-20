@@ -1,4 +1,4 @@
-package project.five.pos.sale.btn.action;
+package project.five.pos.cart.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import project.five.pos.sale.SaleDisplay;
+import project.five.pos.menu.Sale;
 
 public class CancleAction implements ActionListener {
 		
@@ -25,7 +25,7 @@ public class CancleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
 		try {
-			new SaleDisplay();
+			new Sale();
 			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {

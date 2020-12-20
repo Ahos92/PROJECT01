@@ -1,4 +1,4 @@
-package project.five.pos.sale.btn.action;
+package project.five.pos.cart.btn.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import project.five.pos.sale.SaleDisplay;
+import project.five.pos.menu.Sale;
 
 public class DeleteAction extends DefaultCellEditor {
 	protected JButton button;
@@ -30,7 +30,7 @@ public class DeleteAction extends DefaultCellEditor {
 				int row = table.getSelectedRow();
 				dtm.removeRow(row);
 				if (dtm.getRowCount() == 0) {
-					new SaleDisplay();
+					new Sale();
 					frame.dispose();
 					System.err.println("모든 항목이 취소 되었습니다!");
 				}

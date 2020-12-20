@@ -1,4 +1,4 @@
-package project.five.pos.sale;
+package project.five.pos.menu;
 
 
 import java.awt.BorderLayout;
@@ -30,17 +30,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.db.MenuDAO;
+import project.five.pos.cart.CartDisplay;
 import project.five.pos.db.PosVO;
 
-public class SaleDisplay extends JFrame{
+public class Sale extends JFrame{
 	int count = 0;
 	String show = "";
 	int cartNo =0;
 	int on=0;
 
 
-	public SaleDisplay() {
+	public Sale() {
 		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
 		Container con = this.getContentPane();
 		JScrollPane scroll;
@@ -58,7 +58,7 @@ public class SaleDisplay extends JFrame{
 		}
 		upP.add(categ);
 
-		String cate = menu[1].getActionCommand();
+		String cate = menu[2].getActionCommand();
 		Object[][] menus = MenuDAO.getMenus(cate);
 		String[] namelist= new String[menus.length];
 		String[] condilist= new String[menus.length];
@@ -287,7 +287,7 @@ public class SaleDisplay extends JFrame{
 
 
 	public static void main(String[] args) {
-		new SaleDisplay();
+		new Sale();
 	}
 
 }

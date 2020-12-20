@@ -1,4 +1,4 @@
-package project.five.pos.db;
+package project.five.pos.menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

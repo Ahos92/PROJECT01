@@ -21,11 +21,11 @@ public class TableList {
 	public String[] header() {
 		
 		if (btn_text.equals("판매 내역 조회")) {
-			String[] header = {"카트 번호", "주문 번호", "상품 이름", "수량", "가격"};	
+			String[] header = {"판매 날짜", "주문 번호", "상품 이름", "수량", "가격"};	
 			return header;
 
 		} else if (btn_text.equals("결제 내역 조회")) {
-			String[] header = {"결제 번호", "결제 수단", "결제일", "은행 이름", "카드 번호", "결제 금액", "사용 금액", "쿠폰 사용"};	
+			String[] header = {"결제일", "결제 수단", "은행 이름", "카드 번호", "마일리지 사용", "결제 금액", "사용 금액","쿠폰 사용"};	
 			return header;
 
 		} else if (btn_text.equals("회원 정보 조회")) {
@@ -44,9 +44,9 @@ public class TableList {
 		if (btn_text.equals("판매 내역 조회")) {
 			for (int i = 0; i < row_length; i++) {
 				column = 0;
-			lookUp_list[i][column] = searchlist.get(i).getCart_no();
+			lookUp_list[i][column] = searchlist.get(i).getSaled_date();
 			lookUp_list[i][++column] = searchlist.get(i).getOrder_no();
-			lookUp_list[i][++column] = searchlist.get(i).getProduct_name();
+			lookUp_list[i][++column] = searchlist.get(i).getSaled_prdouct_name();
 			lookUp_list[i][++column] = searchlist.get(i).getSelected_item();
 			lookUp_list[i][++column] = searchlist.get(i).getTotal_price();
 			};
@@ -54,14 +54,15 @@ public class TableList {
 		} else if (btn_text.equals("결제 내역 조회")) { // Payment table 조회
 			for (int i = 0; i < row_length; i++) {
 				column = 0;
-				lookUp_list[i][column] = searchlist.get(i).getPayment_no();
+				lookUp_list[i][column] = searchlist.get(i).getPayment_date();
 				lookUp_list[i][++column] = searchlist.get(i).getPayment_type();
-				lookUp_list[i][++column] = searchlist.get(i).getPayment_date();
 				lookUp_list[i][++column] = searchlist.get(i).getBank_id();
 				lookUp_list[i][++column] = searchlist.get(i).getCard_num();
+				lookUp_list[i][++column] = searchlist.get(i).getUsage_of_milage();
 				lookUp_list[i][++column] = searchlist.get(i).getAmount_of_money();
 				lookUp_list[i][++column] = searchlist.get(i).getActual_expenditure();
 				lookUp_list[i][++column] = searchlist.get(i).getCoupon_no();
+				
 			};
 			
 		} else if (btn_text.equals("회원 정보 조회")) { // customer table 조회

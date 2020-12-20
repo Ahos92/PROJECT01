@@ -9,6 +9,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public class PosDAO {
 
 	public PosDAO() {}
 
-	// POS관련 메서드 ----------------------------------------------------------------------------------------
+	// DEVICE ----------------------------------------------------------------------------------------
 	/*
 	 	한달전 데이터 지우는 메서드
 	 		- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X
@@ -42,7 +43,7 @@ public class PosDAO {
 			// 테스트 끝나면 지우기
 			conn.setAutoCommit(false);
 
-			String amonth_ago = new Day().AmonthAgoYmd();
+			String amonth_ago = new Day().AmonthAgoYmdD();
 			String sql01 = "delete from cart where saled_date like \'%" + amonth_ago + "%\'";
 			ps = conn.prepareStatement(sql01);
 
@@ -92,7 +93,7 @@ public class PosDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			today = new Day().TodayYmd();
+			today = new Day().TodayYmdD();
 
 			String sql01 = "select sum(total_price) from cart where saled_date like \'%" + today + "%\'";
 			ps = conn.prepareStatement(sql01);
@@ -268,31 +269,46 @@ public class PosDAO {
 
 
 
-	// 결제 관련 메서드------------------------------------------------------------------------------------------
+	// CART ------------------------------------------------------------------------------------------
 	/*
 	 * 	마지막 결제 창에서 넘겨 받을 데이터 집어넣기
 	 */
-	public boolean saveCartlist(Timestamp date, int order_no, ArrayList<PosVO> cart_list, int device_id) {
+	public boolean saveCartlist(LocalDateTime date, int order_no, ArrayList<String> name_list, 
+									ArrayList<PosVO> cart_list, int device_id) {
 
 		conn = DBManager.getConnection();
 
 		try {
 			String sql = "insert into cart "
-					+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
+					+ "values(?, ?, ?, ?, ?, ?)";
 
 			ps = conn.prepareStatement(sql);
-
-			// cart_no : seq.nextval
-			//			ps.setInt(1, x); // order_no 			- 매개변수 order_no
-			//			ps.setString(2, x); // product_name 	- 객체받아서 name (condition) 으로 포맷
-			//			ps.setInt(3, x); // selected_item 		- 객체받아서 그대로 입력
-			//			ps.setTimestamp(4, x); // saled_date	- 매개변수 date
-			//			ps.setInt(5, x); // total_price			- 객체받아서 가격
-			//			ps.setInt(6, x); // device_id			- 매개변수 device_id
-
-			rs = ps.executeQuery();
-
-
+			String today = new Day().TodayYmdT(date);
+			
+			for (int j = 0; j < cart_list.size(); j++) {
+				String division = String.format(" (%d)", j);
+				
+				ps.setString(1, today + division); 					// saled_date  - 날짜받아서 변환
+				ps.setInt(2, order_no); 							// order_no    - 매개변수 order_no
+				ps.setString(3, name_list.get(j)); 					// sale_product_name - 이름객체받아서 그대로 입력
+				ps.setInt(4, cart_list.get(j).getSelected_item()); // selected_item	- 매개변수 date
+				ps.setInt(5, cart_list.get(j).getTotal_price()); 	// total_price	- 객체받아서 가격
+				ps.setInt(6, device_id); 							// device_id	- 매개변수 device_id
+			
+				ps.addBatch();
+			}
+			
+			System.out.println(name_list.get(0));
+			System.out.println(cart_list.get(0).getSelected_item());
+			System.out.println(cart_list.get(0).getTotal_price());
+			
+			int[] rows = ps.executeBatch();
+			if (rows.length <= 0) {
+				return false;
+			} else {
+				System.out.println("cart TABLE의 " + rows.length + "행이 변경되었습니다.");
+				return true;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -301,6 +317,7 @@ public class PosDAO {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
 		}
+		
 		return false;
 	}
 
@@ -317,18 +334,18 @@ public class PosDAO {
 
 		try {
 			ps = conn.prepareStatement("select *"
-					+ " from cart inner join product using(product_no)");
+					+ " from cart");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setCart_no(rs.getInt("cart_no"));
+				pos.setSaled_date(rs.getString("saled_date"));
 				pos.setOrder_no(rs.getInt("order_no"));
-				pos.setProduct_name(rs.getString("product_name"));
+				pos.setSaled_prdouct_name(rs.getString("saled_product_name"));
 				pos.setSelected_item(rs.getInt("selected_item"));
 				pos.setTotal_price(rs.getInt("total_price"));
-
+			
 				cartlist.add(pos);
 			}
 
@@ -339,7 +356,7 @@ public class PosDAO {
 			try {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
-			
+
 		}
 
 		return cartlist;
@@ -359,14 +376,16 @@ public class PosDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			if (column_name.equals("product_name")) {
-				column_data = "\'" + column_data + "\'";
+			if (column_name.equals("saled_product_name")) {
+				column_data = "\'%" + column_data + "%\'";
 			} 
-
-			ps = conn.prepareStatement("select *"
-					+ " from cart inner join product using(product_no)"
-					+ " where " + column_name + " = " + column_data
-					+ " order by cart_no asc");
+			
+			String sql = "select *"
+					+ " from cart"
+					+ " where " + column_name + " like " + column_data
+					+ " order by saled_date asc";
+			ps = conn.prepareStatement(sql);
+			
 			try {
 				rs = ps.executeQuery();
 			} catch (SQLSyntaxErrorException sse) {
@@ -375,10 +394,9 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setCart_no(rs.getInt("cart_no"));
+				pos.setSaled_date(rs.getString("saled_date"));
 				pos.setOrder_no(rs.getInt("order_no"));
-				pos.setProduct_name(rs.getString("product_name"));
-				pos.setTermsofcondition(rs.getString("termsofcondition"));
+				pos.setSaled_prdouct_name(rs.getString("saled_product_name"));
 				pos.setSelected_item(rs.getInt("selected_item"));
 				pos.setTotal_price(rs.getInt("total_price"));
 
@@ -393,12 +411,12 @@ public class PosDAO {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
 		}
-		
+
 		return cartlist;
 
 	}
 
-	
+
 	/*
  		최신 주문번호
 	 */ 
@@ -417,22 +435,21 @@ public class PosDAO {
 				max = rs.getInt("max(order_no)");
 			}
 
-			System.out.println("현재 주문 번호 : " + max);
-
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
-			
+
 		}
 
 		return max;
 	}
 
 
+	
+	// PAYMENT ---------------------------------------------------------------------------------------------- 
 	/*
 	 	결제 내역 전부 조회
 	 */
@@ -450,11 +467,11 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setPayment_no(rs.getInt("payment_no"));
-				pos.setPayment_type(rs.getString("payment_type"));
 				pos.setPayment_date(rs.getString("payment_date"));
+				pos.setPayment_type(rs.getString("payment_type"));
 				pos.setBank_id(rs.getString("bank_id"));
 				pos.setCard_num(rs.getString("card_num"));
+				pos.setUsage_of_milage(rs.getInt("usage_of_milage"));
 				pos.setAmount_of_money(rs.getInt("amount_of_money"));
 				pos.setActual_expenditure(rs.getInt("actual_expenditure"));
 				pos.setCoupon_no(rs.getInt("coupon_no"));
@@ -486,10 +503,7 @@ public class PosDAO {
 
 		try {
 			String sql = "";
-			//			SimpleDateFormat simple = new SimpleDateFormat("yy/MM/dd");
-			//			Date now = new Date();
-			//			String today = simple.format(now);
-			today = String.format("%s%%", new Day().TodayYmd());
+			today = String.format("%s%%", new Day().TodayYmdD());
 
 			if (column_name.equals("payment_date")) {
 				sql = "select * from payment where " + column_name 
@@ -511,11 +525,11 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setPayment_no(rs.getInt("payment_no"));
+				pos.setPayment_date(rs.getString("payment_date"));
 				pos.setPayment_type(rs.getString("payment_type"));
-				pos.setPayment_date(rs.getString("payment_date").trim());
 				pos.setBank_id(rs.getString("bank_id"));
 				pos.setCard_num(rs.getString("card_num"));
+				pos.setUsage_of_milage(rs.getInt("usage_of_milage"));
 				pos.setAmount_of_money(rs.getInt("amount_of_money"));
 				pos.setActual_expenditure(rs.getInt("actual_expenditure"));
 				pos.setCoupon_no(rs.getInt("coupon_no"));

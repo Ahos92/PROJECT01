@@ -1,4 +1,4 @@
-package project.five.pos.sale;
+package project.five.pos.cart;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.cart.btn.CartBtn;
+import project.five.pos.cart.btn.action.*;
+import project.five.pos.cart.btn.render.*;
 import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
-import project.five.pos.sale.btn.CartBtn;
-import project.five.pos.sale.btn.action.*;
-import project.five.pos.sale.btn.render.*;
 
 public class CartDisplay extends JFrame {
 
@@ -49,6 +49,17 @@ public class CartDisplay extends JFrame {
 		
 		// 선택된 상품 테이블
 		dtm = new DefaultTableModel(select_list, header);
+
+		// null값 제거 
+		int delete = 0;
+		for (int i = 0; i < select_list.length; i++) {
+			if (select_list[i][0] == null) {
+				dtm.removeRow(delete);
+				delete--;
+			} 
+			delete++;
+		}
+		
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
 		scroll.setPreferredSize(new Dimension(480, 100));

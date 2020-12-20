@@ -34,12 +34,12 @@ public class PaymentQuery {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "INSERT INTO payment VALUES (payy_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO payment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			ps = conn.prepareStatement(sql);
 			
-			ps.setString(1, ClickedBtnAction.getPaymentType().toString());
-			ps.setObject(2, tstp2);
+			ps.setObject(1, tstp2);
+			ps.setString(2, ClickedBtnAction.getPaymentType().toString());
 			ps.setString(3, PaidByCard.cardId);
 			ps.setString(4, PaidByCard.cardNumber);
 			
