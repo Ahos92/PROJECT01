@@ -25,7 +25,6 @@ public class SettleDialog extends JDialog {
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setModal(true);
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
