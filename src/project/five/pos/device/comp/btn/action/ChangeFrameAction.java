@@ -15,7 +15,7 @@ import project.five.pos.menu.MenuDisplay;
 
 public class ChangeFrameAction implements ActionListener{
 
-	JFrame present_frame;
+	JFrame present_frame, changeble_frame;
 	JTextField id_tf, pw_tf;
 
 	public ChangeFrameAction(JFrame present_frame, JTextField id_tf, JTextField pw_tf) {
@@ -33,7 +33,7 @@ public class ChangeFrameAction implements ActionListener{
 		String check = e.getActionCommand();
 		
 		if (check.equals("메뉴로 돌아가기")) {
-			 new MainDisplay("1234");
+			changeble_frame =  new MainDisplay("1234");
 
 		} else if(check.equals("로그인")){			
 			DeviceDAO device = new DeviceDAO();
@@ -44,7 +44,7 @@ public class ChangeFrameAction implements ActionListener{
 			}catch (NumberFormatException nfe) {}
 
 			if (device.searchAdmin(id, pw)) {
-				 new ManagerDisplay();
+				changeble_frame =  new ManagerDisplay();
 				System.out.println("로그인 성공!");
 			} else {
 				JOptionPane.showMessageDialog(present_frame, "아이디나 비밀번호가 맞지않습니다.", "오류", 
@@ -57,13 +57,13 @@ public class ChangeFrameAction implements ActionListener{
 		} else if(check.equals("관리자 메뉴로 돌아가기") 
 				|| check.equals("아니요")
 				|| check.equals("메인으로")) {
-			new ManagerDisplay();
+			changeble_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
-			new JoinFrame();
+			changeble_frame = new JoinFrame();
 
 		} else if(check.equals("상품 관리")) {
-			new ProductManage();
+			changeble_frame = new ProductManage();
 
 		} else if(check.equals("매니저 등록")) {
 			new ManagerSignUpDialog(present_frame, check);
@@ -73,12 +73,13 @@ public class ChangeFrameAction implements ActionListener{
 			
 		} else if (check.equals("판매") 
 				|| check.equals("취소하기")) {
-			new MenuDisplay();
+			changeble_frame = new MenuDisplay();
 			
 		} 
 
 		// dialog 띄울 때 변할 화면 Null
 		try {
+			changeble_frame.setVisible(true);
 			present_frame.dispose();
 		} catch (NullPointerException ne) {
 

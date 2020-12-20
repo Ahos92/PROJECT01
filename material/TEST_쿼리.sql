@@ -15,16 +15,20 @@ delete from payment;
 delete from cart;
 
 select * from product;
-select * from payment order by Payment_date;
+select * from payment order by Payment_date desc;
 select * from branch;
 select * from customer;
 select * from bank;
 select * from coupon;
-select * from cart order by saled_date asc;
+select * from cart order by saled_date desc;
 select * from daily_sales_amount;
 select * from businessadminister;
 
-insert into cart values (1, 3, 10, 1, to_date(sysdate, 'RR/MM/DD HH24:MI:SS'), 5000, 1234);
+insert into cart values (to_char(sysdate-30)||' '||'(0)', 50, '카페라테 (HOT)', 4, 10000, 1234);
+insert into payment values (sysdate-30, '현금', null, null, 10000, 5000, 5000, 0, null, 1234);
+
+-- delete from payment where payment_date < '20/12/20';
+-- delete from cart where saled_date < '20/12/20';
 
 insert into branch values (1000, 123, '강남점', 'KN', '02-1111-2222');
 

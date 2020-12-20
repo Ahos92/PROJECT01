@@ -30,6 +30,7 @@ public class LoadingDialog extends JDialog {
 		ok_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				settle.dispose();
 				dispose();
 				try {		
 					Thread.sleep(1000);
@@ -47,7 +48,7 @@ public class LoadingDialog extends JDialog {
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 		
-		settle.dispose();
+		
 		
 		setVisible(true);	
 
