@@ -17,7 +17,7 @@ public class DBManager {
 		try {
 			conn = ds.getConnection();
 			// 테스트 용 코드
-			//System.out.println("DB에 연결되었습니다.!!");
+			System.out.println("DB에 연결되었습니다.!!");
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -35,7 +35,7 @@ public class DBManager {
 	}
 
 	// db 연결해제
-	public static void p_r_c_Close(PreparedStatement ps, ResultSet rs, Connection conn) throws SQLException {
+	public static void r_p_c_Close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 		if (rs != null)
 			rs.close();
 		if (ps != null)
@@ -46,6 +46,29 @@ public class DBManager {
 
 	} 
 
+	public static void p2_r_p_c_Close(PreparedStatement ps2, ResultSet rs, PreparedStatement ps,  Connection conn) throws SQLException {
+		if (ps2 != null)
+			ps2.close();
+		if (rs != null)
+			rs.close();
+		if (ps != null)
+			ps.close();	
+		if (conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
 
+	} 
+
+	public static void p2_p_c_Close(PreparedStatement ps2, PreparedStatement ps,  Connection conn) throws SQLException {
+		if (ps2 != null)
+			ps2.close();
+		if (ps != null)
+			ps.close();	
+		if (conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
+
+	} 
+	
 }
 

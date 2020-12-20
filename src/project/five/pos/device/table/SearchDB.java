@@ -2,10 +2,8 @@ package project.five.pos.device.table;
 
 import java.util.ArrayList;
 
-import project.five.pos.sale.CartDAO;
-import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
-import project.five.pos.membership.dao.MemberDao;
+import project.five.pos.device.DeviceDAO;
 
 public class SearchDB {
 
@@ -14,25 +12,21 @@ public class SearchDB {
 		this.btn_text = btn_text;
 	}
 	
-	CartDAO cart;
-	MemberDao member;
-	PosDAO pos;
+	DeviceDAO device;
 	ArrayList<PosVO> search_data;
 
 	public ArrayList<PosVO> allData() {
 		
-		cart = new CartDAO();
-		member = new MemberDao();
-		pos = new PosDAO();
+		device = new DeviceDAO();
 		
 		if (btn_text.equals("판매 내역 조회")) {
-			search_data = cart.searchAllCart();
+			search_data = device.searchAllCart();
 			
 		} else if (btn_text.equals("결제 내역 조회")) {
-			search_data = pos.searchAllPayment();
+			search_data = device.searchAllPayment();
 			
 		} else if (btn_text.equals("회원 정보 조회")) {	
-			search_data = member.findByAll();
+			search_data = device.findByAll();
 			
 		}
 		
@@ -44,18 +38,16 @@ public class SearchDB {
 	 */
 	public ArrayList<PosVO> searchData(String category, String data) {
 		
-		cart = new CartDAO();
-		member = new MemberDao();
-		pos = new PosDAO();
+		device = new DeviceDAO();
 		
 		if (btn_text.equals("판매 내역 조회")) {
-			search_data = cart.searchCart(category, data);
+			search_data = device.searchCart(category, data);
 		
 		} else if (btn_text.equals("결제 내역 조회")) {
-			search_data = pos.searchPayment(category, data);
+			search_data = device.searchPayment(category, data);
 
 		} else if (btn_text.equals("회원 정보 조회")) {
-			search_data = member.searchMember(category, data); 
+			search_data = device.searchMember(category, data); 
 		
 		}
 		

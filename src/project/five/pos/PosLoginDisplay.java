@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import project.five.pos.device.*;
-import project.five.pos.device.comp.dialog.ConfirmDialog;
-import project.five.pos.sale.CartDAO;
 
 public class PosLoginDisplay extends JFrame {
 
@@ -40,17 +38,18 @@ public class PosLoginDisplay extends JFrame {
 		login_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DeviceDAO dao = new DeviceDAO();
+				DeviceDAO device = new DeviceDAO();
 				int id = 0;
 				try {
 					id = Integer.parseInt(id_tf.getText());
 				}catch (NumberFormatException nfe) {}
 
-				if (dao.searchPOS(id, pw_tf.getText())) {
+				if (device.searchPOS(id, pw_tf.getText())) {
 					new MainDisplay(id_tf.getText());			
 					dispose();
 				} else {
-					new ConfirmDialog(f, "로그인 실패!", "아이디나 비밀번호가 맞지 않습니다!");
+					JOptionPane.showMessageDialog(f, "아이디나 비밀번호가 맞지않습니다.", "오류",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

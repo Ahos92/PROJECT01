@@ -47,7 +47,7 @@ public class LookUpTableModel extends DefaultTableModel {
 				return "order_no";
 				
 			} else if (selectedItem.equals("상품 이름")) {
-				return "product_name";
+				return "saled_product_name";
 	
 			} else if (selectedItem.equals("이름")) {
 				return "last_name||first_name";
@@ -58,7 +58,7 @@ public class LookUpTableModel extends DefaultTableModel {
 			} else if (selectedItem.equals("등급")) {
 				return "membership";
 				
-			} else if (selectedItem.equals("결제일")) {
+			} else if (selectedItem.equals("결제시간")) {
 				return "payment_date";
 				
 			} else if (selectedItem.equals("사용 금액▲")) {
@@ -104,14 +104,7 @@ public class LookUpTableModel extends DefaultTableModel {
 		
 		category = selectedCategory(selected_item);
 		data = select_data.getText();
-		
-//		if (selected_item.equals("이름")
-//				|| selected_item.equals("결제일")) {
-//			data = "\'%" + select_data.getText() + "%\'";
-//		} else {
-//			data = "\'" + select_data.getText() + "\'";
-//		}
-		
+
 		search_data = new SearchDB(btn_text).searchData(category, data);
 
 		list = new TableList(btn_text);

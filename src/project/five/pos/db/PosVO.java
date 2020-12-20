@@ -23,11 +23,11 @@ public class PosVO {
 	private String b_contact_no;
 
 	// cart Table
-	private int cart_no;
+	private String saled_date;
 	private int order_no;
+	private String saled_prdouct_name;
 	private int selected_item;
 	private int total_price;
-	private String saled_date;
 
 	// product table
 	private int product_no;
@@ -48,30 +48,49 @@ public class PosVO {
 	private int mileage;
 
 	// payment table
-	private int payment_no;
-	private String payment_type;
 	private String payment_date;
+	private String payment_type;
 	private String bank_id;
 	private String card_num;
 	private int amount_of_money;
+	private int pay_price;
 	private int actual_expenditure;
+	private int usage_of_milage;
 	private int coupon_no;
 	
 	
+	
+	
+	public int getPay_price() {
+		return pay_price;
+	}
+
+	public void setPay_price(int pay_price) {
+		this.pay_price = pay_price;
+	}
+
+	public int getUsage_of_milage() {
+		return usage_of_milage;
+	}
+
+	public void setUsage_of_milage(int usage_of_mileage) {
+		this.usage_of_milage = usage_of_mileage;
+	}
+
+	public String getSaled_prdouct_name() {
+		return saled_prdouct_name;
+	}
+
+	public void setSaled_prdouct_name(String saled_prdouct_name) {
+		this.saled_prdouct_name = saled_prdouct_name;
+	}
+
 	public int getActual_expenditure() {
 		return actual_expenditure;
 	}
 
 	public void setActual_expenditure(int actual_expenditure) {
 		this.actual_expenditure = actual_expenditure;
-	}
-
-	public int getPayment_no() {
-		return payment_no;
-	}
-
-	public void setPayment_no(int payment_no) {
-		this.payment_no = payment_no;
 	}
 
 	public String getPayment_type() {
@@ -135,7 +154,12 @@ public class PosVO {
 	}
 
 	public void setM_first_name(String m_first_name) {
-		this.m_first_name = m_first_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, m_first_name)) {
+			this.m_first_name = m_first_name;
+		} else {
+			this.m_first_name = null;
+		}
 	}
 
 	public String getM_last_name() {
@@ -143,7 +167,12 @@ public class PosVO {
 	}
 
 	public void setM_last_name(String m_last_name) {
-		this.m_last_name = m_last_name;
+		String name_regex = "^[°¡-ÆR]*$";
+		if (Pattern.matches(name_regex, m_last_name)) {
+			this.m_last_name = m_last_name;
+		} else {
+			this.m_last_name = null;
+		}
 	}
 
 	public String getM_contact_no() {
@@ -151,7 +180,12 @@ public class PosVO {
 	}
 
 	public void setM_contact_no(String m_contact_no) {
-		this.m_contact_no = m_contact_no;
+		String phoneNumber_regex = "01[016789]-\\d{3,4}-[0-9]{4}";
+		if (Pattern.matches(phoneNumber_regex, m_contact_no)) {			
+			this.m_contact_no = m_contact_no;
+		} else {
+			this.m_contact_no = null;
+		}	
 	}
 
 	public int getAmount_price() {
@@ -303,14 +337,6 @@ public class PosVO {
 
 	public void setOrder_no(int order_no) {
 		this.order_no = order_no;
-	}
-
-	public int getCart_no() {
-		return cart_no;
-	}
-
-	public void setCart_no(int cart_no) {
-		this.cart_no = cart_no;
 	}
 
 	public int getProduct_no() {

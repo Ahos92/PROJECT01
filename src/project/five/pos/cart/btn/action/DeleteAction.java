@@ -1,37 +1,39 @@
-package project.five.pos.sale.btn.action;
+package project.five.pos.cart.btn.action;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import project.five.pos.menu.MenuDisplay;
 
 public class DeleteAction extends DefaultCellEditor {
 	protected JButton button;
 
 	private boolean isPushed;
-
+	
 	JTable table;
 	DefaultTableModel dtm;
-
-	public DeleteAction(JCheckBox checkBox, JTable table, DefaultTableModel dtm) {
+	JFrame frame;
+	
+	public DeleteAction(JCheckBox checkBox, JTable table, DefaultTableModel dtm, JFrame frame) {
 		super(checkBox);
 		this.table = table;
 		this.dtm = dtm;
+		this.frame = frame;
 		button = new JButton();
 		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
 				dtm.removeRow(row);
-				/*
-				 * 버튼 사용 중지 알아내서 버그 수정하기
-				 */
+				if (dtm.getRowCount() == 0) {
+					new MenuDisplay();
+					frame.dispose();
+					System.err.println("모든 항목이 취소 되었습니다!");
+				}
 				fireEditingStopped();
 			}
 		});
@@ -66,7 +68,7 @@ public class DeleteAction extends DefaultCellEditor {
 			super.fireEditingStopped();
 			
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("버튼 사용 중지");
+			System.err.println("해당 품목 취소!");
 		}
 	}
 }
