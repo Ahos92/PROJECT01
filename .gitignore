@@ -1,4 +1,4 @@
-# �뿬湲곗뿉 �쟻�뒗 �솗�옣�옄瑜� 媛�吏� �뙆�씪�뱾�� git�씠 臾댁떆�븳�떎
+# �뿬湲곗�? �쟻�뒗 �솗�옣�옄?���? 媛�吏� �뙆�씪�뱾�� git�씠 ?��?��?���븳�떎
 # Java.gitignore template
 
 # Compiled class file
@@ -26,4 +26,9 @@
 hs_err_pid*
 /bin/
 .classpath
+<<<<<<< HEAD
+.project
+=======
+.project
+>>>>>>> branch 'Taewook' of https://github.com/Ahos92/PROJECT01.git
 .project

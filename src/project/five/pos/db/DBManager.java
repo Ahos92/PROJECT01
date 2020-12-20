@@ -9,24 +9,22 @@ public class DBManager {
 
 	// DBpool
 	public static Connection getConnection() {
-		HikariConfig config =  new  HikariConfig("some/hikari.properties");
-		HikariDataSource ds =  new  HikariDataSource(config);
+		HikariConfig config = new HikariConfig("some/hikari.properties");
+		HikariDataSource ds = new HikariDataSource(config);
 
 		Connection conn = null;
+
 		try {
 			conn = ds.getConnection();
-
+			// 테스트 용 코드
 			System.out.println("DB에 연결되었습니다.!!");
+		} catch (SQLException e) {
 
-		} catch (SQLException sqle) {
-			System.out.println("DB 접속실패 : " + sqle.toString());
-		} catch (Exception e) {
-			System.out.println("Unkonwn error");
 			e.printStackTrace();
 		}
 		return conn;
 	}
-	
+
 	// db 연결해제
 	public static void p_c_Close(PreparedStatement ps, Connection conn) throws SQLException {
 		if(ps != null)
@@ -35,9 +33,9 @@ public class DBManager {
 			conn.close();
 		System.out.println("DB 종료!");
 	}
-	
+
 	// db 연결해제
-	public static void p_r_c_Close(PreparedStatement ps, ResultSet rs, Connection conn) throws SQLException {
+	public static void r_p_c_Close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 		if (rs != null)
 			rs.close();
 		if (ps != null)
@@ -45,6 +43,32 @@ public class DBManager {
 		if (conn != null)
 			conn.close();
 		System.out.println("DB 종료!");
+
 	} 
 
+	public static void p2_r_p_c_Close(PreparedStatement ps2, ResultSet rs, PreparedStatement ps,  Connection conn) throws SQLException {
+		if (ps2 != null)
+			ps2.close();
+		if (rs != null)
+			rs.close();
+		if (ps != null)
+			ps.close();	
+		if (conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
+
+	} 
+
+	public static void p2_p_c_Close(PreparedStatement ps2, PreparedStatement ps,  Connection conn) throws SQLException {
+		if (ps2 != null)
+			ps2.close();
+		if (ps != null)
+			ps.close();	
+		if (conn != null)
+			conn.close();
+		System.out.println("DB 종료!");
+
+	} 
+	
 }
+

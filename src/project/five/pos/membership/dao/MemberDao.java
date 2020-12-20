@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
+
+import project.five.pos.db.DBManager;
+import project.five.pos.db.PosVO;
 import project.five.pos.membership.dao.MemberDao;
 import project.five.pos.membership.models.Member;
 
 public class MemberDao {
 	
-	private MemberDao() {
+	public MemberDao() {
 		
 	}
 	
@@ -23,11 +27,11 @@ public class MemberDao {
 	private Connection conn; //DB 연결 객체
 	private PreparedStatement pstmt; //Query 작성 객체
 	private ResultSet rs; //Query 결과 커서
-		
+	
 	//성공 1, 실패 -1, 없음 0
 	public int findByUsernameAndPassword(String customer_no) {
 		//1. DB 연결
-		conn = DBConnection.getConnection();
+		conn = DBManager.getConnection();
 		
 		try {
 			//2. Query 작성
@@ -55,53 +59,35 @@ public class MemberDao {
 		return -1; //로그인 실패
 	}
 	
-	// 아이디 중복확인
-    public int getIdByCheck(Member member) {
-    	conn = DBConnection.getConnection();
-        try {
-            pstmt = conn.prepareStatement("SELECT * FROM cutomer WHERE customer_no = ?");
-            pstmt.setString(1, member.getCustomer_no());
-            rs = pstmt.executeQuery(); 
-            if (rs.next())
-                return 1; //레코드가 존재하면 1 (즉, 중복된 아이디 존재)
- 
-        } catch (SQLException e) {
-        	e.printStackTrace();;
-        } 
-        return -1;
- 
-    }
-	
 	//성공 1, 실패 -1, 
 	public int save(Member member) {
-		conn = DBConnection.getConnection();
-		
+		conn = DBManager.getConnection();
 		try {
 			pstmt = conn.prepareStatement("insert into customer values(?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, member.getCustomer_no());
-			pstmt.setString(3, member.getFirst_name());
 			pstmt.setString(2, member.getLast_name());			
+			pstmt.setString(3, member.getFirst_name());
 			pstmt.setString(4, member.getContact_no());
 			
-			pstmt.setInt(5, 0);	// member.getAmount_price()
-			pstmt.setString(6, "bronze");	// 등급	
-			pstmt.setDouble(7, 0.01);	// 적립률
-			pstmt.setInt(8, 0);		// member.getMileage()	
+			pstmt.setString(5, "bronze");	// 등급	
+			pstmt.setDouble(6, 0.01);	// 적립률
+			pstmt.setInt(7, 0);	// member.getAmount_price()
+			pstmt.setInt(8, 0);		// member.getMileage()
+			
+
+
+			
 			pstmt.executeUpdate(); //return값은 처리된 레코드의 개수
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
-				
-		
 		return -1;
-			
 	}
 	
 	// 회원 삭제
 	public int delete(String customer_no) {
-		conn = DBConnection.getConnection();
+		conn = DBManager.getConnection();
 
 		try {
 			pstmt = conn.prepareStatement("delete from customer where customer_no = ?");
@@ -115,31 +101,4 @@ public class MemberDao {
 		return -1;
 	}
 	
-	//성공 Vector<Member>, 실패 null
-	public Vector<Member> findByAll(){
-		conn = DBConnection.getConnection();
-		Vector<Member> members = new Vector<>();
-		try {
-			pstmt = conn.prepareStatement("select * from customer");
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Member member = new Member();
-				member.setCustomer_no(rs.getString("customer_no"));
-				member.setFirst_name(rs.getString("first_name"));
-				member.setLast_name(rs.getString("last_name"));
-				member.setContact_no(rs.getString("contact_no"));
-				member.setAmount_price(rs.getInt("Amount_price"));
-				member.setMembership(rs.getString("membership"));
-				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));
-				member.setMileage(rs.getInt("mileage"));
-				members.add(member);
-			}
-			return members;
-	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
 }

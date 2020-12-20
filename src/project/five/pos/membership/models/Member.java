@@ -1,9 +1,5 @@
 package project.five.pos.membership.models;
 
-import java.sql.SQLException;
-
-import project.five.pos.membership.dao.DBConnection;
-
 public class Member {
 	private String first_name;
 	private String last_name;
@@ -13,14 +9,11 @@ public class Member {
 	private double accumulation_pct;
 	private int mileage;
 	private String customer_no;
-	private Object member;
-	
 	
 	public Member() {
 	
 	}
 	
-
 	public Member( String customer_no, String first_name, String last_name, String contact_no,
 			int amount_price, String membership, double accumulation_pct, int mileage) {	
 		
@@ -36,9 +29,7 @@ public class Member {
 	}
 
 	public String getCustomer_no() {
-		
-//		return contact_no.substring(contact_no.length()-4);
-		return contact_no;
+		return contact_no.substring(contact_no.length()-4);
 	}
 	
 	public void setCustomer_no(String contact_no) {
