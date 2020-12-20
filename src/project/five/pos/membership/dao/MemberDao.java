@@ -31,7 +31,7 @@ public class MemberDao {
 	//성공 1, 실패 -1, 없음 0
 	public int findByUsernameAndPassword(String customer_no) {
 		//1. DB 연결
-		conn = DBConnection.getConnection();
+		conn = DBManager.getConnection();
 		
 		try {
 			//2. Query 작성
@@ -61,7 +61,7 @@ public class MemberDao {
 	
 	//성공 1, 실패 -1, 
 	public int save(Member member) {
-		conn = DBConnection.getConnection();
+		conn = DBManager.getConnection();
 		try {
 			pstmt = conn.prepareStatement("insert into customer values(?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, member.getCustomer_no());
@@ -87,7 +87,7 @@ public class MemberDao {
 	
 	// 회원 삭제
 	public int delete(String customer_no) {
-		conn = DBConnection.getConnection();
+		conn = DBManager.getConnection();
 
 		try {
 			pstmt = conn.prepareStatement("delete from customer where customer_no = ?");
@@ -101,76 +101,4 @@ public class MemberDao {
 		return -1;
 	}
 	
-	//성공 Vector<Member>, 실패 null
-	public ArrayList<PosVO> findByAll(){
-		conn = DBConnection.getConnection();
-		ArrayList<PosVO> members = new ArrayList<>();
-		try {
-			pstmt = conn.prepareStatement("select * from customer");
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				PosVO member = new PosVO();
-				member.setCustomer_no(rs.getString("customer_no"));
-				member.setM_first_name(rs.getString("first_name"));
-				member.setM_last_name(rs.getString("last_name"));
-				member.setM_contact_no(rs.getString("contact_no"));
-				member.setAmount_price(rs.getInt("Amount_price"));
-				member.setMembership(rs.getString("membership"));
-				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));
-				member.setMileage(rs.getInt("mileage"));
-				members.add(member);
-			}
-			return members;
-	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-	
-	public ArrayList<PosVO> searchMember(String column_name, String column_data) {
-
-		ArrayList<PosVO> members = new ArrayList<>();
-
-		conn = DBManager.getConnection();
-
-		try {
-			String sql = "";
-			if (column_name.equals("last_name||first_name") 
-					|| column_name.equals("contact_no")) {
-				sql = "select * from customer where " + column_name + " like \'%" + column_data + "%\'";
-			} else {
-				sql = "select * from customer where " + column_name + " = \'" + column_data + "\'";
-			}
-			System.out.println(column_data);
-			System.out.println(sql);
-			pstmt = conn.prepareStatement(sql);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				PosVO member = new PosVO();
-				
-				member.setCustomer_no(rs.getString("customer_no"));
-				member.setM_first_name(rs.getString("first_name"));
-				member.setM_last_name(rs.getString("last_name"));
-				member.setM_contact_no(rs.getString("contact_no"));
-				member.setAmount_price(rs.getInt("Amount_price"));
-				member.setMembership(rs.getString("membership"));
-				member.setAccumulation_pct(rs.getDouble("accumulation_pct"));
-				member.setMileage(rs.getInt("mileage"));
-				
-				members.add(member);
-			}
-		
-			DBManager.r_p_c_Close(rs, pstmt, conn);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return members;
-
-	}
 }

@@ -6,8 +6,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
+import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.DeviceLab;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.action.PromptAction;
@@ -51,7 +51,7 @@ public class ManagerSignUpDialog extends JDialog {
 		sign_btn = new DeviceBtn("등록", 60, 30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PosDAO dao = new PosDAO();
+				DeviceDAO device = new DeviceDAO();
 				PosVO manager = new PosVO();
 				
 				int b_id = 0;
@@ -64,7 +64,7 @@ public class ManagerSignUpDialog extends JDialog {
 				manager.setB_first_name(fname_tf.getText());
 				manager.setB_contact_no(tel_tf.getText());
 				
-				if (dao.SighUPManager(manager)) {
+				if (device.SighUPManager(manager)) {
 					JOptionPane.showMessageDialog(frame, "등록 완료!", "매니저 등록", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				} else {

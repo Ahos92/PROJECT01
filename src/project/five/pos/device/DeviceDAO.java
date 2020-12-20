@@ -1,4 +1,4 @@
-package project.five.pos.db;
+package project.five.pos.device;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -7,31 +7,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import project.five.pos.device.ManagerDisplay;
+import project.five.pos.db.DBManager;
+import project.five.pos.db.Day;
+import project.five.pos.db.PosVO;
 
-public class PosDAO {
+public class DeviceDAO {
 
 	static Connection conn;
-	static PreparedStatement ps, ps2;
+	static PreparedStatement ps, ps2, ps3;
 	static ResultSet rs;
 
 	PosVO pos;
 
 	String today;
 
-	public PosDAO() {}
+	public DeviceDAO() {}
 
-	// POS관련 메서드 ----------------------------------------------------------------------------------------
+
+
+	// POS ----------------------------------------------------------------------------------------
 	/*
-	 	한달전 데이터 지우는 메서드
-	 		- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X
+ 	한달전 데이터 지우는 메서드
+ 		- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X
 
-	 		- test : true로 고정
+ 		- test : true로 고정
 	 */
 	public boolean deleteAmonthAgoDate() {
 
@@ -42,7 +43,7 @@ public class PosDAO {
 			// 테스트 끝나면 지우기
 			conn.setAutoCommit(false);
 
-			String amonth_ago = new Day().AmonthAgoYmd();
+			String amonth_ago = new Day().AmonthAgoYmdD();
 			String sql01 = "delete from cart where saled_date like \'%" + amonth_ago + "%\'";
 			ps = conn.prepareStatement(sql01);
 
@@ -82,8 +83,8 @@ public class PosDAO {
 	}
 
 	/*
-		하루 매출 저장 메서드
-			- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X		
+	하루 매출 저장 메서드
+		- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X		
 	 */
 	public boolean saveDailyAmount() {
 		conn = DBManager.getConnection();
@@ -92,7 +93,7 @@ public class PosDAO {
 		try {
 			conn.setAutoCommit(false);
 
-			today = new Day().TodayYmd();
+			today = new Day().TodayYmdD();
 
 			String sql01 = "select sum(total_price) from cart where saled_date like \'%" + today + "%\'";
 			ps = conn.prepareStatement(sql01);
@@ -151,7 +152,7 @@ public class PosDAO {
 	}
 
 	/*
-  	존재하는 포스기계 인지 판별, 기계 로그인 할 때 사용	  
+	존재하는 포스기계 인지 판별, 기계 로그인 할 때 사용	  
 	 */
 	public boolean searchPOS(int device_id, String device_pw) {
 
@@ -188,7 +189,7 @@ public class PosDAO {
 
 
 	/*
-		존재하는 관리자 아이디 인지 판별, 기계 로그인 할 때 사용  	
+	존재하는 관리자 아이디 인지 판별, 기계 로그인 할 때 사용  	
 	 */
 	public boolean searchAdmin(int business_id, String business_pw) {
 
@@ -268,46 +269,9 @@ public class PosDAO {
 
 
 
-	// 결제 관련 메서드------------------------------------------------------------------------------------------
+	// 각종 조회 관련 ----------------------------------------------------------------------------
 	/*
-	 * 	마지막 결제 창에서 넘겨 받을 데이터 집어넣기
-	 */
-	public boolean saveCartlist(Timestamp date, int order_no, ArrayList<PosVO> cart_list, int device_id) {
-
-		conn = DBManager.getConnection();
-
-		try {
-			String sql = "insert into cart "
-					+ "values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
-
-			ps = conn.prepareStatement(sql);
-
-			// cart_no : seq.nextval
-			//			ps.setInt(1, x); // order_no 			- 매개변수 order_no
-			//			ps.setString(2, x); // product_name 	- 객체받아서 name (condition) 으로 포맷
-			//			ps.setInt(3, x); // selected_item 		- 객체받아서 그대로 입력
-			//			ps.setTimestamp(4, x); // saled_date	- 매개변수 date
-			//			ps.setInt(5, x); // total_price			- 객체받아서 가격
-			//			ps.setInt(6, x); // device_id			- 매개변수 device_id
-
-			rs = ps.executeQuery();
-
-
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				DBManager.r_p_c_Close(rs, ps, conn);
-			} catch (SQLException e) {}
-		}
-		return false;
-	}
-
-
-	// 조회 관련 메서드 -----------------------------------------------------------------------------------------
-	/*
- 		cart TABLE 모든 정보 조회
+		cart TABLE 모든 정보 조회
 	 */
 	public ArrayList<PosVO> searchAllCart() {
 
@@ -317,15 +281,15 @@ public class PosDAO {
 
 		try {
 			ps = conn.prepareStatement("select *"
-					+ " from cart inner join product using(product_no)");
+					+ " from cart");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setCart_no(rs.getInt("cart_no"));
+				pos.setSaled_date(rs.getString("saled_date"));
 				pos.setOrder_no(rs.getInt("order_no"));
-				pos.setProduct_name(rs.getString("product_name"));
+				pos.setSaled_prdouct_name(rs.getString("saled_product_name"));
 				pos.setSelected_item(rs.getInt("selected_item"));
 				pos.setTotal_price(rs.getInt("total_price"));
 
@@ -339,7 +303,7 @@ public class PosDAO {
 			try {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
-			
+
 		}
 
 		return cartlist;
@@ -348,9 +312,9 @@ public class PosDAO {
 
 
 	/*
- 		조건에 맞는 cart TABLE 정순 데이터
- 			- 정렬 기준 컬럼 이름, 값
- 			- 조건에 맞는 상품 정보만 담은 객체 반환 
+		조건에 맞는 cart TABLE 정순 데이터
+			- 정렬 기준 컬럼 이름, 값
+			- 조건에 맞는 상품 정보만 담은 객체 반환 
 	 */
 	public ArrayList<PosVO> searchCart(String column_name, String column_data) {
 
@@ -359,14 +323,16 @@ public class PosDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			if (column_name.equals("product_name")) {
-				column_data = "\'" + column_data + "\'";
+			if (column_name.equals("saled_product_name")) {
+				column_data = "\'%" + column_data + "%\'";
 			} 
 
-			ps = conn.prepareStatement("select *"
-					+ " from cart inner join product using(product_no)"
-					+ " where " + column_name + " = " + column_data
-					+ " order by cart_no asc");
+			String sql = "select *"
+					+ " from cart"
+					+ " where " + column_name + " like " + column_data
+					+ " order by saled_date asc";
+			ps = conn.prepareStatement(sql);
+
 			try {
 				rs = ps.executeQuery();
 			} catch (SQLSyntaxErrorException sse) {
@@ -375,10 +341,9 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setCart_no(rs.getInt("cart_no"));
+				pos.setSaled_date(rs.getString("saled_date"));
 				pos.setOrder_no(rs.getInt("order_no"));
-				pos.setProduct_name(rs.getString("product_name"));
-				pos.setTermsofcondition(rs.getString("termsofcondition"));
+				pos.setSaled_prdouct_name(rs.getString("saled_product_name"));
 				pos.setSelected_item(rs.getInt("selected_item"));
 				pos.setTotal_price(rs.getInt("total_price"));
 
@@ -393,52 +358,17 @@ public class PosDAO {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
 		}
-		
+
 		return cartlist;
 
 	}
 
-	
 	/*
- 		최신 주문번호
-	 */ 
-	public int MaxOrderNumber() {
-
-		int max = 0;
-
-		conn = DBManager.getConnection();
-
-		try {
-			ps = conn.prepareStatement("select max(order_no) from cart");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				max = rs.getInt("max(order_no)");
-			}
-
-			System.out.println("현재 주문 번호 : " + max);
-
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				DBManager.r_p_c_Close(rs, ps, conn);
-			} catch (SQLException e) {}
-			
-		}
-
-		return max;
-	}
-
-
-	/*
-	 	결제 내역 전부 조회
+ 	결제 내역 전부 조회
 	 */
 	public ArrayList<PosVO> searchAllPayment() {
 
-		ArrayList<PosVO> poslist = new ArrayList<>();
+		ArrayList<PosVO> paylist = new ArrayList<>();
 
 		conn = DBManager.getConnection();
 
@@ -450,16 +380,16 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setPayment_no(rs.getInt("payment_no"));
-				pos.setPayment_type(rs.getString("payment_type"));
 				pos.setPayment_date(rs.getString("payment_date"));
+				pos.setPayment_type(rs.getString("payment_type"));
 				pos.setBank_id(rs.getString("bank_id"));
 				pos.setCard_num(rs.getString("card_num"));
+				pos.setUsage_of_milage(rs.getInt("usage_of_milage"));
 				pos.setAmount_of_money(rs.getInt("amount_of_money"));
 				pos.setActual_expenditure(rs.getInt("actual_expenditure"));
 				pos.setCoupon_no(rs.getInt("coupon_no"));
 
-				poslist.add(pos);
+				paylist.add(pos);
 			}
 
 		} catch (SQLException e) {
@@ -471,25 +401,22 @@ public class PosDAO {
 			} catch (SQLException e) {}
 		}
 
-		return poslist;
+		return paylist;
 
 	}
 
 	/*
-	 	결제 내역 검색 조회
+ 	결제 내역 검색 조회
 	 */
 	public ArrayList<PosVO> searchPayment(String column_name, String column_data) {
 
-		ArrayList<PosVO> poslist = new ArrayList<>();
+		ArrayList<PosVO> paylist = new ArrayList<>();
 
 		conn = DBManager.getConnection();
 
 		try {
 			String sql = "";
-			//			SimpleDateFormat simple = new SimpleDateFormat("yy/MM/dd");
-			//			Date now = new Date();
-			//			String today = simple.format(now);
-			today = String.format("%s%%", new Day().TodayYmd());
+			today = String.format("%s%%", new Day().TodayYmdD());
 
 			if (column_name.equals("payment_date")) {
 				sql = "select * from payment where " + column_name 
@@ -511,16 +438,16 @@ public class PosDAO {
 			while (rs.next()) {
 				pos = new PosVO();
 
-				pos.setPayment_no(rs.getInt("payment_no"));
+				pos.setPayment_date(rs.getString("payment_date"));
 				pos.setPayment_type(rs.getString("payment_type"));
-				pos.setPayment_date(rs.getString("payment_date").trim());
 				pos.setBank_id(rs.getString("bank_id"));
 				pos.setCard_num(rs.getString("card_num"));
+				pos.setUsage_of_milage(rs.getInt("usage_of_milage"));
 				pos.setAmount_of_money(rs.getInt("amount_of_money"));
 				pos.setActual_expenditure(rs.getInt("actual_expenditure"));
 				pos.setCoupon_no(rs.getInt("coupon_no"));
 
-				poslist.add(pos);
+				paylist.add(pos);
 			}
 
 		} catch (SQLException e) {
@@ -532,12 +459,91 @@ public class PosDAO {
 			} catch (SQLException e) {}
 		}
 
-		return poslist;
+		return paylist;
 
 	}
 
-	//	public static void main(String[] args) {
-	//		PosDAO pos = new PosDAO();
-	//		pos.deleteAmonthAgoDate();
-	//	}
+
+	public ArrayList<PosVO> findByAll(){
+		conn = DBManager.getConnection();
+		ArrayList<PosVO> members = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement("select * from customer");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				pos = new PosVO();
+				pos.setCustomer_no(rs.getString("customer_no"));
+				pos.setM_first_name(rs.getString("first_name"));
+				pos.setM_last_name(rs.getString("last_name"));
+				pos.setM_contact_no(rs.getString("contact_no"));
+				pos.setAmount_price(rs.getInt("Amount_price"));
+				pos.setMembership(rs.getString("membership"));
+				pos.setAccumulation_pct(rs.getDouble("accumulation_pct"));
+				pos.setMileage(rs.getInt("mileage"));
+				members.add(pos);
+			}
+			return members;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DBManager.r_p_c_Close(rs, ps, conn);
+			} catch (SQLException e) {}
+		}
+
+		return null;
+	}
+
+	
+	public ArrayList<PosVO> searchMember(String column_name, String column_data) {
+
+		ArrayList<PosVO> members = new ArrayList<>();
+
+		conn = DBManager.getConnection();
+
+		try {
+			String sql = "";
+			if (column_name.equals("last_name||first_name") 
+					|| column_name.equals("contact_no")) {
+				sql = "select * from customer where " + column_name + " like \'%" + column_data + "%\'";
+			} else {
+				sql = "select * from customer where " + column_name + " = \'" + column_data + "\'";
+			}
+			System.out.println(column_data);
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				pos = new PosVO();
+
+				pos.setCustomer_no(rs.getString("customer_no"));
+				pos.setM_first_name(rs.getString("first_name"));
+				pos.setM_last_name(rs.getString("last_name"));
+				pos.setM_contact_no(rs.getString("contact_no"));
+				pos.setAmount_price(rs.getInt("Amount_price"));
+				pos.setMembership(rs.getString("membership"));
+				pos.setAccumulation_pct(rs.getDouble("accumulation_pct"));
+				pos.setMileage(rs.getInt("mileage"));
+
+				members.add(pos);
+			}
+
+			DBManager.r_p_c_Close(rs, ps, conn);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DBManager.r_p_c_Close(rs, ps, conn);
+			} catch (SQLException e) {}
+		}
+
+		return members;
+
+	}
+
+
 }

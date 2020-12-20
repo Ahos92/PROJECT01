@@ -1,4 +1,4 @@
-package project.five.pos.manage;
+package project.five.pos.menu;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -24,9 +24,8 @@ import project.five.pos.TestSwingTools;
 import project.five.pos.db.DBManager;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
-import project.five.pos.manage.AddMenu;
-import project.five.pos.manage.UpdateMenu;
-import project.five.pos.manage.DeleteMenu;
+import project.five.pos.menu.AddMenu;
+import project.five.pos.menu.UpdateMenu;
 
 public class ProductManage extends JFrame implements ActionListener{
 

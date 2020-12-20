@@ -1,4 +1,4 @@
-package project.five.pos.db;
+package project.five.pos.menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,13 +21,14 @@ public class MenuDAO {
 	
 	PosVO posVo;
 	
+	public MenuDAO() {
+		
+	}
+
 	static private String[] pnames;
 	static private Integer[] pprice;
 	static private String[] category;
 	
-	public MenuDAO() {
-		
-	}
 	
 	public static String[] getCategories(){
 		String sql = "select product_category from product group by product_category";
@@ -46,7 +47,12 @@ public class MenuDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				DBManager.r_p_c_Close(rs, ps, conn);
+			} catch (SQLException e) {}
 		}
+		
 		return category;
 	}
 	
@@ -78,6 +84,10 @@ public class MenuDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				DBManager.r_p_c_Close(rs, ps, conn);
+			} catch (SQLException e) {}
 		}
 		return menus;
 	}

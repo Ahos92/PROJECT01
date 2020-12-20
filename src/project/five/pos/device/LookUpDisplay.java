@@ -12,11 +12,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.cart.*;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.comp.btn.action.TableRepaintAction;
 import project.five.pos.device.table.ComboBoxList;
 import project.five.pos.device.table.LookUpTableModel;
-import project.five.pos.sale.*;
 
 public class LookUpDisplay extends JFrame {
 
@@ -49,6 +49,7 @@ public class LookUpDisplay extends JFrame {
 		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
 		scroll = new JScrollPane(lookUp_table);
 		scroll.setPreferredSize(new Dimension(480, 500));
+		
 		// 검색 
 		String[] list = new ComboBoxList(btn_text).getArr();
 		selectColumn_box = new JComboBox<String>(list);
@@ -79,7 +80,7 @@ public class LookUpDisplay extends JFrame {
 		
 		JLabel info;
 		if (btn_text.equals("결제 내역 조회")) {
-			 info = new JLabel("결제일로 검색 하실 경우 결제'일' 만 입력해야 정보를 얻으 실수 있습니다.");
+			 info = new JLabel("결제시간으로 검색 하실 경우 결제'시간' 만 입력해야 정보를 얻으 실수 있습니다.");
 			 center_p.add(info);
 		}
 		
@@ -90,7 +91,4 @@ public class LookUpDisplay extends JFrame {
 		TestSwingTools.initTestFrame(this, btn_text, true);
 	}
 
-	public static void main(String[] args) {
-		new LookUpDisplay("판매 내역 조회");
-	}
 }
