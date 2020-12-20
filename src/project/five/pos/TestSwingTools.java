@@ -14,6 +14,15 @@ public class TestSwingTools extends JFrame {
 		frame.setSize(500, 800);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(visible);
+		
+		
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setSize(430, 490);
+//		setLocationRelativeTo(null);
+//		contentPane = new JPanel();
+//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		setContentPane(contentPane);
+//		contentPane.setLayout(null);
 	}
 	
 }
