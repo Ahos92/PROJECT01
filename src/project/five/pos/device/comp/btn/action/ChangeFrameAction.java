@@ -5,14 +5,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import project.five.pos.MainDisplay;
-import project.five.pos.db.PosDAO;
 import project.five.pos.device.*;
 import project.five.pos.device.comp.dialog.LoginDialog;
 import project.five.pos.device.comp.dialog.ManagerSignUpDialog;
 import project.five.pos.device.comp.dialog.SettleDialog;
 import project.five.pos.membership.gui.*;
 import project.five.pos.menu.ProductManage;
-import project.five.pos.menu.Sale;
+import project.five.pos.menu.MenuDisplay;
 
 public class ChangeFrameAction implements ActionListener{
 
@@ -37,14 +36,14 @@ public class ChangeFrameAction implements ActionListener{
 			 new MainDisplay("1234");
 
 		} else if(check.equals("로그인")){			
-			PosDAO dao = new PosDAO();
+			DeviceDAO device = new DeviceDAO();
 			int id = 0;
 			String pw = pw_tf.getText();
 			try {
 				id = Integer.parseInt(id_tf.getText());
 			}catch (NumberFormatException nfe) {}
 
-			if (dao.searchAdmin(id, pw)) {
+			if (device.searchAdmin(id, pw)) {
 				 new ManagerDisplay();
 				System.out.println("로그인 성공!");
 			} else {
@@ -74,7 +73,7 @@ public class ChangeFrameAction implements ActionListener{
 			
 		} else if (check.equals("판매") 
 				|| check.equals("취소하기")) {
-			new Sale();
+			new MenuDisplay();
 			
 		} 
 

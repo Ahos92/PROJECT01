@@ -13,7 +13,6 @@ import project.five.pos.TestSwingTools;
 import project.five.pos.cart.btn.CartBtn;
 import project.five.pos.cart.btn.action.*;
 import project.five.pos.cart.btn.render.*;
-import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
 
 public class CartDisplay extends JFrame {
@@ -31,10 +30,10 @@ public class CartDisplay extends JFrame {
 	int cell_btn_size;
 	
 	int order_num;
-	PosDAO pos;
+	CartDAO cart;
 	
 	public CartDisplay(String device_id, Object[][] select_list) {	
-		pos = new PosDAO();
+		cart = new CartDAO();
 
 		setLayout(new BorderLayout());
 		
@@ -44,7 +43,7 @@ public class CartDisplay extends JFrame {
 		info_lab = new JLabel("주문 내역");
 		
 		// 주문 번호
-		order_num = pos.MaxOrderNumber();
+		order_num = cart.MaxOrderNumber();
 		order_num++;
 		
 		// 선택된 상품 테이블

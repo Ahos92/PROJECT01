@@ -25,7 +25,6 @@ import project.five.pos.db.DBManager;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.menu.AddMenu;
-import project.five.pos.menu.DeleteMenu;
 import project.five.pos.menu.UpdateMenu;
 
 public class ProductManage extends JFrame implements ActionListener{

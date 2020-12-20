@@ -7,12 +7,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import project.five.pos.db.PosDAO;
+import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.dialog.LoadingDialog;
 
 public class SettleAction implements ActionListener {
 
-	PosDAO pos;
+	DeviceDAO device;
+	
 	JFrame frame;
 	JDialog dialog;
 	public SettleAction(JFrame frame, JDialog dialog) {
@@ -23,12 +24,12 @@ public class SettleAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		pos = new PosDAO();		
+		device = new DeviceDAO();		
 		
 		// pos.saveDailyAmount(); - 하루 매출 저장 
 		
 		// pos.deleteAmonthAgoDate(); - 30일지난 데이터 테이블에서 삭제	
-		if (pos.saveDailyAmount() && pos.deleteAmonthAgoDate()) {
+		if (device.saveDailyAmount() && device.deleteAmonthAgoDate()) {
 			new LoadingDialog(frame, "정산 중 ...", dialog);
 			
 		} else {

@@ -9,8 +9,6 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -32,10 +30,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import project.five.pos.cart.CartDAO;
 import project.five.pos.db.DBManager;
-import project.five.pos.db.PosDAO;
 import project.five.pos.db.PosVO;
-import project.five.pos.menu.Sale;
+import project.five.pos.menu.MenuDisplay;
 import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
 import project.five.pos.payment.swing.btn.action.NumberField;
 
@@ -71,14 +69,14 @@ public class AskCoupon extends JFrame {
 	
 	JLabel order_cart;
 	
-	PosDAO pos;
+	CartDAO cart;
 	
 	public AskCoupon(int price, JFrame frame, int order_num, ArrayList<String> lists2, ArrayList<PosVO> update_cart) {
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
 		
-		pos = new PosDAO();
+		cart = new CartDAO();
 		
 		// 쿠폰 날짜 비교
 		today = LocalDate.now();
@@ -166,7 +164,7 @@ public class AskCoupon extends JFrame {
 						// 결제 정보 DB 전송
 						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
 						
-						pos.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
 						
 						// 적립 + 등급업 추가						
 						new MembershipQuery(actual_expenditure);
@@ -185,7 +183,7 @@ public class AskCoupon extends JFrame {
 						// 결제 정보 DB 전송
 						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
 									
-						pos.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
 						
 						// 메인 패널 초기화
 						new ResetMain();
@@ -240,7 +238,7 @@ public class AskCoupon extends JFrame {
 				// 결제 정보 DB 전송
 				new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);
 				
-				pos.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+				cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
 				
 				// 멤버 일때 적립
 				if(CheckMem.memberOn == true) {
@@ -280,7 +278,7 @@ public class AskCoupon extends JFrame {
 					
 					//버튼 기능(함수 ClickedBtnAction)
 					PayPanel.main_card.show(PayPanel.main_center_panel, "결제전");	
-					new Sale();
+					new MenuDisplay();
 					
 					frame.dispose();
 				}
