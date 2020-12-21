@@ -307,14 +307,15 @@ class SetPanel extends JPanel{
 		add(bt3);
 		
 
+		
 		// 주문버튼
 		bt2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new CartDisplay("1234", MenuDisplay.allCart);
-				frame.dispose();
+				new CartDisplay(frame, "주문 내역",1234, MenuDisplay.allCart);
+//				frame.dispose();
 				
 				// 배열 확인용
 				System.out.println(Arrays.deepToString(MenuDisplay.allCart));

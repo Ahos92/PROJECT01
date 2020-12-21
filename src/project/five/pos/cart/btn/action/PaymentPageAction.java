@@ -2,12 +2,16 @@ package project.five.pos.cart.btn.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
 import project.five.pos.payment.swing.PayPanel;
@@ -16,21 +20,24 @@ import project.five.pos.menu.MenuDisplay;
 
 public class PaymentPageAction implements ActionListener{
 
-	JFrame present_frame;
+	JDialog cart;
+	JFrame menu;
 
 	ArrayList<PosVO> update_cart; 
 	PosVO updateVO;
 	int order_num, price;
 
 	DefaultTableModel dtm;
-	String device_id;
+	int device_id;
 
 	ArrayList<String> lists;
 
-
-	public PaymentPageAction(JFrame present_frame, 
-			DefaultTableModel dtm, int order_num, String device_id) {
-		this.present_frame = present_frame;
+	
+	public PaymentPageAction(JDialog cart, JFrame menu,
+							DefaultTableModel dtm, int order_num, 
+							int device_id) {
+		this.cart = cart;
+		this.menu = menu;
 		this.dtm = dtm;
 		this.order_num = order_num;	
 		this.device_id = device_id;
@@ -46,9 +53,9 @@ public class PaymentPageAction implements ActionListener{
 		update_cart = getUpdateVO();
 
 		if (update_cart.size() == 0) {
-			JOptionPane.showMessageDialog(present_frame, "결제할 품목이 없습니다!!", "오류", JOptionPane.ERROR_MESSAGE);
-			present_frame.dispose();
-			new MenuDisplay();
+			JOptionPane.showMessageDialog(cart, "결제할 품목이 없습니다!!", "오류", JOptionPane.ERROR_MESSAGE);
+			cart.dispose();
+//			new MenuDisplay();
 			
 		} else {
 			lists = new ArrayList<>();
@@ -74,12 +81,13 @@ public class PaymentPageAction implements ActionListener{
 
 			try {
 				// 결제화면에 넘겨줄 데이터 주문번호(order_num), 총가격(price), List<상품 이름>
+				// payment_type 결제 타입 넘겨주기
 				new PayPanel(order_num, price, lists, update_cart);
-
+				menu.dispose();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			present_frame.dispose();
+			cart.dispose();
 		}
 	}
 

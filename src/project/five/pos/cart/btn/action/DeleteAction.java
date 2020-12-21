@@ -16,13 +16,13 @@ public class DeleteAction extends DefaultCellEditor {
 	
 	JTable table;
 	DefaultTableModel dtm;
-	JFrame frame;
+	JDialog cart;
 	
-	public DeleteAction(JCheckBox checkBox, JTable table, DefaultTableModel dtm, JFrame frame) {
+	public DeleteAction(JCheckBox checkBox, JTable table, DefaultTableModel dtm, JDialog cart) {
 		super(checkBox);
 		this.table = table;
 		this.dtm = dtm;
-		this.frame = frame;
+		this.cart = cart;
 		button = new JButton();
 		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
@@ -30,8 +30,8 @@ public class DeleteAction extends DefaultCellEditor {
 				int row = table.getSelectedRow();
 				dtm.removeRow(row);
 				if (dtm.getRowCount() == 0) {
-					new MenuDisplay();
-					frame.dispose();
+//					new MenuDisplay();
+					cart.dispose();
 					System.err.println("모든 항목이 취소 되었습니다!");
 				}
 				fireEditingStopped();
