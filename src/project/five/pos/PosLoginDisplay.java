@@ -23,7 +23,8 @@ public class PosLoginDisplay extends JFrame {
 
 	Font font;
 	JLabel id_lab, pw_lab;
-	JTextField id_tf, pw_tf;
+	JTextField id_tf; 
+	JPasswordField pw_tf;
 	JButton login_btn;
 	JPanel back_p;
 	JScrollPane scroll;
@@ -47,7 +48,7 @@ public class PosLoginDisplay extends JFrame {
 		pw_lab.setFont(font);		
 		pw_lab.setForeground(getForeground().WHITE);
 		
-		pw_tf = new JTextField(10);
+		pw_tf = new JPasswordField(10);
 		
 
 		JFrame f = this;

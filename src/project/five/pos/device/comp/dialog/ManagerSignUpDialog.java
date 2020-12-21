@@ -30,10 +30,8 @@ public class ManagerSignUpDialog extends JDialog {
 		setLocationRelativeTo(null);
 		setModal(true);
 		
-		center_p = new DevicePanel("assets/images/device/14.png", 300, 280,
-									new FlowLayout(FlowLayout.CENTER, 20, 20));
+		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 		south_p = new JPanel();
-		south_p.setBackground(getBackground().WHITE);
 		
 		id_lab = new DeviceLab("아이디", 50, 30);
 		id_tf = createTf("숫자 1~5 자리");
