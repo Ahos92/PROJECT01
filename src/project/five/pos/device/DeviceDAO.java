@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import project.five.pos.db.DBManager;
 import project.five.pos.db.Day;
 import project.five.pos.db.PosVO;
+import project.five.pos.payment.swing.AskCoupon;
+import project.five.pos.payment.swing.PayPanel;
 
 public class DeviceDAO {
 
@@ -63,7 +65,7 @@ public class DeviceDAO {
 			} else {
 				conn.rollback();
 				System.err.println("deleteAmonthAgoDate() 정상 적인 처리가 되지 않았습니다.");
-				//				return true;
+								//return true;
 				return false;
 			}
 
@@ -112,11 +114,12 @@ public class DeviceDAO {
 			}
 
 
-			String sql02 = "insert into daily_sales_amount values (?, ?)";
+			String sql02 = "insert into daily_sales_amount values (?, ?, ?)";
 			ps2 = conn.prepareStatement(sql02);
 
 			ps2.setString(1, today);
 			ps2.setInt(2, total_money);
+			ps2.setInt(3, AskCoupon.device_id);
 
 			try {
 				int result = ps2.executeUpdate();

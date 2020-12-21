@@ -65,7 +65,7 @@ public class AskCoupon extends JFrame {
 	static LocalDateTime today2;
 	static Timestamp tstp2;
 	
-	static int device_id = 1234;
+	public static int device_id = 1234;
 	
 	JLabel order_cart;
 	
