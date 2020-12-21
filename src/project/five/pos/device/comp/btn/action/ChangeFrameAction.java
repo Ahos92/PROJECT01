@@ -60,7 +60,7 @@ public class ChangeFrameAction implements ActionListener{
 			new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
-			new JoinFrame();
+			new JoinFrame(present_frame, check);
 
 		} else if(check.equals("상품 관리")) {
 			new ProductManage();

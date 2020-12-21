@@ -1,13 +1,14 @@
 package project.five.pos.device.comp.btn.action;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import project.five.pos.device.LookUpDisplay;
-import project.five.pos.membership.gui.MemberListFrame;
+//import project.five.pos.membership.gui.MemberListFrame;
 
 public class LookUpAction implements ActionListener{
 
