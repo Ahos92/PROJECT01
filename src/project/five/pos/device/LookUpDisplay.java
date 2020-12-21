@@ -13,6 +13,8 @@ import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
 import project.five.pos.cart.*;
+import project.five.pos.device.comp.DevicePanel;
+import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.comp.btn.action.TableRepaintAction;
 import project.five.pos.device.table.ComboBoxList;
@@ -35,9 +37,11 @@ public class LookUpDisplay extends JFrame {
 	public LookUpDisplay(String btn_text) {
 		setLayout(new BorderLayout());
 
-		north_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		center_p = new JPanel();
-		south_p = new JPanel();	
+		north_p = new DevicePanel("assets/images/device/14.png", 500, 280,
+									new FlowLayout(FlowLayout.LEFT));
+		center_p = new DevicePanel("assets/images/device/14.png", 500, 700);
+		
+		south_p = new DevicePanel("assets/images/device/14.png", 500, 700);
 		
 		// 헤드
 		head_lab = new JLabel(btn_text);
@@ -48,7 +52,7 @@ public class LookUpDisplay extends JFrame {
 		lookUp_table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
 		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
 		scroll = new JScrollPane(lookUp_table);
-		scroll.setPreferredSize(new Dimension(480, 500));
+		scroll.setPreferredSize(new Dimension(480, 300));
 		
 		// 검색 
 		String[] list = new ComboBoxList(btn_text).getArr();
@@ -57,15 +61,15 @@ public class LookUpDisplay extends JFrame {
 		category_lab = new JLabel("카테고리");
 		selectData_tf = new JTextField(8);
 		selectName_lab = new JLabel("검색 명");
-		search_btn = new JButton("검색");
+		search_btn = new DeviceBtn("검색");
 		search_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
 															selectColumn_box, selectData_tf)); 
-		allInq_btn = new JButton("전체보기");
+		allInq_btn = new DeviceBtn("전체보기");
 		allInq_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
 															selectColumn_box, selectData_tf)); 	
 		
 		// 뒤로가기
-		back_btn = new JButton("관리자 메뉴로 돌아가기");
+		back_btn = new DeviceBtn("관리자 메뉴로 돌아가기");
 		back_btn.addActionListener(new ChangeFrameAction(this));
 		
 		south_p.add(back_btn);

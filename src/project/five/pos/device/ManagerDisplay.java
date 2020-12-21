@@ -12,6 +12,7 @@ import project.five.pos.device.comp.btn.action.*;
 public class ManagerDisplay extends JFrame {
 	
 	static String[]	image_path = {
+			"assets/images/device/14.png",
 			"assets/images/device/001-money.png",
 			"assets/images/device/003-coffee-bean.png",
 			"assets/images/device/002-member.png",
@@ -24,29 +25,30 @@ public class ManagerDisplay extends JFrame {
 	 		back_btn, signUp_btn, productManage_btn, settle_btn;
 	
 	JPanel center_p, south_p, back_p;
-	
+	JScrollPane scroll;
 	public ManagerDisplay() {
 		setLayout(new BorderLayout());
 		setResizable(false);
-		setBackground(getBackground().BLUE);
-//		back_p = new DevicePanel("", 500, 800, new BorderLayout());
-		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 30));
-		south_p = new JPanel(new BorderLayout());
-
-		payHistory_btn = new DeviceBtn("결제 내역 조회", image_path[0], 130, new LookUpAction(this));
 		
-		soldHistory_btn = new DeviceBtn("판매 내역 조회", image_path[1], 130, new LookUpAction(this));
+		center_p = new DevicePanel(image_path[0], 500, 750, 
+									new FlowLayout(FlowLayout.CENTER, 50, 50));
 		
-		memInfo_btn = new DeviceBtn("회원 정보 조회", image_path[2], 130, new LookUpAction(this));
+		south_p = new DevicePanel(image_path[0], 500, 750, new BorderLayout());
 		
-		signUp_btn =  new DeviceBtn("회원 가입", image_path[3], 130, new ChangeFrameAction(this));
+		payHistory_btn = new DeviceBtn("결제 내역 조회", image_path[1], 130, new LookUpAction(this));
+		
+		soldHistory_btn = new DeviceBtn("판매 내역 조회", image_path[2], 130, new LookUpAction(this));
+		
+		memInfo_btn = new DeviceBtn("회원 정보 조회", image_path[3], 130, new LookUpAction(this));
+		
+		signUp_btn =  new DeviceBtn("회원 가입", image_path[4], 130, new ChangeFrameAction(this));
 	
-		productManage_btn = new DeviceBtn("상품 관리", image_path[4], 130, new ChangeFrameAction(this));
+		productManage_btn = new DeviceBtn("상품 관리", image_path[5], 130, new ChangeFrameAction(this));
 	
 		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this));
 
 		settle_btn = new DeviceBtn("정산", 60, 30, new ChangeFrameAction(this));
-		
+
 		center_p.add(payHistory_btn);
 		center_p.add(soldHistory_btn);
 		center_p.add(memInfo_btn);

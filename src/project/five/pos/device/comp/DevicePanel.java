@@ -1,5 +1,6 @@
 package project.five.pos.device.comp;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.LayoutManager;
@@ -34,12 +35,16 @@ public class DevicePanel extends JPanel {
 		this.height = height;
 	}
 	
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		try {
 			icon = ImageIO.read(new File(imagePath));
 			background = new ImageIcon(icon.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-		} catch (IOException e1) {e1.printStackTrace();}
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		g.drawImage(background.getImage(), 0, 0, null);
 		setOpaque(false);

@@ -61,7 +61,7 @@ public class ChangeFrameAction implements ActionListener{
 			changeble_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
-			changeble_frame = new JoinFrame();
+			new JoinFrame(present_frame, "회원 가입");
 
 		} else if(check.equals("상품 관리")) {
 			changeble_frame = new ProductManage();

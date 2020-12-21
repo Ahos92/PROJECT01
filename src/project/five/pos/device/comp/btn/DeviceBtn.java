@@ -1,6 +1,7 @@
 package project.five.pos.device.comp.btn;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -32,7 +33,7 @@ public class DeviceBtn extends JButton {
 	
 	public DeviceBtn(String btn_name) {
 		super(btn_name);
-		decorate();
+		decorate(true);
 	}
 
 	/* 
@@ -42,7 +43,7 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(width, height));
 		addActionListener(action);
-		decorate();
+		decorate(true);
 	}
 
 	// 이미지
@@ -58,7 +59,7 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(width, height,Image.SCALE_SMOOTH)));
 
-		decorate();
+		decorate(false);
 	}
 
 
@@ -69,7 +70,7 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(length, length));
 		addActionListener(action);
-		decorate();
+		decorate(true);
 	}
 
 	// 아이콘
@@ -85,13 +86,13 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(length, length-20,Image.SCALE_SMOOTH)));
 
-		decorate();
+		decorate(false);
 	}
 
-	public void decorate() {
+	public void decorate(boolean areafilled) {
 		setHorizontalTextPosition(JButton.CENTER);
 		setVerticalTextPosition(JButton.BOTTOM);
-		setContentAreaFilled(false);
+		setContentAreaFilled(areafilled);
 		setOpaque(false);
 		setBorderPainted(false);
 	}
@@ -108,10 +109,10 @@ public class DeviceBtn extends JButton {
 			graphics.setColor(getBackground().darker()); 
 			
 		} else if (getModel().isRollover()) { 
-			graphics.setColor(getBackground().LIGHT_GRAY); 
+			graphics.setColor(getBackground().brighter()); 
 			
 		} else { 
-			graphics.setColor(getBackground().WHITE); 
+			graphics.setColor(new Color(255, 0, 0, 0)); 
 		} 
 		
 		

@@ -29,8 +29,8 @@ public class PosLoginDisplay extends JFrame {
 	JScrollPane scroll;
 	public PosLoginDisplay() {
 
-		back_p = new DevicePanel("assets/images/device/loginback.jpg", 
-								800, 460, new FlowLayout(FlowLayout.RIGHT));
+		back_p = new DevicePanel("assets/images/back2.jpg", 
+								800, 460, new FlowLayout(FlowLayout.LEFT));
 		
 		scroll = new JScrollPane(back_p);  
 		setContentPane(scroll);
