@@ -61,7 +61,7 @@ public class CartDisplay extends JFrame {
 		
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
-		scroll.setPreferredSize(new Dimension(480, 100));
+		scroll.setPreferredSize(new Dimension(480, 200));
 		
 		// 수량 조절 버튼
 		cell_btn_size = 40;	

@@ -19,16 +19,13 @@ public class MenuDAO {
 	static PreparedStatement ps;
 	static ResultSet rs;
 	
-	PosVO posVo;
-	
-	public MenuDAO() {
-		
-	}
-
 	static private String[] pnames;
 	static private Integer[] pprice;
 	static private String[] category;
 	
+	public MenuDAO() {
+		
+	}
 	
 	public static String[] getCategories(){
 		String sql = "select product_category from product group by product_category";
@@ -52,7 +49,6 @@ public class MenuDAO {
 				DBManager.r_p_c_Close(rs, ps, conn);
 			} catch (SQLException e) {}
 		}
-		
 		return category;
 	}
 	
@@ -76,9 +72,9 @@ public class MenuDAO {
 			int i = 0;
 			while(rs.next()) {
 				menus[i][0] = rs.getString("product_name");
-				menus[i][1] = rs.getInt("product_price");
+				menus[i][1] = rs.getString("termsofcondition");
 				menus[i][2] = rs.getInt("product_count");
-				menus[i][3] = rs.getString("termsofcondition");
+				menus[i][3] = rs.getInt("product_price");
 				i+=1;
 			}
 			
@@ -90,6 +86,29 @@ public class MenuDAO {
 			} catch (SQLException e) {}
 		}
 		return menus;
+	}
+	
+	public static int allMenus(){
+		String sql = "select count(*) as \"count\" from product";
+		int menu=0;
+		try {
+			conn = DBManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				menu = rs.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DBManager.r_p_c_Close(rs, ps, conn);
+			} catch (SQLException e) {}
+		}
+		return menu;
 	}
 	
 	

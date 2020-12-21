@@ -32,7 +32,8 @@ public class ChangeFrameAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String check = e.getActionCommand();
 		
-		if (check.equals("메뉴로 돌아가기")) {
+		if (check.equals("메뉴로 돌아가기")
+				||check.equals("> To Main page")) {
 			changeble_frame =  new MainDisplay("1234");
 
 		} else if(check.equals("로그인")){			
