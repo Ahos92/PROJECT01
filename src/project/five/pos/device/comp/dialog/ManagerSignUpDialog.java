@@ -9,6 +9,7 @@ import project.five.pos.TestSwingTools;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.DeviceLab;
+import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.action.PromptAction;
 import project.five.pos.device.comp.tf.DeviceTF;
@@ -31,7 +32,7 @@ public class ManagerSignUpDialog extends JDialog {
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 		south_p = new JPanel();
-
+		
 		id_lab = new DeviceLab("아이디", 50, 30);
 		id_tf = createTf("숫자 1~5 자리");
 

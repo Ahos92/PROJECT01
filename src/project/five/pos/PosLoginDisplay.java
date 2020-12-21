@@ -1,40 +1,58 @@
 package project.five.pos;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import project.five.pos.device.*;
+import project.five.pos.device.comp.DevicePanel;
+import project.five.pos.device.comp.btn.DeviceBtn;
 
 public class PosLoginDisplay extends JFrame {
 
 	Font font;
 	JLabel id_lab, pw_lab;
-	JTextField id_tf, pw_tf;
+	JTextField id_tf; 
+	JPasswordField pw_tf;
 	JButton login_btn;
-
+	JPanel back_p;
+	JScrollPane scroll;
 	public PosLoginDisplay() {
-		font = new Font("πŸ≈¡", 10, 20);
+
+		back_p = new DevicePanel("assets/images/back2.jpg", 
+								800, 460, new FlowLayout(FlowLayout.LEFT));
+		
+		scroll = new JScrollPane(back_p);  
+		setContentPane(scroll);
+		
+		font = new Font("πŸ≈¡", font.BOLD, 20);
 
 		id_lab = new JLabel("Device_id");
-		id_lab.setBounds(400, 150, 100, 30);
 		id_lab.setFont(font);
-
-		id_tf = new JTextField(20);
-		id_tf.setBounds(500, 150, 120, 30);
+		id_lab.setForeground(getForeground().WHITE);
+		
+		id_tf = new JTextField(10);
 
 		pw_lab = new JLabel("Password");
-		pw_lab.setBounds(400, 200, 100, 30);
 		pw_lab.setFont(font);		
-
-		pw_tf = new JTextField(20);
-		pw_tf.setBounds(500, 200, 120, 30);
+		pw_lab.setForeground(getForeground().WHITE);
+		
+		pw_tf = new JPasswordField(10);
+		
 
 		JFrame f = this;
-		login_btn = new JButton("login");
-		login_btn.setBounds(650, 150, 70, 80);
+		login_btn = new DeviceBtn("login");
 		login_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -55,18 +73,13 @@ public class PosLoginDisplay extends JFrame {
 			}
 		});
 
-		add(id_lab);
-		add(id_tf);
-		add(pw_lab);
-		add(pw_tf);
-		add(login_btn);
+		back_p.add(id_lab);
+		back_p.add(id_tf);
+		back_p.add(pw_lab);
+		back_p.add(pw_tf);
+		back_p.add(login_btn);
 
-		setTitle("FivePoS");
-		setLayout(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 500);
-		setLocationRelativeTo(null);
-		setVisible(true);	
+		TestSwingTools.posloginFrame(this);
 	}
 
 	public static void main(String[] args) {

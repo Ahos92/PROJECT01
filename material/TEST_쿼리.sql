@@ -110,3 +110,51 @@ INSERT INTO
     bank (bank_id, bank_name, bank_location, phone_number)
 VALUES
         ('IBK', '기업 은행', '서울 중구 을지로 79', '1588-2588');
+        
+----------------------------------------------------------------------------------
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'아메리카노',4600,70,'Coffee','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'아메리카노',4600,70,'Coffee','HOT');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'카페라떼',5100,70,'Coffee','HOT');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'카라멜마끼아또',6100,70,'Coffee','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'카페모카',5600,70,'Coffee','HOT');
+
+ 
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'시그니처뱅쇼',6000,30,'Tea','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'그린티',5500,30,'Tea','HOT');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'허니레몬티',6100,30,'Tea','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'얼그레이',5100,10,'Tea','HOT');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'카모마일',5100,10,'Tea','HOT');
+
+ 
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'카라멜스콘',2900,30,'Deserts',null);
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'떠먹는티라미수',5900,20,'Deserts',null);
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'뉴욕치즈케잌 피스',5700,20,'Deserts',null);
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'가나슈 피스',5900,20,'Deserts',null);
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'당근케잌 피스',5700,15,'Deserts',null);
+
+ 
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'체리프라페',6500,50,'Frappe','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'제주말차프라페',6300,50,'Frappe','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'망고프라페',5800,50,'Frappe','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'모카칩프라페',5800,50,'Frappe','ICE');
+
+insert into product VALUES(PRODUCT_SEQ.nextval,'초코쉐이크',5500,50,'Frappe','ICE');
