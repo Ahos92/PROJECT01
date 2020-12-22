@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import project.five.pos.TestSwingTools;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 
 public class DeviceBtn extends JButton {
 
@@ -53,6 +54,12 @@ public class DeviceBtn extends JButton {
 	/* 
   		직사각형 버튼
 	 */
+	public DeviceBtn(String btn_text, int width, int height) {
+		setText(btn_text);
+		setPreferredSize(new Dimension(width, height));
+		decorate();
+	}
+	
 	public DeviceBtn(String btn_text, int width, int height, ActionListener action) {
 		setText(btn_text);
 		setPreferredSize(new Dimension(width, height));
@@ -113,6 +120,13 @@ public class DeviceBtn extends JButton {
 
 			decorate();
 		}
+
+	public DeviceBtn(String btn_text, int width, int height, ChangeFrameAction action, boolean b) {
+		setText(btn_text);
+		setPreferredSize(new Dimension(width, height));
+		addActionListener(action);
+		
+	}
 
 	public void decorate() {
 		setHorizontalTextPosition(JButton.CENTER);

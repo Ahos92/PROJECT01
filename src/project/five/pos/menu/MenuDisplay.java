@@ -6,6 +6,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.Menu;
@@ -62,7 +63,7 @@ public class MenuDisplay extends JFrame{
 			scroll[i].setViewportView(menubyul[i]);
 			category.addTab(cateG[i], scroll[i]);
 		}
-
+		
 		add(category);
 
 		downP = new SetPanel(this);
@@ -175,7 +176,7 @@ class MenuPanel extends JPanel{
 			add(ok[i]);
 
 			setPreferredSize(size);
-			setBackground(new Color(	143, 74, 7));
+			setBackground(new Color(238, 230, 196));
 			setLayout(null);
 		}
 
@@ -300,12 +301,13 @@ class addCart{
 class SetPanel extends JPanel{
 	
 	public SetPanel(JFrame frame) {
+		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		
-		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame));
-		JButton bt2 = new JButton("주문");
-		JButton bt3 = new JButton("초기화");
+		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame), false);
+		JButton bt2 = new DeviceBtn("주문");
+		JButton bt3 = new DeviceBtn("초기화");
 		
-		bt1.setBackground(new Color(153, 102, 51));
+		bt1.setBackground(new Color(108, 62, 37));
 		
 		add(bt1);
 		add(bt2);
