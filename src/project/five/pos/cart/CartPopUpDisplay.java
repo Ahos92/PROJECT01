@@ -22,11 +22,11 @@ import project.five.pos.cart.btn.render.*;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.DeviceBtn;
 
-public class CartDisplay extends JDialog {
+public class CartPopUpDisplay extends JDialog {
 
-	JPanel south_p, center_p;
+	JPanel south_p, center_p, north_p;
 
-	JButton pay_btn, cancle_btn, card_btn, cash_btn;
+	JButton cancle_btn, card_btn, cash_btn;
 
 	JLabel info_lab;
 
@@ -38,28 +38,37 @@ public class CartDisplay extends JDialog {
 
 	int order_num;
 	CartDAO cart;
+	
+	String[] images_path = {
+			"assets/images/device/credit-card.png",
+			"assets/images/device/money.png",
+			"assets/images/device/close.png"
+	};
 
-	int payment_type;
-	JRadioButton check_rbtn;
-
-	public CartDisplay(JFrame frame, String title, int device_id, Object[][] select_list) {	
+	int width;
+	int height;
+	
+	public CartPopUpDisplay(JFrame frame, String title, int device_id, Object[][] select_list) {	
 		super(frame, title);
+		width = 400;
+		height = 650;
 		setLayout(new BorderLayout());
-		setSize(400, 750);
+		setSize(width, height);
 		setResizable(false);// 사이즈 변경 불가
-		setLocation(810, 150);
+		setLocation(810, 200);
 		setModal(true);
 
 		cart = new CartDAO();
 
 		setLayout(new BorderLayout());
 
+		north_p = new JPanel(new BorderLayout());
 		south_p = new JPanel();
-		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 70));
+		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 40));
 
 		info_lab = new JLabel("주문 내역 확인");
 		info_lab.setFont(new Font("바탕", Font.BOLD, 20));
-		info_lab.setPreferredSize(new Dimension(500, 30));
+		info_lab.setPreferredSize(new Dimension(width, 30));
 
 		// 주문 번호
 		order_num = cart.MaxOrderNumber();
@@ -80,7 +89,7 @@ public class CartDisplay extends JDialog {
 
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
-		scroll.setPreferredSize(new Dimension(380, 150));
+		scroll.setPreferredSize(new Dimension(width - 15, height - 500));
 
 		cellWitdths(cart_table);
 
@@ -91,48 +100,33 @@ public class CartDisplay extends JDialog {
 		createcellBtn(cart_table, "▲", cell_btn_size);
 
 		createcellBtn(cart_table, "▼", cell_btn_size);
-
-//
-//		card_btn = new CartBtn("카드", 120);
-//		check_rbtn = new JRadioButton();
-//		card_btn.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				card_btn.setEnabled(true);
-//				cash_btn.setEnabled(false);
-//				check_rbtn.setSelected(true);
-//			}
-//		});
-//
-//		cash_btn = new CartBtn("현금", 120);
-//		cash_btn.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				cash_btn.setEnabled(true);
-//				card_btn.setEnabled(false);
-//				check_rbtn.setSelected(false);
-//			}
-//		});
 		
 		// 결제
-		pay_btn = new CartBtn("결제", new PaymentPageAction(this, frame, dtm, order_num, device_id));
+		card_btn = new DeviceBtn("카드", images_path[0], 120,  
+				new PaymentPageAction(this, frame, dtm, order_num, device_id)
+		);
+		
+		cash_btn = new DeviceBtn("현금", images_path[1], 120,
+				new PaymentPageAction(this, frame, dtm, order_num, device_id)
+		); 
+
 		// 취소
-		cancle_btn = new CartBtn("취소", new CancleAction(this, dtm));
+		cancle_btn = new DeviceBtn(50, images_path[2],new CancleAction(this, dtm));
 
+		north_p.add(info_lab, BorderLayout.WEST);
+		north_p.add(cancle_btn, BorderLayout.EAST);
 		center_p.add(scroll);
-//		center_p.add(card_btn);
-//		center_p.add(cash_btn);
-//		center_p.add(check_rbtn);
-		south_p.add(cancle_btn);
-		south_p.add(pay_btn);
+		center_p.add(card_btn);
+		center_p.add(cash_btn);
 
-		add(info_lab, BorderLayout.NORTH);
+		add(north_p, BorderLayout.NORTH);
 		add(south_p, BorderLayout.SOUTH);
 		add(center_p, BorderLayout.CENTER);
 
 		setVisible(true);
 	}
 
+	
 	private void cellWitdths(JTable cart_table) {
 		cart_table.getColumn("메뉴").setPreferredWidth(110);
 		cart_table.getColumn("옵션").setPreferredWidth(35);

@@ -28,9 +28,23 @@ public class DeviceBtn extends JButton {
 	// 이미지 참고 - https://www.flaticon.com/
 	BufferedImage s;
 
+	public DeviceBtn() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public DeviceBtn() {}
-	
+	public DeviceBtn(int length, String file_path, ActionListener action) {
+		setPreferredSize(new Dimension(length, length));
+		addActionListener(action);
+		try {
+			s = ImageIO.read(new File(file_path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setIcon(new ImageIcon(s.getScaledInstance(length, length,Image.SCALE_SMOOTH)));
+		decorate(true);
+
+	}
+
 	public DeviceBtn(String btn_name) {
 		super(btn_name);
 		decorate(true);
@@ -97,29 +111,29 @@ public class DeviceBtn extends JButton {
 		setBorderPainted(false);
 	}
 
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		int width = getWidth(); 
 		int height = getHeight(); 
 		Graphics2D graphics = (Graphics2D) g; 
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-		
+
 		if (getModel().isArmed()) {
 			graphics.setColor(getBackground().darker()); 
-			
+
 		} else if (getModel().isRollover()) { 
 			graphics.setColor(getBackground().brighter()); 
-			
+
 		} else { 
 			graphics.setColor(new Color(255, 0, 0, 0)); 
 		} 
-		
-		
+
+
 		graphics.fillRoundRect(0, 0, width, height, 10, 10); 
 		graphics.setColor(getForeground()); 
 		graphics.setFont(getFont()); 
-		
+
 		super.paintComponent(g);
 	}
 

@@ -1,4 +1,4 @@
-package project.five.pos.device.comp.dialog;
+package project.five.pos.device;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,13 +13,13 @@ import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.comp.btn.action.SettleAction;
 
-public class SettleDialog extends JDialog {
+public class SettlePopUpDisplay extends JDialog {
 
 	JLabel msg_lab01, msg_lab02;
 	JButton yes_btn, no_btn;
 	JPanel center_p, south_p;
 	
-	public SettleDialog(JFrame frame, String title) {
+	public SettlePopUpDisplay(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(300, 200);

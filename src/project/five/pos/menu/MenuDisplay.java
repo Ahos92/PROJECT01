@@ -34,7 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.cart.CartDisplay;
+import project.five.pos.cart.CartPopUpDisplay;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
@@ -314,8 +314,7 @@ class SetPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new CartDisplay(frame, "주문 내역",1234, MenuDisplay.allCart);
-//				frame.dispose();
+				new CartPopUpDisplay(frame, "주문 내역",1234, MenuDisplay.allCart);
 				
 				// 배열 확인용
 				System.out.println(Arrays.deepToString(MenuDisplay.allCart));

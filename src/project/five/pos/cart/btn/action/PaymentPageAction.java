@@ -44,9 +44,7 @@ public class PaymentPageAction implements ActionListener{
 	}
 
 	/*
-	 	업데이트된 정보 전달 받아서
-	 	 - savecart_list() 이용 
-	 	 - 데이터 저장 (DB cartTABLE에 저장)
+	 	업데이트된 정보 전달 받아서 결제 창에 넘겨주기
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -55,8 +53,7 @@ public class PaymentPageAction implements ActionListener{
 		if (update_cart.size() == 0) {
 			JOptionPane.showMessageDialog(cart, "결제할 품목이 없습니다!!", "오류", JOptionPane.ERROR_MESSAGE);
 			cart.dispose();
-//			new MenuDisplay();
-			
+	
 		} else {
 			lists = new ArrayList<>();
 			System.out.println("<결제 창으로 넘긴 목록 >");
@@ -78,10 +75,12 @@ public class PaymentPageAction implements ActionListener{
 			System.out.println("---------------------------------");
 			System.out.println("주문 번호 : "+ order_num);
 			System.out.println("총 가격 : " + price);
-
+			System.out.println("결제 수단 : " + e.getActionCommand());
+			System.out.println("디바이스 아이디 : " + device_id);
 			try {
-				// 결제화면에 넘겨줄 데이터 주문번호(order_num), 총가격(price), List<상품 이름>
-				// payment_type 결제 타입 넘겨주기
+				// 결제화면에 넘겨줄 데이터 
+				// 주문번호(order_num), 총가격(price), 상품 이름(lists), 
+				// VO객채(update_cart), 결제 타입(e.getactionCommand), 디바이스 아이디(device_id)
 				new PayPanel(order_num, price, lists, update_cart);
 				menu.dispose();
 			} catch (IOException e1) {
