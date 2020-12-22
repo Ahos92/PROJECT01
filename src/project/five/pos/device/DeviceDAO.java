@@ -67,13 +67,10 @@ public class DeviceDAO {
 			} else {
 				conn.rollback();
 				System.err.println("deleteAmonthAgoDate() 정상 적인 처리가 되지 않았습니다.");
-<<<<<<< HEAD
-								//return true;
-				return false;
-=======
+
 				return true;
 //				return false;
->>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
+
 			}
 
 		} catch (SQLException e) {
@@ -126,11 +123,8 @@ public class DeviceDAO {
 
 			ps2.setString(1, today);
 			ps2.setInt(2, total_money);
-<<<<<<< HEAD
-			ps2.setInt(3, AskCoupon.device_id);
-=======
 			ps2.setInt(3, 1234); // device_id
->>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
+
 
 			try {
 				int result = ps2.executeUpdate();
