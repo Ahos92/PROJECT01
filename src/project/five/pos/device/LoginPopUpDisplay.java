@@ -1,4 +1,4 @@
-package project.five.pos.device.comp.dialog;
+package project.five.pos.device;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,14 +8,14 @@ import javax.swing.*;
 
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 
-public class LoginDialog extends JDialog {
+public class LoginPopUpDisplay extends JDialog {
 
 	private JPanel center_p, south_p;
 	private JLabel id_lab, pw_lab;
 	private JTextField id_tf, pw_tf;
 	private JButton confirm_btn;
 	
-	public LoginDialog(JFrame frame, String title) {
+	public LoginPopUpDisplay(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(200, 130);

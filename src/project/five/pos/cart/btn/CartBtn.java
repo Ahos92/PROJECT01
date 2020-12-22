@@ -7,11 +7,22 @@ import javax.swing.JButton;
 
 public class CartBtn extends JButton {
 
+	public CartBtn() {
+	}
+	
 	public CartBtn(String name, ActionListener action) {
 		setText(name);
 		addActionListener(action);
 	}
 	
+	public CartBtn(String name, int length) {
+		setText(name);
+		setPreferredSize(new Dimension(length, length));
+	}
 	
+	public String getTypeName() {
+		
+		return null;
+	}
 	
 }

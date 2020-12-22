@@ -1,4 +1,4 @@
-package project.five.pos.device.comp.dialog;
+package project.five.pos.device;
 
 import java.awt.*;
 
@@ -7,13 +7,13 @@ import javax.swing.*;
 
 import project.five.pos.TestSwingTools;
 import project.five.pos.db.PosVO;
-import project.five.pos.device.DeviceDAO;
 import project.five.pos.device.comp.DeviceLab;
+import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.action.PromptAction;
 import project.five.pos.device.comp.tf.DeviceTF;
 
-public class ManagerSignUpDialog extends JDialog {
+public class ManagerSignUpPopUpDisplay extends JDialog {
 
 	JPanel center_p, south_p;
 	JTextField id_tf, pw_tf, lname_tf, fname_tf, tel_tf;
@@ -21,7 +21,7 @@ public class ManagerSignUpDialog extends JDialog {
 	JButton sign_btn;
 	Font font;
 	
-	public ManagerSignUpDialog(JFrame frame, String title) {
+	public ManagerSignUpPopUpDisplay(JFrame frame, String title) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(300, 350);
@@ -31,7 +31,7 @@ public class ManagerSignUpDialog extends JDialog {
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 		south_p = new JPanel();
-
+		
 		id_lab = new DeviceLab("아이디", 50, 30);
 		id_tf = createTf("숫자 1~5 자리");
 

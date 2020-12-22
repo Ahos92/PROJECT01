@@ -1,4 +1,4 @@
-package project.five.pos.device.comp.dialog;
+package project.five.pos.device;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,12 +9,12 @@ import javax.swing.*;
 
 import project.five.pos.device.comp.DeviceLab;
 
-public class LoadingDialog extends JDialog {
+public class LoadingPopUpDisplay extends JDialog {
 	JLabel msg_lab;
 	JButton ok_btn;
 	JPanel center_p, south_p;
 
-	public LoadingDialog(JFrame frame, String title, JDialog settle) {
+	public LoadingPopUpDisplay(JFrame frame, String title, JDialog settle) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(200, 130);
@@ -30,6 +30,7 @@ public class LoadingDialog extends JDialog {
 		ok_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				settle.dispose();
 				dispose();
 				try {		
 					Thread.sleep(1000);
@@ -47,7 +48,7 @@ public class LoadingDialog extends JDialog {
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 		
-		settle.dispose();
+		
 		
 		setVisible(true);	
 

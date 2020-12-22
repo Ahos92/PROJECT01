@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -12,11 +13,11 @@ import project.five.pos.menu.MenuDisplay;
 
 public class CancleAction implements ActionListener {
 		
-	JFrame present_frame;
+	JDialog present_frame;
 	
 	DefaultTableModel dtm;
 	
-	public CancleAction(JFrame present_frame, DefaultTableModel dtm) {
+	public CancleAction(JDialog present_frame, DefaultTableModel dtm) {
 		this.present_frame = present_frame;
 		this.dtm = dtm;
 	}
@@ -25,7 +26,7 @@ public class CancleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
 		try {
-			new MenuDisplay();
+//			new MenuDisplay();
 			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {
