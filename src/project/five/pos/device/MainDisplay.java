@@ -23,17 +23,17 @@ public class MainDisplay extends JFrame {
 	
 	public MainDisplay(String device_id) {
 		setLayout(new BorderLayout());
-		setResizable(false);
+		setResizable(false);	
 		
-		center_p = new DevicePanel(image_path[0], 500, 750, 
-									new FlowLayout(FlowLayout.CENTER, 20, 250));
-		south_p = new DevicePanel(image_path[0], 500, 750, new BorderLayout());
+		center_p = new DevicePanel(image_path[0], 890, 789, 
+									new FlowLayout(FlowLayout.CENTER, 100, 250));
+		south_p = new DevicePanel(image_path[0], 890, 789, new BorderLayout());
 		
 		deviceId_lab = new JLabel("DEVICE_ID : " + device_id);
 		
-		manage_btn = new DeviceBtn("관리자", image_path[1], 130, new ChangeFrameAction(this));
+		manage_btn = new DeviceBtn("관리자", image_path[1], 180, new ChangeFrameAction(this));
 
-		sale_btn = new DeviceBtn("판매", image_path[2], 130, new ChangeFrameAction(this));
+		sale_btn = new DeviceBtn("판매", image_path[2], 180, new ChangeFrameAction(this));
 
 		managerSign_btn = new DeviceBtn("매니저 등록", 100, 30, new ChangeFrameAction(this));
 		
@@ -44,7 +44,6 @@ public class MainDisplay extends JFrame {
 		
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
-		
 		TestSwingTools.initTestFrame(this, "main", true);
 	}
 	

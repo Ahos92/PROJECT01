@@ -15,18 +15,19 @@ public class TestSwingTools extends JFrame {
 	public static void initTestFrame(JFrame frame, String title, boolean visible) {
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(875, 750);
+		frame.setSize(890, 789);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(visible);
-	
+		frame.setResizable(false);
 	}
 
 	public static void posloginFrame(JFrame frame) {
 		frame.setTitle("FivePoS");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 500);
+		frame.setSize(890, 789);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);	
+		frame.setResizable(false);
 	}
 	
 	

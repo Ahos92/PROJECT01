@@ -30,10 +30,10 @@ public class ManagerDisplay extends JFrame {
 		setLayout(new BorderLayout());
 		setResizable(false);
 		
-		center_p = new DevicePanel(image_path[0], 500, 750, 
-									new FlowLayout(FlowLayout.CENTER, 50, 50));
+		center_p = new DevicePanel(image_path[0], 890, 789, 
+									new FlowLayout(FlowLayout.CENTER, 200, 80));
 		
-		south_p = new DevicePanel(image_path[0], 500, 750, new BorderLayout());
+		south_p = new DevicePanel(image_path[0], 890, 750, new BorderLayout());
 		
 		payHistory_btn = new DeviceBtn("결제 내역 조회", image_path[1], 130, new ChangeFrameAction(this));
 		

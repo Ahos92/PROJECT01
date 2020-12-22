@@ -3,11 +3,14 @@ package project.five.pos.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.Menu;
 import java.awt.Panel;
@@ -16,15 +19,22 @@ import java.awt.TextField;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -33,12 +43,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import javax.swing.border.Border;
 
 import project.five.pos.TestSwingTools;
 import project.five.pos.cart.CartPopUpDisplay;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
+import project.five.pos.payment.swing.ImageEnum;
+import project.five.pos.payment.swing.ImageLabel;
 
 public class MenuDisplay extends JFrame{
 
@@ -49,27 +62,88 @@ public class MenuDisplay extends JFrame{
 	static Object[][] allCart = new Object[allMenu][4];
 	JPanel downP;
 
-
+	String IMG_COVID = "assets/images/covid19.png";
+	String BG_IMG = "assets/images/backimg5.jpg";
+	
 	public MenuDisplay() {
 		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
 		MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
 		addCart.x = 0;
+		
+		JPanel center_panel = new JPanel();
 		JTabbedPane category = new JTabbedPane();
+		
+		JPanel north_panel = new JPanel(new FlowLayout(FlowLayout.CENTER,5, 5));
+		JPanel west_panel = new JPanel(new CardLayout(15, 15));
+		JPanel east_panel = new JPanel(new CardLayout(15, 15));
 
+		north_panel.setOpaque(false);
+		west_panel.setOpaque(false);
+		east_panel.setOpaque(false);
+		
+		JLabel title = new JLabel("주문 화면 ~ ");
+		title.setFont(new Font("Courier" , Font.BOLD, 23));
+		title.setForeground(getForeground().WHITE);
+		
+		JLabel label = null;
+		try {
+			BufferedImage bgImage = ImageIO.read(new File(BG_IMG));
+			int bgx = bgImage.getWidth();
+			int bgy = bgImage.getHeight();
+			label = new JLabel(new ImageIcon(ImageIO.read(new File(BG_IMG)).getScaledInstance(bgx, bgy, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		for(ImageEnum imgname : ImageEnum.values()) {
+			west_panel.add(imgname.getLname(), new ImageLabel(imgname));
+		}
+		
+		// 메뉴 로테이트(클릭) -> 시간 지남에 따라 자동으로 바꿔보기
+		west_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					((CardLayout)west_panel.getLayout()).next(west_panel);
+				}
+			}
+		});
+		
+		try {
+			BufferedImage coImage = ImageIO.read(new File(IMG_COVID));
+			int cox = coImage.getWidth();
+			int coy = coImage.getHeight();
+			east_panel.add(new JLabel(new ImageIcon(ImageIO.read(new File(IMG_COVID)).getScaledInstance(cox/5, coy/3, Image.SCALE_SMOOTH))));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		//int x = 0;
 		for (int i = 0; i < cateG.length; i++) {
 			menubyul[i] = new MenuPanel(cateG[i]);
 			scroll[i] = new JScrollPane();
 			scroll[i].setViewportView(menubyul[i]);
+			scroll[i].setPreferredSize(new Dimension(450, 645));
 			category.addTab(cateG[i], scroll[i]);
 		}
 		
-		add(category);
-
+		north_panel.add(title);
+		center_panel.add(category);
+		center_panel.setOpaque(false);
+		
 		downP = new SetPanel(this);
-		downP.setBackground(new Color(108, 62, 37));
+		downP.setOpaque(false);
 
-		add(downP, BorderLayout.SOUTH);
+		label.setLayout(new BorderLayout());
+		label.add(north_panel, BorderLayout.NORTH);
+		label.add(west_panel, BorderLayout.WEST);
+		label.add(east_panel, BorderLayout.EAST);
+		label.add(center_panel, BorderLayout.CENTER);
+		label.add(downP, BorderLayout.SOUTH);
+
+		add(label);
+		
 		setVisible(true);
 
 	}
@@ -108,7 +182,7 @@ class MenuPanel extends JPanel{
 		ImageIcon icon[] = new ImageIcon[namelist.length];
 
 		Dimension size = new Dimension();
-		int sizeY = (namelist.length + 1) / 2 * 300 + 20;
+		int sizeY = (namelist.length + 1) / 2 * 300;
 		size.setSize(400, sizeY);
 
 
@@ -125,10 +199,10 @@ class MenuPanel extends JPanel{
 			}
 			bt[i] = new DeviceBtn(namelist[i], file_path, 140);
 			if (i % 2 != 0 || i == 0) {
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
+				bt[i].setBounds(x + (i % 2) * 175, y, 150, 170);
 			} else {
 				y+=290;
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
+				bt[i].setBounds(x + (i % 2) * 175, y, 150, 170);
 			}
 
 			// 숫자 txt 버튼
@@ -301,17 +375,28 @@ class addCart{
 class SetPanel extends JPanel{
 	
 	public SetPanel(JFrame frame) {
-		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+		setLayout(new BorderLayout());
 		
 		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame), false);
-		JButton bt2 = new DeviceBtn("주문");
-		JButton bt3 = new DeviceBtn("초기화");
+		JButton bt2 = new DeviceBtn("주문", 60, 30);
+		JButton bt3 = new DeviceBtn("초기화", 80, 30);
+		
+		JLabel device_lab = new JLabel("device_ID : ");
+		device_lab.setPreferredSize(new Dimension(120, 30));
+		device_lab.setFont(new Font("Courier", Font.BOLD, 15));
+		device_lab.setForeground(getForeground().white);
+		
+		JPanel center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); 
+		center_p.setOpaque(false);
 		
 		bt1.setBackground(new Color(108, 62, 37));
 		
-		add(bt1);
-		add(bt2);
-		add(bt3);
+		center_p.add(bt2);
+		center_p.add(bt3);
+
+		add(device_lab, BorderLayout.WEST);
+		add(center_p, BorderLayout.CENTER);
+		add(bt1, BorderLayout.EAST);
 		
 
 		

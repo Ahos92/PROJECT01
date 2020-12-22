@@ -75,7 +75,6 @@ public class PaymentPageAction implements ActionListener{
 			System.out.println("---------------------------------");
 			System.out.println("주문 번호 : "+ order_num);
 			System.out.println("총 가격 : " + price);
-			System.out.println("결제 수단 : " + e.getActionCommand());
 			System.out.println("디바이스 아이디 : " + device_id);
 			try {
 				// 결제화면에 넘겨줄 데이터 

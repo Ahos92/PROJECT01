@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,32 +27,34 @@ public class PosLoginDisplay extends JFrame {
 	JTextField id_tf; 
 	JPasswordField pw_tf;
 	JButton login_btn;
-	JPanel back_p;
+	JPanel back_p, front_p;
 	JScrollPane scroll;
 	public PosLoginDisplay() {
-
-		back_p = new DevicePanel("assets/images/back2.jpg", 
-								800, 460, new FlowLayout(FlowLayout.LEFT));
 		
-		scroll = new JScrollPane(back_p);  
-		setContentPane(scroll);
+		back_p = new DevicePanel("assets/images/back2.png", 890, 798);
+		back_p.setOpaque(false);
 		
 		font = new Font("πŸ≈¡", font.BOLD, 20);
 
 		id_lab = new JLabel("Device_id");
 		id_lab.setFont(font);
 		id_lab.setForeground(getForeground().WHITE);
+		id_lab.setBounds(10, 333, 150, 30);
 		
 		id_tf = new JTextField(10);
-
+		id_tf.setBounds(120, 333, 100, 30);
+		
 		pw_lab = new JLabel("Password");
 		pw_lab.setFont(font);		
 		pw_lab.setForeground(getForeground().WHITE);
+		pw_lab.setBounds(12, 383, 150, 30);
 		
 		pw_tf = new JPasswordField(10);
+		pw_tf.setBounds(120, 383, 100, 30);
 		
 		JFrame f = this;
 		login_btn = new DeviceBtn("login");
+		login_btn.setBounds(240, 328, 80, 90);
 		login_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -72,12 +75,13 @@ public class PosLoginDisplay extends JFrame {
 			}
 		});
 
-		back_p.add(id_lab);
-		back_p.add(id_tf);
-		back_p.add(pw_lab);
-		back_p.add(pw_tf);
-		back_p.add(login_btn);
-
+		add(id_lab);
+		add(id_tf);
+		add(login_btn);
+		add(pw_lab);
+		add(pw_tf);
+		
+		add(back_p);
 		TestSwingTools.posloginFrame(this);
 	}
 
