@@ -18,6 +18,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,7 +40,7 @@ import project.five.pos.menu.AddMenu;
 import project.five.pos.menu.UpdateMenu;
 import project.five.pos.menu.DeleteMenu;
 
-public class ProductManage extends JFrame implements ActionListener{
+public class ProductManage extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JButton jBtnAddRow;
@@ -75,9 +76,15 @@ public class ProductManage extends JFrame implements ActionListener{
 //	private Image background =new ImageIcon(
 //			"C:\\Users\\손지원\\git\\PROJECT01\\src\\project\\five\\pos\\manage\\tree.png").getImage();
 //	
-	
-	public ProductManage() throws IOException {
-		TestSwingTools.initTestFrame(this, "Menu Management", true);
+	JFrame pf;
+	public ProductManage(JFrame frame, String name) throws IOException {
+		super(frame, name);
+		this.pf = frame;
+		setSize(500, 760);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setModal(true);
+		
 		panel = new JPanel();
 		panel.setLayout(null); 
 		table = new JTable(model);
@@ -97,7 +104,12 @@ public class ProductManage extends JFrame implements ActionListener{
 		add(panel);
 		
 		
-		toMain = new DeviceBtn("", 100, new ChangeFrameAction(this));
+		toMain = new DeviceBtn("", 100, new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		toMain.setIcon(new ImageIcon(ImageIO
 				.read(new File("assets/images/home-page.png"))
 				.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
@@ -131,7 +143,7 @@ public class ProductManage extends JFrame implements ActionListener{
 		select();
 		initialize(); // 값 변화
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
@@ -224,13 +236,13 @@ public class ProductManage extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == jBtnAddRow) {
-			addD = new AddMenu(this, "메뉴 추가");
+			addD = new AddMenu(this.pf, "메뉴 추가");
 			addD.setVisible(true);
 			jBtnAddRow.requestFocus();
 			model.setRowCount(0);
 			select();
 		} else if (e.getSource() == jBtnEditRow) {
-			upD = new UpdateMenu(this, "메뉴 수정");
+			upD = new UpdateMenu(this.pf, "메뉴 수정");
 			upD.setVisible(true);
 			jBtnEditRow.requestFocus();
 			model.setRowCount(0);
@@ -283,11 +295,6 @@ public class ProductManage extends JFrame implements ActionListener{
 			return del;
 		}
 		
-	}
-	
-	
-	public static void main(String[] args) throws IOException {
-		new ProductManage();
 	}
 
 }

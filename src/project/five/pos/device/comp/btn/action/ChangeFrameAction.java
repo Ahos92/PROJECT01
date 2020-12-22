@@ -52,8 +52,7 @@ public class ChangeFrameAction implements ActionListener{
 		} else if(check.equals("관리자")) {
 			new LoginPopUpDisplay(present_frame, "관리자 로그인");
 
-		} else if(check.equals("아니요")
-				|| check.equals("메인으로")) {
+		} else if(check.equals("아니요")) {
 			changeble_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
@@ -61,7 +60,7 @@ public class ChangeFrameAction implements ActionListener{
 
 		} else if(check.equals("상품 관리")) {
 			try {
-				changeble_frame = new ProductManage();
+				new ProductManage(present_frame, "상품 관리");
 			} catch (IOException e1) {e1.printStackTrace();
 			}
 

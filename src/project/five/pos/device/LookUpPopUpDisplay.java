@@ -72,7 +72,7 @@ public class LookUpPopUpDisplay extends JDialog {
 		lookUp_table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
 		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
 		scroll = new JScrollPane(lookUp_table);
-		scroll.setPreferredSize(new Dimension(width - 15, height - 400));
+		scroll.setPreferredSize(new Dimension(width - 20, height - 400));
 		
 		// 검색 
 		String[] list = new ComboBoxList(btn_text).getArr();
