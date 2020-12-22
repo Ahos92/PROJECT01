@@ -102,6 +102,17 @@ public class DeviceBtn extends JButton {
 
 		decorate();
 	}
+	
+	// 메뉴 이미지 (action 제외)
+		public DeviceBtn(String btn_text, String file_path, int length) {
+			setText(btn_text);
+			ImageIcon s = new ImageIcon(file_path);
+			Image image = s.getImage();
+			Image changeI = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
+			setIcon(new ImageIcon(changeI));
+
+			decorate();
+		}
 
 	public void decorate() {
 		setHorizontalTextPosition(JButton.CENTER);
