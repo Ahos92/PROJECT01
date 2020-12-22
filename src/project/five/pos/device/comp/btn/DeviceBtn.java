@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import project.five.pos.TestSwingTools;
-import sun.java2d.loops.FillRect;
 
 public class DeviceBtn extends JButton {
 
@@ -42,13 +41,13 @@ public class DeviceBtn extends JButton {
 			e.printStackTrace();
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(length, length,Image.SCALE_SMOOTH)));
-		decorate(true);
+		decorate();
 
 	}
 
 	public DeviceBtn(String btn_name) {
 		super(btn_name);
-		decorate(true);
+		decorate();
 	}
 
 	/* 
@@ -58,8 +57,9 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(width, height));
 		addActionListener(action);
-		decorate(true);
+		decorate();
 	}
+
 	// 이미지
 	public DeviceBtn(String btn_text, String file_path, int width, int height, ActionListener action) {
 		setText(btn_text);
@@ -73,7 +73,7 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(width, height,Image.SCALE_SMOOTH)));
 
-		decorate(false);
+		decorate();
 	}
 
 
@@ -84,7 +84,7 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(length, length));
 		addActionListener(action);
-		decorate(true);
+		decorate();
 	}
 
 	// 아이콘
@@ -100,13 +100,13 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(length, length-20,Image.SCALE_SMOOTH)));
 
-		decorate(false);
+		decorate();
 	}
 
-	public void decorate(boolean areafilled) {
+	public void decorate() {
 		setHorizontalTextPosition(JButton.CENTER);
 		setVerticalTextPosition(JButton.BOTTOM);
-		setContentAreaFilled(areafilled);
+		setContentAreaFilled(false);
 		setOpaque(false);
 		setBorderPainted(false);
 	}
@@ -126,7 +126,7 @@ public class DeviceBtn extends JButton {
 			graphics.setColor(getBackground().LIGHT_GRAY); 
 
 		} else { 
-			graphics.setColor(new Color(255, 0, 0, 0)); 
+			graphics.setColor(new Color(238, 230, 196)); 
 		} 
 
 

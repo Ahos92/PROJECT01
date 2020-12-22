@@ -21,6 +21,7 @@ import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.comp.btn.action.TableRepaintAction;
 import project.five.pos.device.table.ComboBoxList;
 import project.five.pos.device.table.LookUpTableModel;
+import project.five.pos.device.table.PosCellEditor;
 
 public class LookUpPopUpDisplay extends JDialog {
 
@@ -71,8 +72,10 @@ public class LookUpPopUpDisplay extends JDialog {
 		lookUp_table = new JTable(dtm);
 		lookUp_table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
 		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
+		new PosCellEditor().setWitdth(btn_text, lookUp_table);
+		
 		scroll = new JScrollPane(lookUp_table);
-		scroll.setPreferredSize(new Dimension(width - 20, height - 400));
+		scroll.setPreferredSize(new Dimension(width - 30, height - 400));
 		
 		// 검색 
 		String[] list = new ComboBoxList(btn_text).getArr();
@@ -80,6 +83,7 @@ public class LookUpPopUpDisplay extends JDialog {
 		selectColumn_box.setPreferredSize(lookUp_dms);
 	
 		selectData_tf = new JTextField(8);
+		selectData_tf.setFont(lookUp_font);
 		selectData_tf.setPreferredSize(lookUp_dms);
 		
 		selectName_lab = new JLabel("검색 명");

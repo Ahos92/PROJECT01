@@ -36,6 +36,7 @@ import project.five.pos.TestSwingTools;
 import project.five.pos.db.DBManager;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
+import project.five.pos.device.table.PosCellEditor;
 import project.five.pos.menu.AddMenu;
 import project.five.pos.menu.UpdateMenu;
 import project.five.pos.menu.DeleteMenu;
@@ -75,7 +76,7 @@ public class ProductManage extends JDialog implements ActionListener{
 	
 //	private Image background =new ImageIcon(
 //			"C:\\Users\\손지원\\git\\PROJECT01\\src\\project\\five\\pos\\manage\\tree.png").getImage();
-//	
+
 	JFrame pf;
 	public ProductManage(JFrame frame, String name) throws IOException {
 		super(frame, name);
@@ -90,13 +91,15 @@ public class ProductManage extends JDialog implements ActionListener{
 		table = new JTable(model);
 		//table.setFont(new Font("Courier", Font.PLAIN, 20));
 		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
-		table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+//		table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+		new PosCellEditor().setWitdth(name, table);
 		
 		//table.addMouseListener(new JTableMouseListener());
 		scrollPane = new JScrollPane(table);
 		
 		table.getColumnModel().getColumn(6).setCellRenderer(new TableCell());
 		table.getColumnModel().getColumn(6).setCellEditor(new TableCell());
+		
 		
 		scrollPane.setSize(460,450);
 		scrollPane.setLocation(10, 260);
