@@ -11,7 +11,7 @@ public class TestSwingTools extends JFrame {
 	public static void initTestFrame(JFrame frame, String title, boolean visible) {
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 800);
+		frame.setSize(875, 750);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(visible);
 	}

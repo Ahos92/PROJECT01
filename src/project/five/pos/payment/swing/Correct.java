@@ -36,7 +36,7 @@ public class Correct extends JFrame{
         mem.setOpaque(false);
         iamMem = new JLabel("<html>" + CheckMem.memberName + "님 반갑습니다. 오늘도 좋은 하루 되세요<br/>마일리지 : "
         + CheckMem.memberMileage +"<br/>마일리지 사용은 1000원 이상부터 가능합니다.</html>", JLabel.CENTER);
-        iamMem.setFont(new Font("Serif", Font.BOLD, 14));
+        iamMem.setFont(new Font("카페24 숑숑 보통", Font.BOLD, 14));
         mem.add(iamMem);
         
         PayPanel.card_panel.add("멤버", mem);
@@ -59,7 +59,7 @@ public class Correct extends JFrame{
                 
         setSize(400,100);
         setResizable(false);
-        setLocation(800, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 	}
 }

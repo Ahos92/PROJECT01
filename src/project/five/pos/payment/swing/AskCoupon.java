@@ -121,7 +121,7 @@ public class AskCoupon extends JFrame {
 		
 		JLabel result_explain = new JLabel("주문하신 상품 리스트", SwingConstants.CENTER);
 		result_explain.setForeground(Color.WHITE);
-		result_explain.setFont(new Font("Serif",Font.BOLD, 36));
+		result_explain.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 36));
 		
 		JPanel order_list = new JPanel(new FlowLayout());
 		order_list.setOpaque(false);
@@ -134,7 +134,7 @@ public class AskCoupon extends JFrame {
 				
 		JLabel order_no = new JLabel("주문 번호 : " + order_num, SwingConstants.CENTER);
 		order_no.setForeground(Color.WHITE);
-		order_no.setFont(new Font("Serif",Font.BOLD, 36));
+		order_no.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 36));
 		
 		result_panel.add(result_explain);
 		result_panel.add(order_list);
@@ -421,7 +421,7 @@ public class AskCoupon extends JFrame {
 		setVisible(true);
 		//setLayout(null);
 		setSize(500, 185);
-		setLocation(1180, 500);
+		setLocationRelativeTo(null);
 		
 		this.add(panel04, BorderLayout.CENTER);
 	}

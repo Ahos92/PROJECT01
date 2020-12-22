@@ -38,7 +38,7 @@ public class CancelPayment extends JFrame {
               
         setSize(400,100);
         setResizable(false);
-        setLocation(800, 400);
+        setLocationRelativeTo(null);
         setVisible(true);
 	}
 	

@@ -94,7 +94,7 @@ public class PaidByCash extends JFrame{
 		setVisible(true);
 		//setLayout(null);
 		setSize(500, 170);
-		setLocation(1180, 500);
+		setLocationRelativeTo(null);
 		
 		this.add(insertCash, BorderLayout.CENTER);
 	}

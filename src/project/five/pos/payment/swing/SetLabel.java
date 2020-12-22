@@ -14,7 +14,7 @@ public class SetLabel extends JLabel{
 		setText(data + " " + data2 + "°³");
 		
 		setForeground(Color.WHITE);
-		setFont(new Font("Serif",Font.BOLD, size));
+		setFont(new Font("Ä«Æä24 ¼õ¼õ º¸Åë",Font.BOLD, size));
 		
 	}
 

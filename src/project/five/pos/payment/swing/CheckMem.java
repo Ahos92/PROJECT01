@@ -1,21 +1,32 @@
 package project.five.pos.payment.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 import project.five.pos.db.DBManager;
 import project.five.pos.payment.swing.btn.action.NumberField;
@@ -34,9 +45,13 @@ public class CheckMem extends JFrame {
 	static int memberMileage;
 	static boolean memberOn = false;
 	
+	final static String BG_IMG = "assets/images/miniback7.png";
+	
 	PayPanel main;
 	
 	public CheckMem(PayPanel main) {
+		
+		
 		
 		this.main = main;
 		
@@ -45,7 +60,11 @@ public class CheckMem extends JFrame {
 		JPanel chk_membership = new JPanel(new GridLayout(3,1,0,0));
 		
 		JPanel explain = new JPanel();
-		JLabel explanation = new JLabel("멤버쉽 인증을 위해 멤버쉽 가입 할 때 이용했던 휴대폰 번호를 입력해주세요.");
+		JLabel explanation = new JLabel("<html>멤버쉽 인증을 위해 멤버쉽 가입 할 때 이용했던<br/> "
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ "휴대폰 번호를 입력해주세요.</html>", SwingConstants.CENTER);
+		explanation.setForeground(new Color(245, 245, 220));
+		explanation.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 		
 		JPanel thr_txt = new JPanel(new FlowLayout());
 		
@@ -60,9 +79,10 @@ public class CheckMem extends JFrame {
 		last_no.addKeyListener(new NumberField(4));
 		
 		JPanel chk_mem = new JPanel(new FlowLayout());
-		JButton yes_mem = new JButton("확인");
-		JButton no_mem = new JButton("취소");
-				
+		JButton yes_mem = new MiniButton("확인");
+		JButton no_mem = new MiniButton("취소");
+		
+
 		// 다음 결제 프로세스 창
 		yes_mem.addMouseListener(new MouseAdapter() {
 					
@@ -160,17 +180,41 @@ public class CheckMem extends JFrame {
 		
 		chk_mem.add(yes_mem);
 		chk_mem.add(no_mem);
-								
+		
+		explain.setOpaque(false);
+		thr_txt.setOpaque(false);
+		chk_mem.setOpaque(false);
+		
 		chk_membership.add(explain);
 		chk_membership.add(thr_txt);
 		chk_membership.add(chk_mem);
+		//chk_membership.setBackground(new Color(250, 249, 247));
+		chk_membership.setOpaque(false);
 		
 		setVisible(true);
 		//setLayout(null);
-		setSize(500, 170);
-		setLocation(1180, 500);
+		setSize(500, 210);
+		setLocationRelativeTo(null);
 		
-		this.add(chk_membership, BorderLayout.CENTER);
+		JLabel label = null;
+		try {
+			BufferedImage bgImage = ImageIO.read(new File(BG_IMG));
+			int bgx = bgImage.getWidth();
+			int bgy = bgImage.getHeight();
+			label = new JLabel(new ImageIcon(ImageIO.read(new File(BG_IMG)).getScaledInstance(bgx, bgy, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		label.setBounds(0, 0, 500, 170);
+		JPanel back = new JPanel(new BorderLayout());
+		back.setBounds(0, 0, 500, 170);
+		back.add(chk_membership, BorderLayout.CENTER);
+		
+		back.setOpaque(false);
+		add(back);
+		add(label);
+		
+		//this.add(chk_membership, BorderLayout.CENTER);
 	}
 		
 }
