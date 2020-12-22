@@ -30,7 +30,7 @@ public class AddMenu extends JDialog implements ActionListener{
 	
 	private int TextX = 20;
 	private JTextField[] rows = new JTextField[3];
-	private String[] category = {"","Coffee","Ade","Deserts"};
+	private String[] category = {"","Coffee","Tea","Deserts","Frappe"};
 	private String[] condition = {"","ICE","HOT"};
 	
 	private JPanel panel;
