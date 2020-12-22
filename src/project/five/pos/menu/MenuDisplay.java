@@ -107,7 +107,7 @@ class MenuPanel extends JPanel{
 		ImageIcon icon[] = new ImageIcon[namelist.length];
 
 		Dimension size = new Dimension();
-		int sizeY = (namelist.length + 1) / 2 * 300;
+		int sizeY = (namelist.length + 1) / 2 * 300 + 20;
 		size.setSize(400, sizeY);
 
 
@@ -116,21 +116,25 @@ class MenuPanel extends JPanel{
 		for (int i = 0; i < namelist.length; i++) {
 
 			// 메뉴 버튼
-			bt[i] = new JButton(namelist[i]);
+			String file_path;
+			if(condilist[i] == null) {
+				file_path ="assets/images/"+namelist[i]+".png";
+			}else {
+				file_path ="assets/images/"+namelist[i]+condilist[i]+".png";
+			}
+			bt[i] = new DeviceBtn(namelist[i], file_path, 140);
 			if (i % 2 != 0 || i == 0) {
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 150);
+				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
 			} else {
 				y+=290;
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 150);
+				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
 			}
-			icon[i] = new ImageIcon(i + ".png");
-			bt[i].setIcon(icon[i]);
 
 			// 숫자 txt 버튼
 			suja[i] = new TextField("0");
 			suja[i].setBackground(Color.white);
 			suja[i].setEditable(false);
-			suja[i].setBounds(bt[i].getX() + 50, bt[i].getY() + 205, 40, 20);
+			suja[i].setBounds(bt[i].getX() + 50, bt[i].getY() + 225, 40, 20);
 
 			// "-" 버튼
 			minus[i] = new Button("-");
@@ -171,6 +175,7 @@ class MenuPanel extends JPanel{
 			add(ok[i]);
 
 			setPreferredSize(size);
+			setBackground(new Color(	143, 74, 7));
 			setLayout(null);
 		}
 

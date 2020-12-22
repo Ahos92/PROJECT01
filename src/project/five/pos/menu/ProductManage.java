@@ -34,6 +34,7 @@ import javax.swing.table.TableCellRenderer;
 import project.five.pos.TestSwingTools;
 //import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.db.DBManager;
+import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.table.PosCellEditor;
@@ -86,7 +87,7 @@ public class ProductManage extends JDialog implements ActionListener{
 		setResizable(false);
 		setModal(true);
 		
-		panel = new JPanel();
+		panel = new DevicePanel("assets/images/device/14.png", 500, 760);
 		panel.setLayout(null); 
 		table = new JTable(model);
 		//table.setFont(new Font("Courier", Font.PLAIN, 20));
