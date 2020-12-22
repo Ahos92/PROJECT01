@@ -14,8 +14,8 @@ public class ManagerDisplay extends JFrame {
 	static String[]	image_path = {
 			"assets/images/device/14.png",
 			"assets/images/device/001-money.png",
-			"assets/images/device/003-coffee-bean.png",
-			"assets/images/device/002-member.png",
+			"assets/images/device/002-saled.png",
+			"assets/images/device/003-member.png",
 			"assets/images/device/004-sign-up.png",
 			"assets/images/device/005-product-management.png"
 	};
@@ -35,11 +35,11 @@ public class ManagerDisplay extends JFrame {
 		
 		south_p = new DevicePanel(image_path[0], 500, 750, new BorderLayout());
 		
-		payHistory_btn = new DeviceBtn("결제 내역 조회", image_path[1], 130, new LookUpAction(this));
+		payHistory_btn = new DeviceBtn("결제 내역 조회", image_path[1], 130, new ChangeFrameAction(this));
 		
-		soldHistory_btn = new DeviceBtn("판매 내역 조회", image_path[2], 130, new LookUpAction(this));
+		soldHistory_btn = new DeviceBtn("판매 내역 조회", image_path[2], 130, new ChangeFrameAction(this));
 		
-		memInfo_btn = new DeviceBtn("회원 정보 조회", image_path[3], 130, new LookUpAction(this));
+		memInfo_btn = new DeviceBtn("회원 정보 조회", image_path[3], 130, new ChangeFrameAction(this));
 		
 		signUp_btn =  new DeviceBtn("회원 가입", image_path[4], 130, new ChangeFrameAction(this));
 	

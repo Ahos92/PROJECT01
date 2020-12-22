@@ -21,6 +21,10 @@ public class DevicePanel extends JPanel {
 	
 	String imagePath;
 	int width, height;
+	public DevicePanel(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	
 	public DevicePanel(String imagePath, int width, int height, LayoutManager layout) {
 		super(layout);

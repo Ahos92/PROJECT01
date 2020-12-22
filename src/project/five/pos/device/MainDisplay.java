@@ -1,9 +1,10 @@
-package project.five.pos;
+package project.five.pos.device;
 
 import java.awt.*;
 
 import javax.swing.*;
 
+import project.five.pos.TestSwingTools;
 import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.*;

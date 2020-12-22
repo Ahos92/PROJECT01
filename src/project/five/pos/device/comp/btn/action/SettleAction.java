@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import project.five.pos.device.DeviceDAO;
-import project.five.pos.device.comp.dialog.LoadingDialog;
+import project.five.pos.device.LoadingPopUpDisplay;
 
 public class SettleAction implements ActionListener {
 
@@ -27,7 +27,7 @@ public class SettleAction implements ActionListener {
 		device = new DeviceDAO();		
 			
 		if (device.saveDailyAmount() && device.deleteAmonthAgoDate()) {
-			new LoadingDialog(frame, "정산 중 ...", dialog);
+			new LoadingPopUpDisplay(frame, "정산 중 ...", dialog);
 			
 		} else {
 			JOptionPane.showMessageDialog(frame

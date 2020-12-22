@@ -50,7 +50,6 @@ public class PosLoginDisplay extends JFrame {
 		
 		pw_tf = new JPasswordField(10);
 		
-
 		JFrame f = this;
 		login_btn = new DeviceBtn("login");
 		login_btn.addActionListener(new ActionListener() {

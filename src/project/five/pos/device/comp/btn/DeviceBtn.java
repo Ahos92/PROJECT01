@@ -28,12 +28,26 @@ public class DeviceBtn extends JButton {
 	// 이미지 참고 - https://www.flaticon.com/
 	BufferedImage s;
 
+	public DeviceBtn() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public DeviceBtn() {}
-	
+	public DeviceBtn(int length, String file_path, ActionListener action) {
+		setPreferredSize(new Dimension(length, length));
+		addActionListener(action);
+		try {
+			s = ImageIO.read(new File(file_path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setIcon(new ImageIcon(s.getScaledInstance(length, length,Image.SCALE_SMOOTH)));
+		decorate();
+
+	}
+
 	public DeviceBtn(String btn_name) {
 		super(btn_name);
-		decorate(true);
+		decorate();
 	}
 
 	/* 
@@ -43,7 +57,7 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(width, height));
 		addActionListener(action);
-		decorate(true);
+		decorate();
 	}
 
 	// 이미지
@@ -59,7 +73,7 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(width, height,Image.SCALE_SMOOTH)));
 
-		decorate(false);
+		decorate();
 	}
 
 
@@ -70,7 +84,7 @@ public class DeviceBtn extends JButton {
 		setText(btn_text);
 		setPreferredSize(new Dimension(length, length));
 		addActionListener(action);
-		decorate(true);
+		decorate();
 	}
 
 	// 아이콘
@@ -86,40 +100,51 @@ public class DeviceBtn extends JButton {
 		}
 		setIcon(new ImageIcon(s.getScaledInstance(length, length-20,Image.SCALE_SMOOTH)));
 
-		decorate(false);
+		decorate();
 	}
+	
+	// 메뉴 이미지 (action 제외)
+		public DeviceBtn(String btn_text, String file_path, int length) {
+			setText(btn_text);
+			ImageIcon s = new ImageIcon(file_path);
+			Image image = s.getImage();
+			Image changeI = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
+			setIcon(new ImageIcon(changeI));
 
-	public void decorate(boolean areafilled) {
+			decorate();
+		}
+
+	public void decorate() {
 		setHorizontalTextPosition(JButton.CENTER);
 		setVerticalTextPosition(JButton.BOTTOM);
-		setContentAreaFilled(areafilled);
+		setContentAreaFilled(false);
 		setOpaque(false);
 		setBorderPainted(false);
 	}
 
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		int width = getWidth(); 
 		int height = getHeight(); 
 		Graphics2D graphics = (Graphics2D) g; 
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-		
+
 		if (getModel().isArmed()) {
 			graphics.setColor(getBackground().darker()); 
-			
+
 		} else if (getModel().isRollover()) { 
-			graphics.setColor(getBackground().brighter()); 
-			
+			graphics.setColor(getBackground().LIGHT_GRAY); 
+
 		} else { 
-			graphics.setColor(new Color(255, 0, 0, 0)); 
+			graphics.setColor(new Color(238, 230, 196)); 
 		} 
-		
-		
+
+
 		graphics.fillRoundRect(0, 0, width, height, 10, 10); 
 		graphics.setColor(getForeground()); 
 		graphics.setFont(getFont()); 
-		
+
 		super.paintComponent(g);
 	}
 
