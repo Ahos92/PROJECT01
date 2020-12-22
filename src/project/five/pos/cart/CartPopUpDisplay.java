@@ -26,7 +26,7 @@ public class CartPopUpDisplay extends JDialog {
 
 	JPanel south_p, center_p, north_p;
 
-	JButton cancle_btn, card_btn, cash_btn;
+	JButton cancle_btn, check_btn;
 
 	JLabel info_lab;
 
@@ -51,7 +51,7 @@ public class CartPopUpDisplay extends JDialog {
 	public CartPopUpDisplay(JFrame frame, String title, int device_id, Object[][] select_list) {	
 		super(frame, title);
 		width = 400;
-		height = 650;
+		height = 500;
 		setLayout(new BorderLayout());
 		setSize(width, height);
 		setResizable(false);// 사이즈 변경 불가
@@ -89,7 +89,7 @@ public class CartPopUpDisplay extends JDialog {
 
 		cart_table = new JTable(dtm);
 		scroll = new JScrollPane(cart_table);
-		scroll.setPreferredSize(new Dimension(width - 15, height - 500));
+		scroll.setPreferredSize(new Dimension(width - 15, height - 350));
 
 		cellWitdths(cart_table);
 
@@ -102,13 +102,10 @@ public class CartPopUpDisplay extends JDialog {
 		createcellBtn(cart_table, "▼", cell_btn_size);
 		
 		// 결제
-		card_btn = new DeviceBtn("카드", images_path[0], 120,  
+		check_btn = new DeviceBtn("확인", images_path[1], 120,  
 				new PaymentPageAction(this, frame, dtm, order_num, device_id)
 		);
-		
-		cash_btn = new DeviceBtn("현금", images_path[1], 120,
-				new PaymentPageAction(this, frame, dtm, order_num, device_id)
-		); 
+
 
 		// 취소
 		cancle_btn = new DeviceBtn(50, images_path[2],new CancleAction(this, dtm));
@@ -116,8 +113,7 @@ public class CartPopUpDisplay extends JDialog {
 		north_p.add(info_lab, BorderLayout.WEST);
 		north_p.add(cancle_btn, BorderLayout.EAST);
 		center_p.add(scroll);
-		center_p.add(card_btn);
-		center_p.add(cash_btn);
+		center_p.add(check_btn);
 
 		add(north_p, BorderLayout.NORTH);
 		add(south_p, BorderLayout.SOUTH);

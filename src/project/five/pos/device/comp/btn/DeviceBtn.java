@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import project.five.pos.TestSwingTools;
+import sun.java2d.loops.FillRect;
 
 public class DeviceBtn extends JButton {
 
@@ -59,7 +60,6 @@ public class DeviceBtn extends JButton {
 		addActionListener(action);
 		decorate(true);
 	}
-
 	// ¿ÃπÃ¡ˆ
 	public DeviceBtn(String btn_text, String file_path, int width, int height, ActionListener action) {
 		setText(btn_text);
@@ -123,7 +123,7 @@ public class DeviceBtn extends JButton {
 			graphics.setColor(getBackground().darker()); 
 
 		} else if (getModel().isRollover()) { 
-			graphics.setColor(getBackground().brighter()); 
+			graphics.setColor(getBackground().LIGHT_GRAY); 
 
 		} else { 
 			graphics.setColor(new Color(255, 0, 0, 0)); 

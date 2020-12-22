@@ -14,8 +14,8 @@ public class ManagerDisplay extends JFrame {
 	static String[]	image_path = {
 			"assets/images/device/14.png",
 			"assets/images/device/001-money.png",
-			"assets/images/device/003-coffee-bean.png",
-			"assets/images/device/002-member.png",
+			"assets/images/device/002-saled.png",
+			"assets/images/device/003-member.png",
 			"assets/images/device/004-sign-up.png",
 			"assets/images/device/005-product-management.png"
 	};
