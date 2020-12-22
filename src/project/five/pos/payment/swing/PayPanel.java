@@ -19,11 +19,13 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import project.five.pos.db.PosVO;
@@ -34,9 +36,9 @@ import project.five.pos.payment.swing.btn.action.ClickedBtnAction;
 public class PayPanel extends JFrame {
 	
 	JFrame frame;
-	
+		
 	// 뒷 배경 이미지
-	ImageIcon bg = new ImageIcon(ImageIO.read(new File("assets/images/background.jpg")).getScaledInstance(1000, 1000, Image.SCALE_SMOOTH));
+	final static String BG_IMG = "assets/images/backimg5.jpg";
 	
 	//코로나 고정 이미지
 	final static String IMG_COVID = "assets/images/covid19.png";
@@ -57,9 +59,9 @@ public class PayPanel extends JFrame {
 	
 	static JButton card_btn;
 	static JButton cash_btn;
-						
+							
 	public PayPanel(int order_num, int price, ArrayList<String> lists2, ArrayList<PosVO> update_cart) throws IOException {
-					
+				
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -88,7 +90,7 @@ public class PayPanel extends JFrame {
 		
 		JLabel stnsProduct = new JLabel("주문 하신 상품 리스트", SwingConstants.CENTER);
 		stnsProduct.setForeground(Color.WHITE);
-		stnsProduct.setFont(new Font("Serif",Font.BOLD, 14));
+		stnsProduct.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
 		
 		JPanel productList = new JPanel(new FlowLayout());
 		productList.setOpaque(false);
@@ -115,30 +117,36 @@ public class PayPanel extends JFrame {
 		//카페 이름
 		JLabel branch_name = new JLabel("Fancy a cuppa?");
 		branch_name.setForeground(Color.WHITE);
-		branch_name.setFont(new Font("Serif",Font.BOLD, 36));
+		branch_name.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 36));
 				
-		JLabel total_price = new JLabel("총 결제할 금액 : " + price, SwingConstants.CENTER);
+		JLabel total_price = new JLabel("총 결제 금액 : " + price + "(원)", SwingConstants.CENTER);
 		total_price.setForeground(Color.WHITE);
-		total_price.setFont(new Font("Serif",Font.BOLD, 16));
+		total_price.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
 				
 		//버튼 모음
-		ckmem_btn = new JButton("멤버쉽 입력");
-		register_btn = new JButton("멤버쉽 등록");
-	
+		ckmem_btn = new RoundedButton("멤버쉽 입력");
+		ckmem_btn.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
+		
+		register_btn = new RoundedButton("멤버쉽 등록");
+		register_btn.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
+		
 		register_btn.addActionListener(new BtnAction(register_btn));
 		ckmem_btn.addActionListener(new BtnAction(ckmem_btn));
 
-		card_btn = new JButton("카드");
-		cash_btn = new JButton("현금");
+		card_btn = new RoundedButton("카드");
+		card_btn.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
+		cash_btn = new RoundedButton("현금");
+		cash_btn.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 16));
+		
 		
 		//버튼 테두리 지정
 		card_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		cash_btn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		
-		JButton cancel_btn = new JButton("취소하기");
+		JButton cancel_btn = new RoundedButton("취소하기");
 		cancel_btn.addActionListener(new ChangeFrameAction(this));
 		
-		JButton payment_btn = new JButton("결제하기");
+		JButton payment_btn = new RoundedButton("결제하기");
 		payment_btn.setEnabled(false);
 		
 		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num, lists2, update_cart));
@@ -165,7 +173,7 @@ public class PayPanel extends JFrame {
 				}
 			}
 		});
-		
+			
 		// 코로나 마스크 포스터 추가
 		try {
 			BufferedImage coImage = ImageIO.read(new File(IMG_COVID));
@@ -179,12 +187,7 @@ public class PayPanel extends JFrame {
 		for(int i = 0; i < lists2.size(); i++) {
 			productList.add(new SetLabel(lists2.get(i), update_cart.get(i).getSelected_item(), 14));
 		}
-		
-		// 커피 이미지들 (보류)
-//		for(CfmenuEnum cfname : CfmenuEnum.values()) {
-//			productList.add(cfname.getCfname(), new CfmenuLabel(cfname));
-//		}
-		
+				
 		//장바구니 리스트 패널들
 		productPanel.add(stnsProduct);
 		productPanel.add(productList);
@@ -212,10 +215,18 @@ public class PayPanel extends JFrame {
 		setVisible(true);
 		
 		ProSwingTools.initTestFrame(this);
-		JLabel label = new JLabel(bg);
-		label.setBounds(0, 0, 750, 750);
+		JLabel label = null;
+		try {
+			BufferedImage bgImage = ImageIO.read(new File(BG_IMG));
+			int bgx = bgImage.getWidth();
+			int bgy = bgImage.getHeight();
+			label = new JLabel(new ImageIcon(ImageIO.read(new File(BG_IMG)).getScaledInstance(bgx, bgy, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		label.setBounds(0, 0, 875, 750);
 		JPanel back = new JPanel(new BorderLayout());
-		back.setBounds(0, 0, 750, 750);
+		back.setBounds(0, 0, 875, 750);
 		back.add(main_center_panel, BorderLayout.CENTER);
 		back.add(north_panel, BorderLayout.NORTH);
 		back.add(west_panel, BorderLayout.WEST);
@@ -224,7 +235,8 @@ public class PayPanel extends JFrame {
 		back.setOpaque(false);
 		add(back);
 		add(label);
+		
 				
 	}
-		
+	
 }

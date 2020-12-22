@@ -69,8 +69,7 @@ public class PaidByCard extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
+								
 				if(e.getButton() == MouseEvent.BUTTON1) {
 					
 					String selectedCard = selectCode.getSelectedItem().toString();
@@ -90,18 +89,12 @@ public class PaidByCard extends JFrame{
 						cardNumber += first_cardNum.getText();
 						cardNumber += "-****-****-";
 						cardNumber += last_cardNum.getText();
-						
-						
-						
+												
 						new SuccessCard();
 						dispose();
 						
 						selectedCard = "";
-					}
-					
-					
-					
-					
+					}				
 				}
 			}
 		});
@@ -143,7 +136,7 @@ public class PaidByCard extends JFrame{
 		setVisible(true);
 		//setLayout(null);
 		setSize(500, 170);
-		setLocation(1180, 500);
+		setLocationRelativeTo(null);
 		
 		this.add(insertCard, BorderLayout.CENTER);
 	}

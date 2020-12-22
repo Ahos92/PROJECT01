@@ -29,8 +29,10 @@ public class ChangeFrameAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String check = e.getActionCommand();
 		
+
 		if (check.equals("메뉴로 돌아가기")
 				||check.equals("> To Main page")) {
+
 			changeble_frame =  new MainDisplay("1234");
 
 		} else if(check.equals("로그인")){			
@@ -52,17 +54,23 @@ public class ChangeFrameAction implements ActionListener{
 		} else if(check.equals("관리자")) {
 			new LoginPopUpDisplay(present_frame, "관리자 로그인");
 
+
 		} else if(check.equals("아니요")) {
+
 			changeble_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
+
 			new JoinFrame(present_frame, "회원 가입");
 
+
 		} else if(check.equals("상품 관리")) {
+
 			try {
 				new ProductManage(present_frame, "상품 관리");
 			} catch (IOException e1) {e1.printStackTrace();
 			}
+
 
 		} else if(check.equals("매니저 등록")) {
 			new ManagerSignUpPopUpDisplay(present_frame, check);

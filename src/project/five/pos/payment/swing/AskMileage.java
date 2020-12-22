@@ -284,7 +284,7 @@ public class AskMileage extends JFrame{
 		setVisible(true);
 		//setLayout(null);
 		setSize(500, 185);
-		setLocation(1180, 500);
+		setLocationRelativeTo(null);
 		
 		this.add(panel_ml, BorderLayout.CENTER);
 	}
