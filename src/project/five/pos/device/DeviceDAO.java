@@ -57,16 +57,23 @@ public class DeviceDAO {
 			int check02 = ps2.executeUpdate();
 
 			if (check01 == 1 && check02 == 1) {
-				conn.commit();
-				System.out.println("오래된 데이터 지우기 쿼리1 : " + sql01);
-				System.out.println("오래된 데이터 지우기 쿼리2 : " + sql02);
-				System.out.println(amonth_ago + "날의 데이터 "+ check01 +"행과 "+ check02 + "행이 삭제되었습니다.");
+//				conn.commit();
+				System.err.println("TEST : deleteAmonthAgoDate() 커밋 설정 해제되있음");
+				System.out.println("쿼리1 : " + sql01);
+				System.out.println("쿼리2 : " + sql02);
+				System.out.println(amonth_ago + "날의 판매 내역 "
+								+ check01 +"행과 / 결제내역"+ check02 + "행이 삭제되었습니다.");
 				return true;
 			} else {
 				conn.rollback();
 				System.err.println("deleteAmonthAgoDate() 정상 적인 처리가 되지 않았습니다.");
+<<<<<<< HEAD
 								//return true;
 				return false;
+=======
+				return true;
+//				return false;
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 			}
 
 		} catch (SQLException e) {
@@ -110,7 +117,7 @@ public class DeviceDAO {
 
 			} else {
 				conn.rollback();
-				System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (sql01) 본사에 연락해주세요. 02-000-0000");
+				System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount()(sql01)");
 			}
 
 
@@ -119,25 +126,30 @@ public class DeviceDAO {
 
 			ps2.setString(1, today);
 			ps2.setInt(2, total_money);
+<<<<<<< HEAD
 			ps2.setInt(3, AskCoupon.device_id);
+=======
+			ps2.setInt(3, 1234); // device_id
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 
 			try {
 				int result = ps2.executeUpdate();
 				if(result != 1){
 					conn.rollback();
-					System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (sql02) 본사에 연락해주세요. 02-000-0000");
+					System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (sql02)");
 				} else {
 					//					conn.commit();
-					System.err.println("현재 PosDAO().saveDailyAmount()의 commit() 설정이 되있지 않습니다!");
+					System.err.println("TEST : saveDailyAmount() 커밋 설정 해제되있음");
 					System.out.println("daily_sales_amount 테이블의 " + result + "행이 변경 되었습니다.");
-					System.out.printf(">>\tSALES_DATE : %s\t TOTAL_MONEY : %d\n", today, total_money);
+					System.out.printf(">> SALES_DATE : %s\t TOTAL_MONEY : %d\t Device_id : %d\n", 
+										today, total_money, 1234);
 					System.out.println();
 					return true;
 				}
 
 			} catch (SQLIntegrityConstraintViolationException sie){
 				System.err.println("TEST : "+ today +"날의 데이터는 이미 있습니다!");
-				System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (PK) 본사에 연락해주세요. 02-000-0000");
+				System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (PK)");
 			}
 
 		} catch (SQLException e) {
@@ -284,7 +296,7 @@ public class DeviceDAO {
 
 		try {
 			ps = conn.prepareStatement("select *"
-					+ " from cart");
+					+ " from cart order by saled_date desc");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -333,7 +345,7 @@ public class DeviceDAO {
 			String sql = "select *"
 					+ " from cart"
 					+ " where " + column_name + " like " + column_data
-					+ " order by saled_date asc";
+					+ " order by saled_date desc";
 			ps = conn.prepareStatement(sql);
 
 			try {
@@ -376,7 +388,7 @@ public class DeviceDAO {
 		conn = DBManager.getConnection();
 
 		try {
-			ps = conn.prepareStatement("select * from payment");
+			ps = conn.prepareStatement("select * from payment order by Payment_date desc");
 
 			rs = ps.executeQuery();
 
@@ -423,7 +435,7 @@ public class DeviceDAO {
 
 			if (column_name.equals("payment_date")) {
 				sql = "select * from payment where " + column_name 
-						+ " like \'%"+ today + column_data + ":%\' order by payment_date asc";
+						+ " like \'%"+ today + column_data + ":%\' order by payment_date desc";
 			} else if (column_name.equals("actual_expenditure")) {
 				sql = "select * from payment where " + column_name + " >= " + column_data 
 						+ " order by actual_expenditure desc";

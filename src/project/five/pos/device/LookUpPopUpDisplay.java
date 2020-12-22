@@ -1,6 +1,8 @@
 package project.five.pos.device;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -13,12 +15,15 @@ import javax.swing.table.*;
 
 import project.five.pos.TestSwingTools;
 import project.five.pos.cart.*;
+import project.five.pos.device.comp.DevicePanel;
+import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 import project.five.pos.device.comp.btn.action.TableRepaintAction;
 import project.five.pos.device.table.ComboBoxList;
 import project.five.pos.device.table.LookUpTableModel;
+import project.five.pos.device.table.PosCellEditor;
 
-public class LookUpDisplay extends JFrame {
+public class LookUpPopUpDisplay extends JDialog {
 
 	JComboBox<String> selectColumn_box;
 	JTextField selectData_tf;
@@ -32,45 +37,77 @@ public class LookUpDisplay extends JFrame {
 	JScrollPane scroll;
 	DefaultTableModel dtm;
 	
-	public LookUpDisplay(String btn_text) {
+	Font lookUp_font = new Font("Serif", Font.BOLD, 20);
+	Dimension lookUp_dms = new Dimension(80, 35);
+	
+	String[] images_path = {
+			"assets/images/device/14.png",
+	};
+	
+	int width;
+	int height;
+	
+	public LookUpPopUpDisplay(JFrame frame, String btn_text) {
+		super(frame, btn_text);
+		width = 550;
+		height = 700;
 		setLayout(new BorderLayout());
+		setSize(width, height);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setModal(true);
 
-		north_p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		center_p = new JPanel();
-		south_p = new JPanel();	
+		north_p = new DevicePanel(images_path[0], width, height, new FlowLayout(FlowLayout.LEFT));
+		
+		center_p = new DevicePanel(images_path[0], width, height, new FlowLayout(FlowLayout.CENTER, 10, 40));
+		
+		south_p = new DevicePanel(images_path[0], width, height);
 		
 		// 헤드
 		head_lab = new JLabel(btn_text);
-
+		head_lab.setFont(lookUp_font);
+		
 		// 조회 테이블
 		dtm = new LookUpTableModel(btn_text);
 		lookUp_table = new JTable(dtm);
 		lookUp_table.setAutoCreateRowSorter(true); // 테이블 역순/정순 변환
 		lookUp_table.getTableHeader().setReorderingAllowed(false); // 테이블 수정불가
+		new PosCellEditor().setWitdth(btn_text, lookUp_table);
+		
 		scroll = new JScrollPane(lookUp_table);
-		scroll.setPreferredSize(new Dimension(480, 500));
+		scroll.setPreferredSize(new Dimension(width - 30, height - 400));
 		
 		// 검색 
 		String[] list = new ComboBoxList(btn_text).getArr();
 		selectColumn_box = new JComboBox<String>(list);
-		selectColumn_box.setPreferredSize(new Dimension(100, 20));
-		category_lab = new JLabel("카테고리");
+		selectColumn_box.setPreferredSize(lookUp_dms);
+	
 		selectData_tf = new JTextField(8);
+		selectData_tf.setFont(lookUp_font);
+		selectData_tf.setPreferredSize(lookUp_dms);
+		
 		selectName_lab = new JLabel("검색 명");
-		search_btn = new JButton("검색");
-		search_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
-															selectColumn_box, selectData_tf)); 
-		allInq_btn = new JButton("전체보기");
-		allInq_btn.addActionListener(new TableRepaintAction(btn_text, dtm,
-															selectColumn_box, selectData_tf)); 	
+		selectName_lab.setPreferredSize(lookUp_dms);
+		selectName_lab.setFont(lookUp_font);
+		
+		search_btn = new DeviceBtn("검색", 60, 35, new TableRepaintAction(btn_text, dtm,
+											selectColumn_box, selectData_tf));
+
+		allInq_btn = new DeviceBtn("전체", 60, 35, new TableRepaintAction(btn_text, dtm,
+				selectColumn_box, selectData_tf));
+
 		
 		// 뒤로가기
-		back_btn = new JButton("관리자 메뉴로 돌아가기");
-		back_btn.addActionListener(new ChangeFrameAction(this));
+		back_btn = new DeviceBtn("관리자 메뉴로 돌아가기");
+		back_btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();			
+			}
+		});
 		
 		south_p.add(back_btn);
 		center_p.add(scroll);
-		center_p.add(category_lab);
 		center_p.add(selectColumn_box);
 		center_p.add(selectName_lab);
 		center_p.add(selectData_tf);
@@ -80,7 +117,8 @@ public class LookUpDisplay extends JFrame {
 		
 		JLabel info;
 		if (btn_text.equals("결제 내역 조회")) {
-			 info = new JLabel("결제시간으로 검색 하실 경우 결제'시간' 만 입력해야 정보를 얻으 실수 있습니다.");
+			 info = new JLabel("결제시간은 '시간'만 입력해 주세요.");
+			 info.setFont(lookUp_font);
 			 center_p.add(info);
 		}
 		
@@ -88,7 +126,7 @@ public class LookUpDisplay extends JFrame {
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 
-		TestSwingTools.initTestFrame(this, btn_text, true);
+		setVisible(true);
 	}
 
 }

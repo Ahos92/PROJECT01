@@ -1,7 +1,11 @@
 package project.five.pos;
 
 
+import java.awt.Graphics;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class TestSwingTools extends JFrame {
 
@@ -14,6 +18,16 @@ public class TestSwingTools extends JFrame {
 		frame.setSize(500, 800);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(visible);
+	
 	}
+
+	public static void posloginFrame(JFrame frame) {
+		frame.setTitle("FivePoS");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(800, 500);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);	
+	}
+	
 	
 }

@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import project.five.pos.device.DeviceDAO;
-import project.five.pos.device.comp.dialog.LoadingDialog;
+import project.five.pos.device.LoadingPopUpDisplay;
 
 public class SettleAction implements ActionListener {
 
@@ -25,16 +25,17 @@ public class SettleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		device = new DeviceDAO();		
-		
-		// pos.saveDailyAmount(); - 하루 매출 저장 
-		
-		// pos.deleteAmonthAgoDate(); - 30일지난 데이터 테이블에서 삭제	
+			
 		if (device.saveDailyAmount() && device.deleteAmonthAgoDate()) {
-			new LoadingDialog(frame, "정산 중 ...", dialog);
+			new LoadingPopUpDisplay(frame, "정산 중 ...", dialog);
 			
 		} else {
-			JOptionPane.showMessageDialog(frame, "정상적인 처리가 되지 않았습니다!!", "처리 오류!", 
-												JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(frame
+										, "정상적인 처리가 되지 않았습니다!! \n본사에 연락 해주세요 02-0000-0000"
+										, "처리 오류!"
+										, JOptionPane.ERROR_MESSAGE
+			);
+	
 			dialog.dispose();
 		}
 

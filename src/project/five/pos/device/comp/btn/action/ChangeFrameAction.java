@@ -1,14 +1,11 @@
 package project.five.pos.device.comp.btn.action;
 
 import java.awt.event.*;
+import java.io.IOException;
 
 import javax.swing.*;
 
-import project.five.pos.MainDisplay;
 import project.five.pos.device.*;
-import project.five.pos.device.comp.dialog.LoginDialog;
-import project.five.pos.device.comp.dialog.ManagerSignUpDialog;
-import project.five.pos.device.comp.dialog.SettleDialog;
 import project.five.pos.membership.gui.*;
 import project.five.pos.menu.ProductManage;
 import project.five.pos.menu.MenuDisplay;
@@ -32,7 +29,12 @@ public class ChangeFrameAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String check = e.getActionCommand();
 		
+<<<<<<< HEAD
 		if (check.equals("메뉴로 돌아가기")) {
+=======
+		if (check.equals("메뉴로 돌아가기")
+				||check.equals("> To Main page")) {
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 			changeble_frame =  new MainDisplay("1234");
 
 		} else if(check.equals("로그인")){			
@@ -52,30 +54,49 @@ public class ChangeFrameAction implements ActionListener{
 			}
 
 		} else if(check.equals("관리자")) {
-			new LoginDialog(present_frame, "관리자 로그인");
+			new LoginPopUpDisplay(present_frame, "관리자 로그인");
 
+<<<<<<< HEAD
 		} else if(check.equals("관리자 메뉴로 돌아가기") 
 				|| check.equals("아니요")
 				|| check.equals("메인으로")) {
+=======
+		} else if(check.equals("아니요")) {
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 			changeble_frame = new ManagerDisplay();
 
 		} else if(check.equals("회원 가입")) {
+<<<<<<< HEAD
 			changeble_frame = new JoinFrame();
+=======
+			new JoinFrame(present_frame, "회원 가입");
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 
 		} else if(check.equals("상품 관리")) {
+<<<<<<< HEAD
 			changeble_frame = new ProductManage();
+=======
+			try {
+				new ProductManage(present_frame, "상품 관리");
+			} catch (IOException e1) {e1.printStackTrace();
+			}
+>>>>>>> branch 'developer' of https://github.com/Ahos92/PROJECT01.git
 
 		} else if(check.equals("매니저 등록")) {
-			new ManagerSignUpDialog(present_frame, check);
+			new ManagerSignUpPopUpDisplay(present_frame, check);
 			
 		} else if(check.equals("정산")) {
-			new SettleDialog(present_frame, check);
+			new SettlePopUpDisplay(present_frame, check);
 			
 		} else if (check.equals("판매") 
 				|| check.equals("취소하기")) {
 			changeble_frame = new MenuDisplay();
 			
-		} 
+		} else if (check.equals("판매 내역 조회")
+				|| check.equals("결제 내역 조회")
+				|| check.equals("회원 정보 조회")) {
+			new LookUpPopUpDisplay(present_frame, check);
+		}
 
 		// dialog 띄울 때 변할 화면 Null
 		try {

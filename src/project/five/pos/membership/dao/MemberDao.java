@@ -80,7 +80,7 @@ public class MemberDao {
 			pstmt.executeUpdate(); //return값은 처리된 레코드의 개수
 			return 1;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("잘못된 입력 입니다.");
 		}
 		return -1;
 	}

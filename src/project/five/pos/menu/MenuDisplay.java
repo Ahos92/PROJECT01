@@ -5,12 +5,14 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.Menu;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -27,56 +29,73 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
 
 import project.five.pos.TestSwingTools;
-import project.five.pos.cart.CartDisplay;
+import project.five.pos.cart.CartPopUpDisplay;
 import project.five.pos.db.PosVO;
+import project.five.pos.device.comp.btn.DeviceBtn;
+import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 
 public class MenuDisplay extends JFrame{
-	int count = 0;
-	String show = "";
-	int cartNo =0;
-	int on=0;
+
+	String[] cateG = MenuDAO.getCategories();
+	static int allMenu = MenuDAO.allMenus();
+	JPanel menubyul[] = new JPanel[cateG.length];
+	JScrollPane[] scroll = new JScrollPane[cateG.length];
+	static Object[][] allCart = new Object[allMenu][4];
+	JPanel downP;
 
 
 	public MenuDisplay() {
 		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
-		Container con = this.getContentPane();
-		JScrollPane scroll;
+		MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
+		addCart.x = 0;
+		JTabbedPane category = new JTabbedPane();
 
-		// 배열 설정 부분
-		String[] category = MenuDAO.getCategories();
-		JMenu menu[] = new JMenu[category.length];
-
-		// 위패널
-		Panel upP = new Panel();
-		JMenuBar categ = new JMenuBar();
-		for (int i = 0; i < category.length; i++) {
-			menu[i] = new JMenu(category[i]);
-			categ.add(menu[i]);
+		//int x = 0;
+		for (int i = 0; i < cateG.length; i++) {
+			menubyul[i] = new MenuPanel(cateG[i]);
+			scroll[i] = new JScrollPane();
+			scroll[i].setViewportView(menubyul[i]);
+			category.addTab(cateG[i], scroll[i]);
 		}
-		upP.add(categ);
 
-		String cate = menu[2].getActionCommand();
+		add(category);
+
+		downP = new SetPanel(this);
+		downP.setBackground(new Color(108, 62, 37));
+
+		add(downP, BorderLayout.SOUTH);
+		setVisible(true);
+
+	}
+
+	public static void main(String[] args) {
+		new MenuDisplay();
+	}
+
+}
+
+
+
+class MenuPanel extends JPanel{
+	private int count = 0;
+
+	public MenuPanel(String cate) {
 		Object[][] menus = MenuDAO.getMenus(cate);
 		String[] namelist= new String[menus.length];
 		String[] condilist= new String[menus.length];
 		int[] pricelist= new int[menus.length]; 
 		int[] countlist= new int[menus.length];
 
-		for (int i = 0; i < menus.length; i++) {
-			for (int j = 0; j < menus[i].length; j++) {
-				System.out.print(menus[i][j] + " ");
-				System.out.println();
-			}
-		}
-
 		for(int i = 0; i < menus.length; ++i) {
 			namelist[i] = (String)menus[i][0];
-			pricelist[i] = (int)menus[i][1];
+			condilist[i] = (String)menus[i][1];
 			countlist[i] = (int)menus[i][2];
-			condilist[i] = (String)menus[i][3];
+			pricelist[i] = (int)menus[i][3];
 		}
 		JButton bt[] = new JButton[namelist.length];
 		TextField[] suja = new TextField[namelist.length];
@@ -86,38 +105,36 @@ public class MenuDisplay extends JFrame{
 		Label l[] = new Label[namelist.length];
 		Label l2[] = new Label[namelist.length];
 		ImageIcon icon[] = new ImageIcon[namelist.length];
-		Object[][] cart = new Object[namelist.length][4];;
 
+		Dimension size = new Dimension();
+		int sizeY = (namelist.length + 1) / 2 * 300 + 20;
+		size.setSize(400, sizeY);
 
-
-		// 메뉴 패널
-		JPanel center_panel = new JPanel();
-		add(center_panel);
-		center_panel.setLayout(null);
-		center_panel.setSize(0, 600);
-		scroll = new JScrollPane(center_panel);
-		scroll.setBounds(0,0,0, 400);
 
 		// 버튼 부분
-		int x = 60; int y = 40;
+		int x = 55; int y = 40;
 		for (int i = 0; i < namelist.length; i++) {
 
 			// 메뉴 버튼
-			bt[i] = new JButton(namelist[i]);
+			String file_path;
+			if(condilist[i] == null) {
+				file_path ="assets/images/"+namelist[i]+".png";
+			}else {
+				file_path ="assets/images/"+namelist[i]+condilist[i]+".png";
+			}
+			bt[i] = new DeviceBtn(namelist[i], file_path, 140);
 			if (i % 2 != 0 || i == 0) {
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 150);
+				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
 			} else {
 				y+=290;
-				bt[i].setBounds(x + (i % 2) * 210, y, 150, 150);
+				bt[i].setBounds(x + (i % 2) * 210, y, 150, 170);
 			}
-			icon[i] = new ImageIcon(i + ".png");
-			bt[i].setIcon(icon[i]);
 
 			// 숫자 txt 버튼
 			suja[i] = new TextField("0");
 			suja[i].setBackground(Color.white);
 			suja[i].setEditable(false);
-			suja[i].setBounds(bt[i].getX() + 50, bt[i].getY() + 205, 40, 20);
+			suja[i].setBounds(bt[i].getX() + 50, bt[i].getY() + 225, 40, 20);
 
 			// "-" 버튼
 			minus[i] = new Button("-");
@@ -135,8 +152,8 @@ public class MenuDisplay extends JFrame{
 
 			// 구분
 			if(condilist[i] == null) {
-				l2[i] = new Label(">ㅇ<");
-				l2[i].setBounds(bt[i].getX() + 48, l[i].getY() - 25, 120, 20);
+				l2[i] = new Label(" ♥ ");
+				l2[i].setBounds(bt[i].getX() + 60, l[i].getY() - 25, 120, 20);
 			}else {
 				l2[i] = new Label("[   "+condilist[i]+"   ]");
 				l2[i].setFont(new Font(null, Font.BOLD, 12));
@@ -148,27 +165,19 @@ public class MenuDisplay extends JFrame{
 			ok[i].setBounds(bt[i].getX()+20, suja[i].getY() + 30, 100, 20);
 			ok[i].setEnabled(false);
 
-			center_panel.add(bt[i]);
-			center_panel.add(suja[i]);
-			center_panel.add(minus[i]);
-			center_panel.add(plus[i]);
-			center_panel.add(l[i]);
-			center_panel.add(l2[i]);
-			center_panel.add(ok[i]);
+
+			add(bt[i]);
+			add(suja[i]);
+			add(minus[i]);
+			add(plus[i]);
+			add(l[i]);
+			add(l2[i]);
+			add(ok[i]);
+
+			setPreferredSize(size);
+			setBackground(new Color(	143, 74, 7));
+			setLayout(null);
 		}
-		// 아래패널
-		Panel downP = new Panel();
-		downP.setBackground(new Color(108, 62, 37));
-
-		Button bt1 = new Button("주문");
-		Button bt2 = new Button("초기화");
-		downP.add(bt1);
-		downP.add(bt2);
-
-		add(upP, BorderLayout.NORTH);
-		add(scroll);
-		add(downP, BorderLayout.SOUTH);
-		setVisible(true);
 
 		// 메뉴 이벤트
 		for (int i = 0; i < namelist.length; i++) {
@@ -176,15 +185,19 @@ public class MenuDisplay extends JFrame{
 
 			// 메뉴버튼
 			bt[i].addActionListener(new ActionListener() {
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
+
 					minus[j].setEnabled(true);
 					plus[j].setEnabled(true);
 					bt[j].setEnabled(false);
-					ok[j].setEnabled(true);
 
+					// ok[j] 삭제
 					count = 0;
+
 				}
+
 			});
 
 			// "-"버튼
@@ -192,15 +205,24 @@ public class MenuDisplay extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+
 					if (count > 0) {
+
 						count = count - 1;
+
 						suja[j].setText(count + "");
 						ok[j].setEnabled(true);
+
 					} else {
 						minus[j].setEnabled(false);
+
 					}
+
 				}
+
 			});
+
+ 
 
 			//"+"버튼
 			plus[i].addActionListener(new ActionListener() {
@@ -209,81 +231,114 @@ public class MenuDisplay extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					count = count + 1;
 					suja[j].setText(count + "");
-					ok[j].setEnabled(true);
+					ok[j].setEnabled(true);   //추가
 					if (count > 0) {
+
 						minus[j].setEnabled(true);
-						if(count >= countlist[j])
+
+					if(count >= countlist[j])
+
 							plus[j].setEnabled(false);
+
+					} else {
+
+						ok[j].setEnabled(false);  // 추가
+
 					}
+
 				}
+
 			});
 
+ 
+
 			// 확인 버튼
-			
 			ok[i].addActionListener(new ActionListener() {
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("카트넘버 : "  + cartNo);
-					show = bt[j].getActionCommand();
-					cart[cartNo][0]=namelist[j];
-					cart[cartNo][1]=condilist[j];
-					cart[cartNo][2]=count;
-					cart[cartNo][3]=count * pricelist[j];
+
+					if(count == 0) {
+						bt[j].setEnabled(true);
 					
-					cartNo+=1;
+					} else {
+
+						new addCart(namelist[j],condilist[j],pricelist[j],count);  // 변경
+
+					}
+
 					minus[j].setEnabled(false);
 					plus[j].setEnabled(false);
 					ok[j].setEnabled(false);
+
 				}
+
 			});
+
 		}
+	}
+}
+
+// 버튼 값을 누적 저장
+class addCart{
+	static int x=0;
+	
+	public addCart(Object name, Object condi, Object price, Object count) {
+		
+		MenuDisplay.allCart[x][0]= name;
+		MenuDisplay.allCart[x][1]= condi;
+		MenuDisplay.allCart[x][2]= count;
+		MenuDisplay.allCart[x][3]= price;
+
+		x+=1;
+		System.out.println(Arrays.deepToString(MenuDisplay.allCart));
+	}
+}
+
+
+
+class SetPanel extends JPanel{
+	
+	public SetPanel(JFrame frame) {
+		
+		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame));
+		JButton bt2 = new JButton("주문");
+		JButton bt3 = new JButton("초기화");
+		
+		bt1.setBackground(new Color(153, 102, 51));
+		
+		add(bt1);
+		add(bt2);
+		add(bt3);
+		
+
 		
 		// 주문버튼
-        bt1.addActionListener(new ActionListener() {
- 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // 주문 확인
-            	//JOptionPane.showMessageDialog(null, Arrays.deepToString(cart) + "\n주문되었습니다. \n이용해주셔서 감사합니다.");
-                
-                cartNo=0;
+		bt2.addActionListener(new ActionListener() {
 
-                new CartDisplay("1234", cart);
-                dispose();
-            }
-        });
- 
-        // 초기화 버튼
-        bt2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < menus.length; i++) {
-                    bt[i].setEnabled(true);
-                    minus[i].setEnabled(false);
-                    plus[i].setEnabled(false);
-                    suja[i].setText("0");
-                }
-                //System.out.println(Arrays.deepToString(cart));
-                for(int i = 0; i < cart.length; i++) {
-                	Arrays.fill(cart[i], null);
-                }
-                cartNo=0;
-                //System.out.println(Arrays.deepToString(cart));
-            }
-        });
-
-		// 끄기
-		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
+			public void actionPerformed(ActionEvent e) {
+				
+				new CartPopUpDisplay(frame, "주문 내역",1234, MenuDisplay.allCart);
+				
+				// 배열 확인용
+				System.out.println(Arrays.deepToString(MenuDisplay.allCart));
+
+			}
+		});
+
+		
+		// 초기화 버튼
+		bt3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 새창이 열리고 이전 창이 지워짐
+				MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
+				addCart.x = 0;
+				new MenuDisplay();
+				frame.dispose();
+				
 			}
 		});
 	}
-
-
-	public static void main(String[] args) {
-		new MenuDisplay();
-	}
-
 }
