@@ -50,7 +50,7 @@ public class CartPopUpDisplay extends JDialog {
 	int width;
 	int height;
 
-	public CartPopUpDisplay(JFrame frame, String title, int device_id, Object[][] select_list) {	
+	public CartPopUpDisplay(JFrame frame, String title, String device_id, Object[][] select_list) {	
 		super(frame, title);
 		width = 400;
 		height = 400;

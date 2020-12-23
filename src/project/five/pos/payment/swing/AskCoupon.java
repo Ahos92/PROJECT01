@@ -72,16 +72,17 @@ public class AskCoupon extends JFrame {
 	
 	final static String BG_IMG = "assets/images/miniback7.png";
 	
-	public static int device_id = 1234;
-	
 	JLabel order_cart;
 	
 	CartDAO cart;
 	
-	public AskCoupon(int price, JFrame frame, int order_num, ArrayList<String> lists2, ArrayList<PosVO> update_cart) {
+	public AskCoupon(int price, JFrame frame, int order_num, 
+			ArrayList<String> lists2, ArrayList<PosVO> update_cart, String device_id) {
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
+		
+		int device_id_int = Integer.parseInt(device_id);
 		
 		cart = new CartDAO();
 		
@@ -164,16 +165,16 @@ public class AskCoupon extends JFrame {
 					actual_expenditure = price;
 					
 					if(CheckMem.memberOn == true && CheckMem.memberMileage >= 1000) {
-						new AskMileage(tstp2, price, actual_expenditure, couponNo, device_id);
+						new AskMileage(tstp2, price, actual_expenditure, couponNo, device_id_int);
 						
 						dispose();	
 						
 					}else if(CheckMem.memberOn == true){
 						
 						// 결제 정보 DB 전송
-						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
+						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id_int);						
 						
-						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id_int);
 						
 						// 적립 + 등급업 추가						
 						new MembershipQuery(actual_expenditure);
@@ -190,9 +191,9 @@ public class AskCoupon extends JFrame {
 					else {
 						
 						// 결제 정보 DB 전송
-						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);						
+						new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id_int);						
 									
-						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id_int);
 						
 						
 						// 메인 패널 초기화
@@ -248,9 +249,9 @@ public class AskCoupon extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				// 결제 정보 DB 전송
-				new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id);
+				new PaymentQuery(tstp2, price, actual_expenditure, couponNo, device_id_int);
 				
-				cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
+				cart.saveCartlist(today2, order_num, lists2, update_cart, device_id_int);
 				
 				// 멤버 일때 적립
 				if(CheckMem.memberOn == true) {
@@ -290,7 +291,7 @@ public class AskCoupon extends JFrame {
 					
 					//버튼 기능(함수 ClickedBtnAction)
 					PayPanel.main_card.show(PayPanel.main_center_panel, "결제전");	
-					new MenuDisplay();
+					new MenuDisplay(device_id);
 					
 					frame.dispose();
 				}

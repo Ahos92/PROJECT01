@@ -15,7 +15,7 @@ public class LoginPopUpDisplay extends JDialog {
 	private JTextField id_tf, pw_tf;
 	private JButton confirm_btn;
 	
-	public LoginPopUpDisplay(JFrame frame, String title) {
+	public LoginPopUpDisplay(JFrame frame, String title, String device_id) {
 		super(frame, title);
 		setLayout(new BorderLayout());
 		setSize(200, 130);
@@ -33,7 +33,7 @@ public class LoginPopUpDisplay extends JDialog {
 		pw_tf = new JPasswordField(10);
 		
 		confirm_btn = new JButton("·Î±×ÀÎ");
-		confirm_btn.addActionListener(new ChangeFrameAction(frame, id_tf, pw_tf));
+		confirm_btn.addActionListener(new ChangeFrameAction(frame, id_tf, pw_tf, device_id));
 
 		center_p.add(id_lab);
 		center_p.add(id_tf);

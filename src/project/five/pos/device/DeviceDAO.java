@@ -57,8 +57,8 @@ public class DeviceDAO {
 			int check02 = ps2.executeUpdate();
 
 			if (check01 == 1 && check02 == 1) {
-//				conn.commit();
-				System.err.println("TEST : deleteAmonthAgoDate() 커밋 설정 해제되있음");
+				conn.commit();
+//				System.err.println("TEST : deleteAmonthAgoDate() 커밋 설정 해제되있음");
 				System.out.println("쿼리1 : " + sql01);
 				System.out.println("쿼리2 : " + sql02);
 				System.out.println(amonth_ago + "날의 판매 내역 "
@@ -92,7 +92,7 @@ public class DeviceDAO {
 	하루 매출 저장 메서드
 		- boolean으로 정산 처리 결과를 받아 에러 나면 프로그램 종료 X		
 	 */
-	public boolean saveDailyAmount() {
+	public boolean saveDailyAmount(String device_id) {
 		conn = DBManager.getConnection();
 
 		int total_money = 0;
@@ -123,7 +123,7 @@ public class DeviceDAO {
 
 			ps2.setString(1, today);
 			ps2.setInt(2, total_money);
-			ps2.setInt(3, 1234); // device_id
+			ps2.setInt(3, Integer.parseInt(device_id));
 
 
 			try {
@@ -132,8 +132,8 @@ public class DeviceDAO {
 					conn.rollback();
 					System.err.println("정상적인 처리가 되지 않았습니다.saveDailyAmount() (sql02)");
 				} else {
-					//					conn.commit();
-					System.err.println("TEST : saveDailyAmount() 커밋 설정 해제되있음");
+					conn.commit();
+//					System.err.println("TEST : saveDailyAmount() 커밋 설정 해제되있음");
 					System.out.println("daily_sales_amount 테이블의 " + result + "행이 변경 되었습니다.");
 					System.out.printf(">> SALES_DATE : %s\t TOTAL_MONEY : %d\t Device_id : %d\n", 
 										today, total_money, 1234);

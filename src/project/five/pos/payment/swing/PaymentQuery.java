@@ -59,10 +59,7 @@ public class PaymentQuery {
 			
 			rs = ps.executeQuery();
 			
-			if(rs != null) rs.close();
-			if(ps != null) ps.close();
-			if(conn != null) conn.close();
-			
+
 			PaidByCard.cardId = "";
 			PaidByCard.cardNumber = "";
 			PaidByCash.i_money = 0;				
@@ -70,6 +67,16 @@ public class PaymentQuery {
 			
 		} catch (SQLException e1) {					
 			e1.printStackTrace();
+		} finally {
+				try {
+					if(rs != null) rs.close();
+					if(ps != null) ps.close();
+					if(conn != null) conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 		}
 	}
 	

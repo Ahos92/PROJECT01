@@ -35,7 +35,7 @@ public class MenuDisplay extends JFrame{
 	String IMG_COVID = "assets/images/covid19.png";
 	String BG_IMG = "assets/images/backimg5.jpg";
 	
-	public MenuDisplay() {
+	public MenuDisplay(String device_id) {
 		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
 		MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
 		addCart.x = 0;
@@ -54,6 +54,8 @@ public class MenuDisplay extends JFrame{
 		JLabel title = new JLabel("주문 화면 ~ ");
 		title.setFont(new Font("Courier" , Font.BOLD, 23));
 		title.setForeground(getForeground().WHITE);
+		
+		JLabel device_lab = new JLabel("Device_ID : " + device_id);
 		
 		JLabel label = null;
 		try {
@@ -102,7 +104,7 @@ public class MenuDisplay extends JFrame{
 		center_panel.add(category);
 		center_panel.setOpaque(false);
 		
-		downP = new SetPanel(this);
+		downP = new SetPanel(this, device_id);
 		downP.setOpaque(false);
 
 		label.setLayout(new BorderLayout());
@@ -118,9 +120,9 @@ public class MenuDisplay extends JFrame{
 
 	}
 
-	public static void main(String[] args) {
-		new MenuDisplay();
-	}
+//	public static void main(String[] args) {
+//		new MenuDisplay("1234");
+//	}
 
 }
 
@@ -344,14 +346,14 @@ class addCart{
 
 class SetPanel extends JPanel{
 	
-	public SetPanel(JFrame frame) {
+	public SetPanel(JFrame frame , String device_id) {
 		setLayout(new BorderLayout());
 		
-		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame), false);
+		JButton bt1 = new DeviceBtn("> To Main page", 130, 30, new ChangeFrameAction(frame, device_id), false);
 		JButton bt2 = new DeviceBtn("주문", 60, 30);
 		JButton bt3 = new DeviceBtn("초기화", 80, 30);
 		
-		JLabel device_lab = new JLabel("device_ID : ");
+		JLabel device_lab = new JLabel("device_ID : " + device_id);
 		device_lab.setPreferredSize(new Dimension(120, 30));
 		device_lab.setFont(new Font("Courier", Font.BOLD, 15));
 		device_lab.setForeground(getForeground().white);
@@ -376,7 +378,7 @@ class SetPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new CartPopUpDisplay(frame, "주문 내역",1234, MenuDisplay.allCart);
+				new CartPopUpDisplay(frame, "주문 내역", device_id, MenuDisplay.allCart);
 				
 				// 배열 확인용
 				System.out.println(Arrays.deepToString(MenuDisplay.allCart));
@@ -392,7 +394,7 @@ class SetPanel extends JPanel{
 				// 새창이 열리고 이전 창이 지워짐
 				MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
 				addCart.x = 0;
-				new MenuDisplay();
+				new MenuDisplay(device_id);
 				frame.dispose();
 				
 			}

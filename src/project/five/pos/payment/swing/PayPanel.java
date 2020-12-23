@@ -60,7 +60,8 @@ public class PayPanel extends JFrame {
 	static JButton card_btn;
 	static JButton cash_btn;
 							
-	public PayPanel(int order_num, int price, ArrayList<String> lists2, ArrayList<PosVO> update_cart) throws IOException {
+	public PayPanel(int order_num, int price, 
+			ArrayList<String> lists2, ArrayList<PosVO> update_cart, String device_id) throws IOException {
 				
 		//동서남북 패널 지정
 		JPanel south_panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -149,7 +150,7 @@ public class PayPanel extends JFrame {
 		JButton payment_btn = new RoundedButton("결제하기");
 		payment_btn.setEnabled(false);
 		
-		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num, lists2, update_cart));
+		payment_btn.addActionListener(new BtnAction(payment_btn, price, this, order_num, lists2, update_cart, device_id));
 		
 		
 		//버튼 기능(함수 ClickedBtnAction)

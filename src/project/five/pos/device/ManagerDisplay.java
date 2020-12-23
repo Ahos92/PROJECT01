@@ -23,10 +23,10 @@ public class ManagerDisplay extends JFrame {
 	// 결제내역, 판매상품, 회원정보조회, 메뉴로 돌아가기 버튼
 	JButton payHistory_btn, soldHistory_btn, memInfo_btn,
 	 		back_btn, signUp_btn, productManage_btn, settle_btn;
-	
+	JLabel device_lab;
 	JPanel center_p, south_p, back_p;
 	JScrollPane scroll;
-	public ManagerDisplay() {
+	public ManagerDisplay(String device_id) {
 		setLayout(new BorderLayout());
 		setResizable(false);
 		
@@ -45,15 +45,19 @@ public class ManagerDisplay extends JFrame {
 	
 		productManage_btn = new DeviceBtn("상품 관리", image_path[5], 130, new ChangeFrameAction(this));
 	
-		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this));
+		device_lab = new JLabel("Device_ID : " + device_id);
+		
+		back_btn = new DeviceBtn("메뉴로 돌아가기", 130, 30, new ChangeFrameAction(this, device_id));
 
-		settle_btn = new DeviceBtn("정산", 60, 30, new ChangeFrameAction(this));
+		settle_btn = new DeviceBtn("정산", 60, 30, new ChangeFrameAction(this, device_id));
 
 		center_p.add(payHistory_btn);
 		center_p.add(soldHistory_btn);
 		center_p.add(memInfo_btn);
 		center_p.add(signUp_btn);
 		center_p.add(productManage_btn);
+		
+		south_p.add(device_lab, BorderLayout.CENTER);
 		south_p.add(back_btn, BorderLayout.WEST);	
 		south_p.add(settle_btn, BorderLayout.EAST);
 		
@@ -64,6 +68,6 @@ public class ManagerDisplay extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new ManagerDisplay();
+		new ManagerDisplay("1234");
 	}
 }

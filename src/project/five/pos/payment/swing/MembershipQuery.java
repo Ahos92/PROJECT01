@@ -87,13 +87,20 @@ public class MembershipQuery {
 			
 			conn.commit();
 						
-			if(ps != null) ps.close();
-			if(ps2 != null) ps2.close();
-			if(ps3 != null) ps3.close();
-			if(conn != null) conn.close();
+			
 												
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+		} finally {
+				try {
+					if(ps != null) ps.close();
+					if(ps2 != null) ps2.close();
+					if(ps3 != null) ps3.close();
+					if(conn != null) conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		
 	}

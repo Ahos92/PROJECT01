@@ -28,14 +28,14 @@ public class PaymentPageAction implements ActionListener{
 	int order_num, price;
 
 	DefaultTableModel dtm;
-	int device_id;
+	String device_id;
 
 	ArrayList<String> lists;
 
 	
 	public PaymentPageAction(JDialog cart, JFrame menu,
 							DefaultTableModel dtm, int order_num, 
-							int device_id) {
+							String device_id) {
 		this.cart = cart;
 		this.menu = menu;
 		this.dtm = dtm;
@@ -80,7 +80,7 @@ public class PaymentPageAction implements ActionListener{
 				// 결제화면에 넘겨줄 데이터 
 				// 주문번호(order_num), 총가격(price), 상품 이름(lists), 
 				// VO객채(update_cart), 결제 타입(e.getactionCommand), 디바이스 아이디(device_id)
-				new PayPanel(order_num, price, lists, update_cart);
+				new PayPanel(order_num, price, lists, update_cart, device_id);
 				menu.dispose();
 			} catch (IOException e1) {
 				e1.printStackTrace();

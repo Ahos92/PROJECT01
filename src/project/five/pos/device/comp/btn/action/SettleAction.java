@@ -16,9 +16,12 @@ public class SettleAction implements ActionListener {
 	
 	JFrame frame;
 	JDialog dialog;
-	public SettleAction(JFrame frame, JDialog dialog) {
+	String device_id;
+	
+	public SettleAction(JFrame frame, JDialog dialog, String device_id) {
 		this.frame = frame;
 		this.dialog = dialog;
+		this.device_id = device_id;
 	}
 
 	@Override
@@ -26,7 +29,7 @@ public class SettleAction implements ActionListener {
 		
 		device = new DeviceDAO();		
 			
-		if (device.saveDailyAmount() && device.deleteAmonthAgoDate()) {
+		if (device.saveDailyAmount(device_id) && device.deleteAmonthAgoDate()) {
 			new LoadingPopUpDisplay(frame, "Á¤»ê Áß ...", dialog);
 			
 		} else {

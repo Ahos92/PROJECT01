@@ -23,14 +23,17 @@ public class BtnAction implements ActionListener{
 	int order_num;
 	ArrayList<String> lists2;
 	ArrayList<PosVO> update_cart;
+	String device_id;
 	
-	public BtnAction(JButton btn, int price, JFrame frame, int order_num, ArrayList<String> lists2, ArrayList<PosVO> update_cart) {
+	public BtnAction(JButton btn, int price, JFrame frame, int order_num, 
+			ArrayList<String> lists2, ArrayList<PosVO> update_cart, String device_id) {
 		this.btn = btn;
 		this.price = price;
 		this.frame = frame;
 		this.order_num = order_num;
 		this.lists2 =lists2;
 		this.update_cart = update_cart;
+		this.device_id = device_id;
 	}
 	public BtnAction(JButton btn) {
 		this.btn = btn;
@@ -52,7 +55,7 @@ public class BtnAction implements ActionListener{
 		}
 		
 		if(btn.getText().equals("결제하기")) {
-			new AskCoupon(price, frame, order_num, lists2, update_cart);
+			new AskCoupon(price, frame, order_num, lists2, update_cart, device_id);
 		}
 			
 	}

@@ -15,17 +15,25 @@ public class ChangeFrameAction implements ActionListener{
 
 	JFrame present_frame, changeble_frame;
 	JTextField id_tf, pw_tf;
+	String device_id;
 
-	public ChangeFrameAction(JFrame present_frame, JTextField id_tf, JTextField pw_tf) {
+	public ChangeFrameAction(JFrame present_frame, JTextField id_tf, JTextField pw_tf, String device_id) {
 		this.present_frame = present_frame;
 		this.id_tf = id_tf;
 		this.pw_tf = pw_tf;
+		this.device_id = device_id;
 	}
 
 	public ChangeFrameAction(JFrame present_frame) {
 		this.present_frame = present_frame;
 	}
 
+	public ChangeFrameAction(JFrame present_frame, String device_id) {
+		this.present_frame = present_frame;
+		this.device_id = device_id;
+	}
+
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -33,11 +41,10 @@ public class ChangeFrameAction implements ActionListener{
 		
 		String check = e.getActionCommand();
 		
-
 		if (check.equals("메뉴로 돌아가기")
 				||check.equals("> To Main page")) {
 
-			changeble_frame =  new MainDisplay("1234");
+			changeble_frame =  new MainDisplay(device_id);
 
 		} else if(check.equals("로그인")){			
 			DeviceDAO device = new DeviceDAO();
@@ -48,7 +55,7 @@ public class ChangeFrameAction implements ActionListener{
 			}catch (NumberFormatException nfe) {}
 
 			if (device.searchAdmin(id, pw)) {
-				changeble_frame =  new ManagerDisplay();
+				changeble_frame =  new ManagerDisplay(device_id);
 				System.out.println("로그인 성공!");
 			} else {
 				JOptionPane.showMessageDialog(present_frame, "아이디나 비밀번호가 맞지않습니다.", "오류", 
@@ -56,12 +63,12 @@ public class ChangeFrameAction implements ActionListener{
 			}
 
 		} else if(check.equals("관리자")) {
-			new LoginPopUpDisplay(present_frame, "관리자 로그인");
+			new LoginPopUpDisplay(present_frame, "관리자 로그인", device_id);
 
 
 		} else if(check.equals("아니요")) {
 
-			changeble_frame = new ManagerDisplay();
+			changeble_frame = new ManagerDisplay(device_id);
 
 		} else if(check.equals("회원 가입")) {
 
@@ -80,11 +87,11 @@ public class ChangeFrameAction implements ActionListener{
 			new ManagerSignUpPopUpDisplay(present_frame, check);
 			
 		} else if(check.equals("정산")) {
-			new SettlePopUpDisplay(present_frame, check);
+			new SettlePopUpDisplay(present_frame, check, device_id);
 			
 		} else if (check.equals("판매") 
 				|| check.equals("취소하기")) {
-			changeble_frame = new MenuDisplay();
+			changeble_frame = new MenuDisplay(device_id);
 			
 		} else if (check.equals("판매 내역 조회")
 				|| check.equals("결제 내역 조회")

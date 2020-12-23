@@ -31,9 +31,9 @@ public class MainDisplay extends JFrame {
 		
 		deviceId_lab = new JLabel("DEVICE_ID : " + device_id);
 		
-		manage_btn = new DeviceBtn("관리자", image_path[1], 180, new ChangeFrameAction(this));
+		manage_btn = new DeviceBtn("관리자", image_path[1], 180, new ChangeFrameAction(this, device_id));
 
-		sale_btn = new DeviceBtn("판매", image_path[2], 180, new ChangeFrameAction(this));
+		sale_btn = new DeviceBtn("판매", image_path[2], 180, new ChangeFrameAction(this, device_id));
 
 		managerSign_btn = new DeviceBtn("매니저 등록", 100, 30, new ChangeFrameAction(this));
 		
@@ -46,9 +46,9 @@ public class MainDisplay extends JFrame {
 		add(south_p, BorderLayout.SOUTH);
 		TestSwingTools.initTestFrame(this, "main", true);
 	}
-	
-	public static void main(String[] args) {
-		new MainDisplay("1234");
-	}
+//	
+//	public static void main(String[] args) {
+//		new MainDisplay("1234");
+//	}
 	
 }
