@@ -1,6 +1,7 @@
 package project.five.pos.device;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,9 @@ public class SettlePopUpDisplay extends JDialog {
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		
+		center_p.setBackground(new Color(238, 230, 196));
+		south_p.setBackground(new Color(238, 230, 196));
 		
 		msg_lab01 = new DeviceLab("오늘은 더 이상 판매를 할 수 없게 됩니다.", 230, 40);
 		msg_lab02 = new DeviceLab("정말 정산 하시겠습니까?", 150, 40);

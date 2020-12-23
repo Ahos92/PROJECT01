@@ -34,8 +34,7 @@ public class SettleAction implements ActionListener {
 										, "정상적인 처리가 되지 않았습니다!! \n본사에 연락 해주세요 02-0000-0000"
 										, "처리 오류!"
 										, JOptionPane.ERROR_MESSAGE
-			);
-	
+			);	
 			dialog.dispose();
 		}
 
