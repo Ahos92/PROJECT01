@@ -178,8 +178,7 @@ ALTER TABLE daily_sales_amount MODIFY (
 
 
 /*
-    ORDERS
-*/
+
 CREATE TABLE orders (
     order_no NUMBER(4) PRIMARY KEY,
     product_no NUMBER(2) NOT NULL,
@@ -193,9 +192,6 @@ ALTER TABLE orders MODIFY (
 SELECT * FROM user_constraints WHERE table_name = 'ORDERS';
 
 
-/*
-    DATA_STORE
-*/
 CREATE TABLE data_store(
     storage_date DATE PRIMARY KEY,
     product_no NUMBER(2) NOT NULL,
@@ -210,3 +206,4 @@ ALTER TABLE data_store MODIFY (
 );
 
 SELECT * FROM user_constraints WHERE table_name = 'DATA_STORE';
+*/
