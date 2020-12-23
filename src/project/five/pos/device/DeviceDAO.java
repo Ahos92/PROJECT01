@@ -66,7 +66,7 @@ public class DeviceDAO {
 				return true;
 			} else {
 				conn.rollback();
-				System.err.println(amonth_ago + "날의 데이터가 존재 하지 않습니다.");
+				System.out.println(amonth_ago + "날의 데이터가 존재 하지 않습니다.");
 
 				return true;
 
