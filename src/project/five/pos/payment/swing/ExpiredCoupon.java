@@ -1,5 +1,7 @@
 package project.five.pos.payment.swing;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,9 +15,13 @@ public class ExpiredCoupon extends JFrame{
 		setTitle("쿠폰 오류");
 		
         JPanel NewWindowContainer = new JPanel();
+        NewWindowContainer.setBackground(new Color(250, 249, 247));
         setContentPane(NewWindowContainer);
         
         JLabel NewLabel = new JLabel("기한이 지난 쿠폰입니다. 쿠폰 번호를 확인해주세요.");
+        NewLabel.setForeground(new Color(1, 1, 1));
+        NewLabel.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
+        NewLabel.setOpaque(false);
         
         NewWindowContainer.add(NewLabel);
         

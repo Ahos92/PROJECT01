@@ -6,11 +6,14 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -23,6 +26,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -65,6 +70,8 @@ public class AskCoupon extends JFrame {
 	static LocalDateTime today2;
 	static Timestamp tstp2;
 	
+	final static String BG_IMG = "assets/images/miniback7.png";
+	
 	public static int device_id = 1234;
 	
 	JLabel order_cart;
@@ -99,10 +106,12 @@ public class AskCoupon extends JFrame {
 		JPanel display_price = new JPanel(new GridLayout(1,2,0,0));
 		
 		JLabel ask = new JLabel("쿠폰을 사용하시겠습니까?", SwingConstants.CENTER);
+		ask.setForeground(Color.WHITE);
+		ask.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 	
 		JPanel yesnobtn = new JPanel(new FlowLayout());
 		
-		JButton yes = new JButton("예");
+		JButton yes = new MiniButton("예");
 		
 		// 다음 결제 프로세스 창
 		yes.addMouseListener(new MouseAdapter() {
@@ -142,7 +151,7 @@ public class AskCoupon extends JFrame {
 		
 		PayPanel.main_center_panel.add("결제후", result_panel);
 				
-		JButton no = new JButton("아니요");
+		JButton no = new MiniButton("아니요");
 		
 		no.addActionListener(new ActionListener() {
 						
@@ -200,16 +209,18 @@ public class AskCoupon extends JFrame {
 		});
 				
 		JLabel input_label = new JLabel("쿠폰번호를 입력해주세요", SwingConstants.CENTER);
+		input_label.setForeground(Color.WHITE);
+		input_label.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 		
 		JPanel input_field = new JPanel(null);
 		JTextField input_text = new JTextField(6);
-		input_text.setBounds(175,0,100,25);
+		input_text.setBounds(175,0,115,25);
 		
 		input_text.addKeyListener(new NumberField(6));
 					
 		JPanel input_btn = new JPanel(new FlowLayout());
-		JButton check = new JButton("확인");
-		JButton cancel = new JButton("취소");
+		JButton check = new MiniButton("확인");
+		JButton cancel = new MiniButton("취소");
 		
 		
 		JPanel left_coupon = new JPanel(null);
@@ -228,7 +239,7 @@ public class AskCoupon extends JFrame {
 		}
 		
 	
-		JButton check2 = new JButton("확인");
+		JButton check2 = new MiniButton("확인");
 		
 		check2.addMouseListener(new MouseAdapter() {
 			
@@ -257,7 +268,7 @@ public class AskCoupon extends JFrame {
 			}
 		});
 		
-		JButton cancel2 = new JButton("취소");
+		JButton cancel2 = new MiniButton("취소");
 		
 		// 결제 취소 버튼
 		cancel2.addMouseListener(new MouseAdapter() {
@@ -328,7 +339,10 @@ public class AskCoupon extends JFrame {
 											new ExpiredCoupon();
 										}
 										else {
-										JLabel coupon_label = new JLabel("사용하신 쿠폰은 : " + AskCoupon.couponName + "입니다.");
+										JLabel coupon_label = new JLabel("사용하신 쿠폰은 : " + AskCoupon.couponName + "입니다.", SwingConstants.CENTER);
+										coupon_label.setForeground(Color.WHITE);
+										coupon_label.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 12));
+										
 										
 										((CardLayout)coupon_img.getLayout()).show(coupon_img, AskCoupon.couponName);
 										
@@ -339,11 +353,15 @@ public class AskCoupon extends JFrame {
 										
 										if(ClickedBtnAction.getPaymentType().toString().contains("카드")) {
 											JLabel calc_label2 = new JLabel("<html>카드 결제 입니다<br/>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + actual_expenditure + " (원)<html>", SwingConstants.CENTER);
+											calc_label2.setForeground(Color.WHITE);
+											calc_label2.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 											total_calc.add(calc_label2);
 											}
 										else {
 											JLabel calc_label = new JLabel("<html>결제 금액 : " + price + "-" + AskCoupon.couponPrice + "=" + actual_expenditure + " (원)<br/>입금 금액 : " + PaidByCash.i_money + "(원)"
 													+ "<br/>거스름돈 : "+  change + "(원)</html>", SwingConstants.CENTER);
+											calc_label.setForeground(Color.WHITE);
+											calc_label.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 											total_calc.add(calc_label);
 										}
 																																																												
@@ -352,14 +370,23 @@ public class AskCoupon extends JFrame {
 										left_coupon.add(coupon_name);
 										left_coupon.add(coupon_img);
 										
+										coupon_name.setOpaque(false);
+										coupon_img.setOpaque(false);
+										lcheck_panel.setOpaque(false);
+										total_calc.setOpaque(false);
 										
 										lcheck_panel.add(check2);
 										lcheck_panel.add(cancel2);
 										right_coupon.add(total_calc);
 										right_coupon.add(lcheck_panel);
 										
+										left_coupon.setOpaque(false);
+										right_coupon.setOpaque(false);
+										
 										display_price.add(left_coupon);
 										display_price.add(right_coupon);
+										
+										display_price.setOpaque(false);
 											
 										// 메인에 3의 패널 추가
 										panel04.add(display_price);
@@ -406,24 +433,54 @@ public class AskCoupon extends JFrame {
 		yes_or_no.add(ask);
 		yes_or_no.add(yesnobtn);
 		
+		ask.setOpaque(false);
+		yesnobtn.setOpaque(false);
+		
 		// - 두번째 패널
 		input_field.add(input_text);
 		input_btn.add(check);
 		input_btn.add(cancel);
+		
+		input_field.setOpaque(false);
+		input_btn.setOpaque(false);
+		
 		input_coupon.add(input_label);
 		input_coupon.add(input_field);
 		input_coupon.add(input_btn);
+		
+		yes_or_no.setOpaque(false);
+		input_coupon.setOpaque(false);
 		
 		// 메인에 1, 2의 패널들 추가
 		panel04.add(yes_or_no);
 		panel04.add(input_coupon);
 		
+		panel04.setOpaque(false);
+		
 		setVisible(true);
 		//setLayout(null);
-		setSize(500, 185);
+		setSize(500, 210);
 		setLocationRelativeTo(null);
 		
-		this.add(panel04, BorderLayout.CENTER);
+		JLabel label = null;
+		try {
+			BufferedImage bgImage = ImageIO.read(new File(BG_IMG));
+			int bgx = bgImage.getWidth();
+			int bgy = bgImage.getHeight();
+			label = new JLabel(new ImageIcon(ImageIO.read(new File(BG_IMG)).getScaledInstance(bgx, bgy, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		label.setBounds(0, 0, 500, 170);
+		JPanel back = new JPanel(new BorderLayout());
+		back.setBounds(0, 0, 500, 170);
+		back.add(panel04, BorderLayout.CENTER);
+		
+		back.setOpaque(false);
+		add(back);
+		add(label);
+		
+		//this.add(panel04, BorderLayout.CENTER);
 	}
 
 }

@@ -1,5 +1,7 @@
 package project.five.pos.payment.swing;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,9 +15,13 @@ public class NotenoughNo extends JFrame {
 		setTitle("카드 번호 오류");
         
         JPanel NewWindowContainer = new JPanel();
+        NewWindowContainer.setBackground(new Color(250, 249, 247));
         setContentPane(NewWindowContainer);
         
         JLabel NewLabel = new JLabel("입력 하신 카드 숫자가 모자랍니다. 다시 확인해주세요");
+        NewLabel.setForeground(new Color(1, 1, 1));
+        NewLabel.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
+        NewLabel.setOpaque(false);
         
         NewWindowContainer.add(NewLabel);
         

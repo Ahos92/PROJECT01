@@ -9,6 +9,6 @@ public class CouponLabel extends JLabel{
 
 	public CouponLabel(CouponEnum cp) {
 		super(new ImageIcon(cp.coupon
-				.getScaledInstance(130, 60, Image.SCALE_SMOOTH)));
+				.getScaledInstance(200, 70, Image.SCALE_SMOOTH)));
 	}
 }

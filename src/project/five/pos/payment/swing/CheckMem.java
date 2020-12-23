@@ -43,7 +43,7 @@ public class CheckMem extends JFrame {
 	static double memberPct;
 	static int memberPrice;
 	static int memberMileage;
-	static boolean memberOn = false;
+	public static boolean memberOn = false;
 	
 	final static String BG_IMG = "assets/images/miniback7.png";
 	
@@ -63,7 +63,7 @@ public class CheckMem extends JFrame {
 		JLabel explanation = new JLabel("<html>멤버쉽 인증을 위해 멤버쉽 가입 할 때 이용했던<br/> "
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 				+ "휴대폰 번호를 입력해주세요.</html>", SwingConstants.CENTER);
-		explanation.setForeground(new Color(245, 245, 220));
+		explanation.setForeground(Color.WHITE);
 		explanation.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 		
 		JPanel thr_txt = new JPanel(new FlowLayout());
