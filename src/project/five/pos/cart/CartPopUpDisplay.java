@@ -26,7 +26,7 @@ import project.five.pos.device.table.PosCellEditor;
 
 public class CartPopUpDisplay extends JDialog {
 
-	JPanel south_p, center_p, north_p;
+	JPanel center_p, north_p;
 
 	JButton cancle_btn, check_btn;
 
@@ -43,7 +43,6 @@ public class CartPopUpDisplay extends JDialog {
 	CartDAO cart;
 	
 	String[] images_path = {
-			"assets/images/device/14.png",
 			"assets/images/device/smile.png",
 			"assets/images/device/sad.png"
 	};
@@ -65,10 +64,12 @@ public class CartPopUpDisplay extends JDialog {
 
 		setLayout(new BorderLayout());
 
-		north_p = new DevicePanel(images_path[0], width, height, new BorderLayout());
-		south_p = new DevicePanel(images_path[0], width, height);
-		center_p = new DevicePanel(images_path[0], width, height, new FlowLayout(FlowLayout.CENTER, 40, 40));
+		north_p = new JPanel(new BorderLayout());
+		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 40));
 
+		north_p.setBackground(new Color(238, 230, 196));
+		center_p.setBackground(new Color(238, 230, 196));
+		
 		info_lab = new JLabel("주문 내역 확인");
 		info_lab.setFont(new Font("Courier", Font.BOLD, 20));
 		info_lab.setPreferredSize(new Dimension(width, 30));
@@ -106,10 +107,10 @@ public class CartPopUpDisplay extends JDialog {
 		cell_edit.createcellBtn(cart_table, dtm, this, "▼", cell_btn_size);
 		
 		// 취소
-		cancle_btn = new DeviceBtn(30, images_path[2], new CancleAction(this, dtm));
+		cancle_btn = new DeviceBtn(30, images_path[1], new CancleAction(this, dtm));
 		
 		// 결제
-		check_btn = new DeviceBtn(60, images_path[1],
+		check_btn = new DeviceBtn(60, images_path[0],
 				new PaymentPageAction(this, frame, dtm, order_num, device_id)
 		);
 
@@ -119,7 +120,6 @@ public class CartPopUpDisplay extends JDialog {
 		center_p.add(check_btn);
 
 		add(north_p, BorderLayout.NORTH);
-		add(south_p, BorderLayout.SOUTH);
 		add(center_p, BorderLayout.CENTER);
 
 		setVisible(true);

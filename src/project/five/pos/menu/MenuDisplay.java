@@ -1,28 +1,8 @@
 package project.five.pos.menu;
 
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.Menu;
-import java.awt.Panel;
-import java.awt.TextArea;
-import java.awt.TextField;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,18 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import project.five.pos.TestSwingTools;
@@ -50,6 +19,7 @@ import project.five.pos.cart.CartPopUpDisplay;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
+import project.five.pos.payment.*;
 import project.five.pos.payment.swing.ImageEnum;
 import project.five.pos.payment.swing.ImageLabel;
 
@@ -363,7 +333,7 @@ class addCart{
 		MenuDisplay.allCart[x][0]= name;
 		MenuDisplay.allCart[x][1]= condi;
 		MenuDisplay.allCart[x][2]= count;
-		MenuDisplay.allCart[x][3]= price;
+		MenuDisplay.allCart[x][3]= (int)count * (int)price;
 
 		x+=1;
 		System.out.println(Arrays.deepToString(MenuDisplay.allCart));

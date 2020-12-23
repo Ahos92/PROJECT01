@@ -151,7 +151,7 @@ public class DeviceBtn extends JButton {
 			graphics.setColor(getBackground().LIGHT_GRAY); 
 
 		} else { 
-			graphics.setColor(new Color(238, 230, 196)); 
+			graphics.setColor(new Color(238, 238, 238)); 
 		} 
 
 

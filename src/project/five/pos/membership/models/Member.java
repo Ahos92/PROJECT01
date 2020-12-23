@@ -29,7 +29,7 @@ public class Member {
 	}
 
 	public String getCustomer_no() {
-		return contact_no.substring(contact_no.length()-4);
+		return contact_no.substring(contact_no.length()-9);
 	}
 	
 	public void setCustomer_no(String contact_no) {
