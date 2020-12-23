@@ -56,7 +56,7 @@ public class DeviceDAO {
 
 			int check02 = ps2.executeUpdate();
 
-			if (check01 == 1 && check02 == 1) {
+			if (check01 >= 1 && check02 >= 1) {
 				conn.commit();
 //				System.err.println("TEST : deleteAmonthAgoDate() 커밋 설정 해제되있음");
 				System.out.println("쿼리1 : " + sql01);
@@ -66,9 +66,9 @@ public class DeviceDAO {
 				return true;
 			} else {
 				conn.rollback();
-				System.err.println("deleteAmonthAgoDate() 정상 적인 처리가 되지 않았습니다.");
+				System.err.println(amonth_ago + "날의 데이터가 존재 하지 않습니다.");
 
-				return false;
+				return true;
 
 			}
 
