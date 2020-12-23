@@ -1,5 +1,7 @@
 package project.five.pos.payment.swing;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,9 +30,18 @@ public class SuccessCash extends JFrame{
 		setTitle("결제 정보 확인 중..");
 		        
         JPanel NewWindowContainer = new JPanel();
+        NewWindowContainer.setBackground(new Color(250, 249, 247));
         setContentPane(NewWindowContainer);
+        
         JLabel NewLabel = new JLabel("잔액이 부족합니다");
+        NewLabel.setForeground(new Color(1, 1, 1));
+        NewLabel.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
+        NewLabel.setOpaque(false);
         JLabel NewLabel2 = new JLabel("결제 정보 확인 완료");
+        NewLabel2.setForeground(new Color(1, 1, 1));
+        NewLabel2.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
+        NewLabel2.setOpaque(false);
+        
         try {
 			// 잔액 부족			
 	        if(money < price) {

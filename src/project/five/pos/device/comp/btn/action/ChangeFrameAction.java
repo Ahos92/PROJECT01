@@ -8,6 +8,7 @@ import javax.swing.*;
 import project.five.pos.device.*;
 import project.five.pos.membership.gui.*;
 import project.five.pos.menu.ProductManage;
+import project.five.pos.payment.swing.CheckMem;
 import project.five.pos.menu.MenuDisplay;
 
 public class ChangeFrameAction implements ActionListener{
@@ -27,6 +28,9 @@ public class ChangeFrameAction implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		CheckMem.memberOn = false;
+		
 		String check = e.getActionCommand();
 		
 

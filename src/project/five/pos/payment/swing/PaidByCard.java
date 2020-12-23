@@ -1,12 +1,20 @@
 package project.five.pos.payment.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,6 +26,8 @@ import javax.swing.border.BevelBorder;
 import project.five.pos.payment.swing.btn.action.NumberField;
 
 public class PaidByCard extends JFrame{
+	
+	final static String BG_IMG = "assets/images/miniback7.png";
 
 	int price;
 	
@@ -46,6 +56,8 @@ public class PaidByCard extends JFrame{
 		JPanel btnCard2 = new JPanel(new FlowLayout());
 		
 		JLabel cardExplain = new JLabel("카드를 투입하세요");
+		cardExplain.setForeground(Color.WHITE);
+		cardExplain.setFont(new Font("카페24 숑숑 보통",Font.BOLD, 13));
 		
 		JComboBox<String> selectCode = new JComboBox<>(bankCode);
 		
@@ -62,7 +74,7 @@ public class PaidByCard extends JFrame{
 		third_cardNum.addKeyListener(new NumberField(4));
 		last_cardNum.addKeyListener(new NumberField(4));
 		
-		JButton cardOkay = new JButton("확인");
+		JButton cardOkay = new MiniButton("확인");
 		
 		cardNumber = "";
 		cardOkay.addMouseListener(new MouseAdapter() {
@@ -99,7 +111,7 @@ public class PaidByCard extends JFrame{
 			}
 		});
 		
-		JButton cardNo = new JButton("취소");
+		JButton cardNo = new MiniButton("취소");
 		
 		cardNo.addMouseListener(new MouseAdapter() {
 			
@@ -133,11 +145,34 @@ public class PaidByCard extends JFrame{
 		insertCard.add(numPanel);
 		insertCard.add(btnCard2);
 		
+		stnPanel2.setOpaque(false);
+		numPanel.setOpaque(false);
+		btnCard2.setOpaque(false);
+		insertCard.setOpaque(false);
+		
 		setVisible(true);
 		//setLayout(null);
-		setSize(500, 170);
+		setSize(500, 210);
 		setLocationRelativeTo(null);
 		
-		this.add(insertCard, BorderLayout.CENTER);
+		JLabel label = null;
+		try {
+			BufferedImage bgImage = ImageIO.read(new File(BG_IMG));
+			int bgx = bgImage.getWidth();
+			int bgy = bgImage.getHeight();
+			label = new JLabel(new ImageIcon(ImageIO.read(new File(BG_IMG)).getScaledInstance(bgx, bgy, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		label.setBounds(0, 0, 500, 170);
+		JPanel back = new JPanel(new BorderLayout());
+		back.setBounds(0, 0, 500, 170);
+		back.add(insertCard,BorderLayout.CENTER);
+		
+		back.setOpaque(false);
+		add(back);
+		add(label);
+		
+		//this.add(insertCard, BorderLayout.CENTER);
 	}
 }
