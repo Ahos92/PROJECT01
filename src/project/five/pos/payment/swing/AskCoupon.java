@@ -194,6 +194,7 @@ public class AskCoupon extends JFrame {
 									
 						cart.saveCartlist(today2, order_num, lists2, update_cart, device_id);
 						
+						
 						// 메인 패널 초기화
 						new ResetMain();
 						

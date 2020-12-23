@@ -67,7 +67,6 @@ public class PaymentQuery {
 			PaidByCard.cardNumber = "";
 			PaidByCash.i_money = 0;				
 			couponNo = "";
-			CheckMem.memberOn = false;
 			
 		} catch (SQLException e1) {					
 			e1.printStackTrace();

@@ -158,7 +158,7 @@ CREATE TABLE customer (
     amount_price NUMBER(8),
     mileage NUMBER(6)
 );
-
+select * from customer;
 SELECT * FROM user_constraints WHERE table_name = 'CUSTOMER';
 
 
@@ -175,6 +175,7 @@ CREATE TABLE daily_sales_amount(
 ALTER TABLE daily_sales_amount MODIFY (
     device_id NUMBER(5) CONSTRAINT dsa_did_fk REFERENCES pos ( device_id )
 );
+
 
 
 /*

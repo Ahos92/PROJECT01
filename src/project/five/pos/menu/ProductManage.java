@@ -58,7 +58,7 @@ public class ProductManage extends JDialog implements ActionListener{
 	private UpdateMenu upD;
 	private DeleteMenu delD;
 	
-	private String[] category = {"전체","Coffee","Tea","Deserts","Frappe"};
+	private String[] category = {"","전체","Coffee","Tea","Deserts","Frappe"};
 	private String colNames[] = {"No","메뉴명","가격","수량","카테고리","구분","삭제"};
 	private DefaultTableModel model = new DefaultTableModel(colNames,0)
 	{public boolean isCellEditable(int row, int col) {

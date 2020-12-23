@@ -15,6 +15,8 @@ public class SuccessPayment extends JFrame {
 		
 		setTitle("∞·¡¶ ¡ﬂ..");
 
+		CheckMem.memberOn = false;
+		
         JPanel NewWindowContainer = new JPanel();
         NewWindowContainer.setBackground(new Color(250, 249, 247));
         setContentPane(NewWindowContainer);
