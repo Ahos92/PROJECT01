@@ -68,8 +68,7 @@ public class DeviceDAO {
 				conn.rollback();
 				System.err.println("deleteAmonthAgoDate() 정상 적인 처리가 되지 않았습니다.");
 
-				return true;
-//				return false;
+				return false;
 
 			}
 
@@ -84,8 +83,7 @@ public class DeviceDAO {
 		}
 
 		System.err.println("정상 적인 처리가 되지 않았습니다. deleteAmonthAgoDate() 본사에 연락해주세요. 02-000-0000");
-		//return false;
-		return true;
+		return false;
 	}
 
 	/*

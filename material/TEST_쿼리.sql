@@ -25,13 +25,12 @@ select * from cart order by saled_date desc;
 select * from daily_sales_amount;
 select * from businessadminister;
 
-delete from daily_sales_amount;
-
 insert into cart values (to_char(sysdate-30)||' '||'(0)', 50, '카페라테 (HOT)', 4, 10000, 1234);
 insert into payment values (sysdate-30, '현금', null, null, 10000, 5000, 5000, 0, null, 1234);
 
--- delete from payment where payment_date < '20/12/20';
--- delete from cart where saled_date < '20/12/20';
+delete from daily_sales_amount;
+delete from payment where payment_date < '20/12/20';
+delete from cart where saled_date < '20/12/20';
 
 insert into branch values (1000, 123, '강남점', 'KN', '02-1111-2222');
 
