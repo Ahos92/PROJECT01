@@ -82,7 +82,7 @@ public class PosLoginDisplay extends JFrame {
 		add(pw_tf);
 		
 		add(back_p);
-		TestSwingTools.posloginFrame(this);
+		SwingTools.posloginFrame(this);
 	}
 
 	public static void main(String[] args) {

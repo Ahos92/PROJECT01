@@ -21,7 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
 
 public class DeviceBtn extends JButton {
@@ -29,9 +29,7 @@ public class DeviceBtn extends JButton {
 	// 이미지 참고 - https://www.flaticon.com/
 	BufferedImage s;
 
-	public DeviceBtn() {
-		// TODO Auto-generated constructor stub
-	}
+	public DeviceBtn() {}
 
 	public DeviceBtn(int length, String file_path, ActionListener action) {
 		setPreferredSize(new Dimension(length, length));

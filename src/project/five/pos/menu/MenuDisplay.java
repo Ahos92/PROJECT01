@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.cart.CartPopUpDisplay;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.btn.DeviceBtn;
@@ -36,7 +36,7 @@ public class MenuDisplay extends JFrame{
 	String BG_IMG = "assets/images/backimg5.jpg";
 	
 	public MenuDisplay(String device_id) {
-		TestSwingTools.initTestFrame(this, "메뉴 화면", true);
+		SwingTools.initTestFrame(this, "메뉴 화면", true);
 		MenuDisplay.allCart = new Object[MenuDisplay.allMenu][4];
 		addCart.x = 0;
 		
@@ -119,10 +119,6 @@ public class MenuDisplay extends JFrame{
 		setVisible(true);
 
 	}
-
-//	public static void main(String[] args) {
-//		new MenuDisplay("1234");
-//	}
 
 }
 
@@ -380,8 +376,6 @@ class SetPanel extends JPanel{
 				
 				new CartPopUpDisplay(frame, "주문 내역", device_id, MenuDisplay.allCart);
 				
-				// 배열 확인용
-				System.out.println(Arrays.deepToString(MenuDisplay.allCart));
 
 			}
 		});

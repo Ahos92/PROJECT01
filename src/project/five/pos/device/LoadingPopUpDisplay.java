@@ -47,9 +47,7 @@ public class LoadingPopUpDisplay extends JDialog {
 		
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
-		
-		
-		
+
 		setVisible(true);	
 
 		try {		

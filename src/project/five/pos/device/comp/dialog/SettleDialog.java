@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.*;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
@@ -25,8 +25,7 @@ public class SettleDialog extends JDialog {
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		
-		
+			
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		

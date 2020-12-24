@@ -15,6 +15,7 @@ public class DeviceTF extends JTextField {
 		setPreferredSize(new Dimension(width, height));
 	}
 	
+	
 	public DeviceTF(String txt, int columns, int width, int height) {
 		super(txt, columns);
 		setPreferredSize(new Dimension(width, height));

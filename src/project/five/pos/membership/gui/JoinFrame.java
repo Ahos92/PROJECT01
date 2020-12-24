@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.DeviceLab;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.tf.DeviceTF;
@@ -100,8 +100,6 @@ public class JoinFrame extends JDialog {
 //		contentPane.add(tfContact_no);
 		
 		joinCompleteBtn = new DeviceBtn("µî·Ï", 60, 30, new ActionListener() {
-//		joinCompleteBtn.setBounds(206, 256, 139, 29);
-//		contentPane.add(joinCompleteBtn);
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

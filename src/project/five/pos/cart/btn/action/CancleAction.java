@@ -26,7 +26,6 @@ public class CancleAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {	
 		dtm.setNumRows(0);
 		try {
-//			new MenuDisplay();
 			present_frame.dispose();
 			
 		} catch (NullPointerException npe) {

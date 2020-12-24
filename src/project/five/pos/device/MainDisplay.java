@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.*;
@@ -44,11 +44,7 @@ public class MainDisplay extends JFrame {
 		
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
-		TestSwingTools.initTestFrame(this, "main", true);
+		SwingTools.initTestFrame(this, "main", true);
 	}
-//	
-//	public static void main(String[] args) {
-//		new MainDisplay("1234");
-//	}
-	
+
 }

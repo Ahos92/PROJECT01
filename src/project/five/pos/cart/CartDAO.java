@@ -51,10 +51,6 @@ public class CartDAO {
 				ps.addBatch();
 			}
 			
-			System.out.println(name_list.get(0));
-			System.out.println(cart_list.get(0).getSelected_item());
-			System.out.println(cart_list.get(0).getTotal_price());
-			
 			int[] rows = ps.executeBatch();
 			if (rows.length <= 0) {
 				return false;

@@ -7,8 +7,7 @@ import javax.swing.JButton;
 
 public class CartBtn extends JButton {
 
-	public CartBtn() {
-	}
+	public CartBtn() {}
 	
 	public CartBtn(String name, ActionListener action) {
 		setText(name);

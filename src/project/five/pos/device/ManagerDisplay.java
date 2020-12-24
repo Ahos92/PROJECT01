@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.DevicePanel;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.*;
@@ -64,10 +64,7 @@ public class ManagerDisplay extends JFrame {
 		add(center_p, BorderLayout.CENTER);
 		add(south_p, BorderLayout.SOUTH);
 		
-		TestSwingTools.initTestFrame(this, "관리자 모드", true);
+		SwingTools.initTestFrame(this, "관리자 모드", true);
 	}
-	
-	public static void main(String[] args) {
-		new ManagerDisplay("1234");
-	}
+
 }

@@ -16,7 +16,7 @@ public class UpDonwBtnRender extends JButton implements TableCellRenderer {
 		this.UpDown = UpDown;
 		setOpaque(true);
 	}
-	
+
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		setBackground(isSelected?table.getSelectionBackground():table.getBackground());
@@ -24,4 +24,5 @@ public class UpDonwBtnRender extends JButton implements TableCellRenderer {
 		setFont(font);
 	    return this;
 	}
+	
 }

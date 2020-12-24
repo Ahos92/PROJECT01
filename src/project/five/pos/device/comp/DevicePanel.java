@@ -36,8 +36,7 @@ public class DevicePanel extends JPanel {
 		this.imagePath = imagePath;
 		this.width = width;
 		this.height = height;
-	}
-	
+	}	
 	
 	@Override
 	protected void paintComponent(Graphics g) {

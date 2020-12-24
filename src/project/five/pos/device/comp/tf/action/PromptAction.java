@@ -9,9 +9,7 @@ public class PromptAction implements FocusListener {
 
 	JTextField tf;
 	String txt;
-	
-	
-	
+
 	public PromptAction(JTextField tf, String txt) {
 		this.tf = tf;
 		this.txt = txt;

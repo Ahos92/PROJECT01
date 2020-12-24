@@ -22,8 +22,7 @@ public class Day {
 	public String TodayYmdT(LocalDateTime today) {
 		return today.format(DateTimeFormatter.ofPattern("yy/MM/dd kk:mm:ss")).toString();
 	}
-	
-	
+		
 	// 한달전 날짜
 	public String AmonthAgoYmdD() {
 		LocalDate amonth_ago = LocalDate.now().minusDays(30);

@@ -10,9 +10,7 @@ public class Member {
 	private int mileage;
 	private String customer_no;
 	
-	public Member() {
-	
-	}
+	public Member() {}
 	
 	public Member( String customer_no, String first_name, String last_name, String contact_no,
 			int amount_price, String membership, double accumulation_pct, int mileage) {	

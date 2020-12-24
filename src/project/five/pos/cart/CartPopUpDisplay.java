@@ -15,7 +15,7 @@ import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.cart.btn.CartBtn;
 import project.five.pos.cart.btn.action.*;
 import project.five.pos.cart.btn.render.*;
@@ -56,7 +56,7 @@ public class CartPopUpDisplay extends JDialog {
 		height = 400;
 		setLayout(new BorderLayout());
 		setSize(width, height);
-		setResizable(false);// 사이즈 변경 불가
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setModal(true);
 

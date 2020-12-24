@@ -32,7 +32,6 @@ public class ChangeFrameAction implements ActionListener{
 		this.present_frame = present_frame;
 		this.device_id = device_id;
 	}
-
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

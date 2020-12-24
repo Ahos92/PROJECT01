@@ -2,13 +2,14 @@ package project.five.pos.device;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.device.comp.*;
 import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.device.comp.btn.action.ChangeFrameAction;
@@ -29,15 +30,17 @@ public class SettlePopUpDisplay extends JDialog {
 		
 		center_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		south_p = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		
-		center_p.setBackground(new Color(238, 230, 196));
-		south_p.setBackground(new Color(238, 230, 196));
-		
+			
 		msg_lab01 = new DeviceLab("오늘은 더 이상 판매를 할 수 없게 됩니다.", 230, 40);
 		msg_lab02 = new DeviceLab("정말 정산 하시겠습니까?", 150, 40);
 		
-		yes_btn = new DeviceBtn("예", 70, 30, new SettleAction(frame, this, device_id));
-		no_btn = new DeviceBtn("아니요", 70, 30, new ActionListener() {
+		yes_btn = new JButton("예");
+		yes_btn.setPreferredSize(new Dimension(70, 30));
+		yes_btn.addActionListener(new SettleAction(frame, this, device_id));
+		
+		no_btn = new JButton("아니요"); 
+		no_btn.setPreferredSize(new Dimension(70, 30));
+		no_btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();

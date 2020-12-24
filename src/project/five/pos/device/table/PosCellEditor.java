@@ -44,7 +44,7 @@ public class PosCellEditor {
 			cart_table.getColumn("결제 금액").setPreferredWidth(20);
 			cart_table.getColumn("사용 금액").setPreferredWidth(20);
 			cart_table.getColumn("쿠폰 사용").setPreferredWidth(20);
-//			"회원 번호", "이름", "전화 번호", "등급", "총 사용금액", "적립률", "마일리지"
+			
 		} else if (title.equals("회원 정보 조회")) {
 			cart_table.getColumn("회원 번호").setPreferredWidth(40);
 			cart_table.getColumn("이름").setPreferredWidth(30);

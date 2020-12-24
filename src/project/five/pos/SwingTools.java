@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class TestSwingTools extends JFrame {
+public class SwingTools extends JFrame {
 
 	String title;
 	boolean visible;

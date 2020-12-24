@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 public class PosVO {
 
 	// pos table
-	private int device_id; // cart fk
+	private int device_id;
 	private String device_pw;
 
 	// branch table
-	private int branch_no;// pos fk
+	private int branch_no;
 	// business_id
 	private String branch_name;
 	private String branch_location;

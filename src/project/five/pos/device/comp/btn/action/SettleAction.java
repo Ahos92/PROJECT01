@@ -24,6 +24,7 @@ public class SettleAction implements ActionListener {
 		this.device_id = device_id;
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

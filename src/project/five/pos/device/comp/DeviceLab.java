@@ -8,6 +8,7 @@ public class DeviceLab extends JLabel {
 
 	public DeviceLab() {}
 	
+	
 	public DeviceLab(String lab_txt, int width, int heghit) {
 		setText(lab_txt);
 		setPreferredSize(new Dimension(width, heghit));

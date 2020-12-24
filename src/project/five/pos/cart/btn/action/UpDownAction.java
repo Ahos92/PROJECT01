@@ -49,7 +49,6 @@ public class UpDownAction extends DefaultCellEditor {
 					}
 					
 				}
-				//버튼 사용 중지 알아내서 버그 수정하기
 				fireEditingStopped();
 			}
 		});

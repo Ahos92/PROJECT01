@@ -30,7 +30,6 @@ public class DeleteAction extends DefaultCellEditor {
 				int row = table.getSelectedRow();
 				dtm.removeRow(row);
 				if (dtm.getRowCount() == 0) {
-//					new MenuDisplay();
 					cart.dispose();
 					System.err.println("모든 항목이 취소 되었습니다!");
 				}

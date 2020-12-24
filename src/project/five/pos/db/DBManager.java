@@ -16,7 +16,6 @@ public class DBManager {
 
 		try {
 			conn = ds.getConnection();
-			// 테스트 용 코드
 			System.out.println("DB에 연결되었습니다.!!");
 		} catch (SQLException e) {
 

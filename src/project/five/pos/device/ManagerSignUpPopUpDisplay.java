@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 import project.five.pos.db.PosVO;
 import project.five.pos.device.comp.DeviceLab;
 import project.five.pos.device.comp.DevicePanel;
@@ -91,6 +91,7 @@ public class ManagerSignUpPopUpDisplay extends JDialog {
 		
 		setVisible(true);
 	}
+
 	
 	private JTextField createTf(String txt) {
 		JTextField tf = new DeviceTF(txt, 16, 40, 30);

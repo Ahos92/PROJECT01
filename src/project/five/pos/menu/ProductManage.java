@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import project.five.pos.TestSwingTools;
+import project.five.pos.SwingTools;
 //import project.five.pos.device.comp.btn.DeviceBtn;
 import project.five.pos.db.DBManager;
 import project.five.pos.device.comp.DevicePanel;
@@ -74,9 +74,6 @@ public class ProductManage extends JDialog implements ActionListener{
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
-//	private Image background =new ImageIcon(
-//			"C:\\Users\\손지원\\git\\PROJECT01\\src\\project\\five\\pos\\manage\\tree.png").getImage();
 
 	JFrame pf;
 	public ProductManage(JFrame frame, String name) throws IOException {
@@ -90,12 +87,9 @@ public class ProductManage extends JDialog implements ActionListener{
 		panel = new DevicePanel("assets/images/device/14.png", 500, 760);
 		panel.setLayout(null); 
 		table = new JTable(model);
-		//table.setFont(new Font("Courier", Font.PLAIN, 20));
-		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
-//		table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+		table.getTableHeader().setReorderingAllowed(false); 
 		new PosCellEditor().setWitdth(name, table);
 		
-		//table.addMouseListener(new JTableMouseListener());
 		scrollPane = new JScrollPane(table);
 		
 		table.getColumnModel().getColumn(6).setCellRenderer(new TableCell());
@@ -151,9 +145,6 @@ public class ProductManage extends JDialog implements ActionListener{
 		setVisible(true);
 	}
 	
-//	public void paint(Graphics g) {//그리는 함수
-//		g.drawImage(background, 0, 0, null);//background를 그려줌
-//	}
 
 	private void select() {
 		String sql = "SELECT * FROM product order by product_no";

@@ -482,7 +482,6 @@ public class AskCoupon extends JFrame {
 		add(back);
 		add(label);
 		
-		//this.add(panel04, BorderLayout.CENTER);
 	}
 
 }

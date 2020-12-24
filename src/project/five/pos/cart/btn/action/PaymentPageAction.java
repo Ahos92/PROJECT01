@@ -56,7 +56,6 @@ public class PaymentPageAction implements ActionListener{
 	
 		} else {
 			lists = new ArrayList<>();
-			System.out.println("<결제 창으로 넘긴 목록 >");
 			for (int i = 0; i < update_cart.size(); i++) {
 				String format = String.format("%s (%s)",  
 						update_cart.get(i).getProduct_name(),
@@ -67,19 +66,8 @@ public class PaymentPageAction implements ActionListener{
 					lists.add(format);
 				}
 				price += update_cart.get(i).getTotal_price();
-				System.out.println("---------------------------------");
-				System.out.println("상품 이름 : " + lists.get(i));
-				System.out.println("상품 선택 : " + update_cart.get(i).getSelected_item() + " 개");
-				System.out.println("각 상품 가격 : " + update_cart.get(i).getProduct_price() + " 원");
 			}	
-			System.out.println("---------------------------------");
-			System.out.println("주문 번호 : "+ order_num);
-			System.out.println("총 가격 : " + price);
-			System.out.println("디바이스 아이디 : " + device_id);
 			try {
-				// 결제화면에 넘겨줄 데이터 
-				// 주문번호(order_num), 총가격(price), 상품 이름(lists), 
-				// VO객채(update_cart), 결제 타입(e.getactionCommand), 디바이스 아이디(device_id)
 				new PayPanel(order_num, price, lists, update_cart, device_id);
 				menu.dispose();
 			} catch (IOException e1) {

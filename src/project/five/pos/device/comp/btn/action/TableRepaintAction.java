@@ -26,6 +26,7 @@ public class TableRepaintAction implements ActionListener {
 		this.selectData_tf = selectData_tf;
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("°Ë»ö")) {
