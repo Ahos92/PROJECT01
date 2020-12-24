@@ -85,9 +85,14 @@ public class UpdateMenu extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveB) {
 			update();
+			try {
 			for(int i=0;i<5;i++) {
 				rows[i].setText("");
 			}
+			}catch(IndexOutOfBoundsException syserr){
+				
+			}
+			
 		} else if(e.getSource() == exitB) {
 			dispose(); //다이얼로그 제거
 		}

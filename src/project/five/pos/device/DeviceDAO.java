@@ -425,7 +425,7 @@ public class DeviceDAO {
 
 			if (column_name.equals("payment_date")) {
 				sql = "select * from payment where " + column_name 
-						+ " like \'%"+ today + column_data + ":%\' order by payment_date desc";
+						+ " like \'% "+ column_data + ":%\' order by payment_date desc";
 			} else if (column_name.equals("actual_expenditure")) {
 				sql = "select * from payment where " + column_name + " >= " + column_data 
 						+ " order by actual_expenditure desc";
