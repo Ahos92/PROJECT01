@@ -175,3 +175,4 @@ CREATE TABLE daily_sales_amount(
 ALTER TABLE daily_sales_amount MODIFY (
     device_id NUMBER(5) CONSTRAINT dsa_did_fk REFERENCES pos ( device_id )
 );
+
