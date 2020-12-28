@@ -175,36 +175,3 @@ CREATE TABLE daily_sales_amount(
 ALTER TABLE daily_sales_amount MODIFY (
     device_id NUMBER(5) CONSTRAINT dsa_did_fk REFERENCES pos ( device_id )
 );
-
-
-
-/*
-
-CREATE TABLE orders (
-    order_no NUMBER(4) PRIMARY KEY,
-    product_no NUMBER(2) NOT NULL,
-    order_date DATE NOT NULL
-);
-
-ALTER TABLE orders MODIFY (
-    product_no NUMBER(4) CONSTRAINT od_pno_fk REFERENCES product ( product_no )
-);
-
-SELECT * FROM user_constraints WHERE table_name = 'ORDERS';
-
-
-CREATE TABLE data_store(
-    storage_date DATE PRIMARY KEY,
-    product_no NUMBER(2) NOT NULL,
-    customer_no NUMBER(4) NOT NULL,
-    device_id NUMBER(5) NOT NULL
-);
-
-ALTER TABLE data_store MODIFY (
-    product_no NUMBER(4) CONSTRAINT ds_pno_fk REFERENCES product ( product_no ),
-    customer_no NUMBER(4) CONSTRAINT ds_cuno_fk REFERENCES customer ( customer_no ),
-    device_id NUMBER(4) CONSTRAINT ds_cano_fk REFERENCES pos ( device_id )
-);
-
-SELECT * FROM user_constraints WHERE table_name = 'DATA_STORE';
-*/
