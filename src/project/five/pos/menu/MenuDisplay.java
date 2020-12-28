@@ -334,7 +334,7 @@ class addCart{
 		MenuDisplay.allCart[x][3]= (int)count * (int)price;
 
 		x+=1;
-		System.out.println(Arrays.deepToString(MenuDisplay.allCart));
+		//System.out.println(Arrays.deepToString(MenuDisplay.allCart));
 	}
 }
 
