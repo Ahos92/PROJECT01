@@ -23,11 +23,16 @@
 ## 코드 및 화면
 * ### 로그인 화면
 <img src = "./assets/images/포스로그인.png" width="400" height="300">
+
 * ### 판매
 <img src = "./assets/images/판매.png" width="400" height="300">
+
 * ### 결제
 <img src = "./assets/images/결제.png" width="400" height="300">
+
 * ### 관리자 모드
-<img src = "./assets/images/회원정보.png" width="400" height="300">
+<img src = "./assets/images/관리자.png" width="400" height="300">
+
 * ### 조회
 <img src = "./assets/images/회원정보.png" width="400" height="300">
+
