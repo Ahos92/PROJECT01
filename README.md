@@ -1,4 +1,4 @@
-# 1차 프로젝트 'POS'
+# 1차 프로젝트 'POS PROGRAM'
 
 >[개요](#개요) / 
 >[개발환경](#개발환경) / 
@@ -23,4 +23,4 @@
 <img src = "./assets/images/결제.png" width="800" height="500"> 
 
 * ### 관리자 모드
-<img src = "./assets/images/관리자.png" width="350" height="400"><img src = "./assets/images/회원정보.png" width="350" height="400">
+<img src = "./assets/images/관리자.png" width="350" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src = "./assets/images/회원정보.png" width="350" height="400">
