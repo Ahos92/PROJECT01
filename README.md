@@ -3,16 +3,18 @@
 >[개요](#개요) / 
 >[개발환경](#개발환경) / 
 >[화면](#화면) 
----
-### 개요
+
+<br>
+
+### <img src = "./assets/images/아메리카노HOT.png" width="30" height="20">개요
  ##### 상품 판매, 회원 조회, 결제 내역 조회, 정산 등의 기능을 가진 카페 POS 프로그램
 ---
-### 개발환경
+### <img src = "./assets/images/아메리카노HOT.png" width="30" height="20">개발환경
 * #### 개발언어 : JAVA
 * #### Tool : eclipse
 * #### DB : Oracle
 ---
-### 화면
+### <img src = "./assets/images/아메리카노HOT.png" width="30" height="20">화면
 * #### 로그인 화면
 <img src = "./assets/images/포스로그인.png" width="800" height="500">
 
